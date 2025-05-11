@@ -47,8 +47,10 @@ public class AuthServiceImpl implements AuthService {
 	        throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
 	    }
 
-	    String token = jwtUtil.generateToken(user.getUsername());
-	    return new JwtResponse(token, user.getUsername(), user.isAdmin() ? "ADMIN" : "USER");
+	    String role = user.isAdmin() ? "ADMIN" : "USER";
+	    String token = jwtUtil.generateToken(user.getUsername(), role);
+	    
+	    return new JwtResponse(token, user.getUsername(), role);
 	}
 
 
