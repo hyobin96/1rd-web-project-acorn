@@ -1,5 +1,8 @@
 package com.ssafy.ssafit.model.dao;
 
+import java.util.Optional;
+
+import com.ssafy.ssafit.model.dto.LoginRequest;
 import com.ssafy.ssafit.model.dto.User;
 
 public interface UserDao {
@@ -13,4 +16,11 @@ public interface UserDao {
 	int updateIsDeleted(int id);
 	
 	int deleteUserById(int id);
+	
+	/**
+	 * 
+	 * @param request
+	 * @return username, 암호화된 password, role을 담은 User dto를 반환
+	 */
+	Optional<User> selectUser(LoginRequest request);
 }

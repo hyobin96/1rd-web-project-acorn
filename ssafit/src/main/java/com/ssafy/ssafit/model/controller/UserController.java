@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.ssafit.model.dto.User;
 import com.ssafy.ssafit.model.service.UserService;
 
+
+
+/**
+ * 회원 정보를 관리하는 컨트롤러
+ * 회원가입, 회원탈퇴, 정보 수정 기능을 처리
+ */
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin("*")
 public class UserController {
 	private UserService userService;
 
@@ -65,15 +73,6 @@ public class UserController {
 	public ResponseEntity<?> deleteUserPermanently(@PathVariable("userId") int id) {
 		return userService.deleteUserPermanently(id) ? ResponseEntity.ok().build()
 				: ResponseEntity.internalServerError().body("처리 중 오류가 발생했습니다.");
-	}
-
-	/**
-	 * 로그인
-	 */
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user) {
-
-		return null;
 	}
 
 }
