@@ -8,8 +8,8 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100),
     nickname VARCHAR(50),
-    is_admin BOOLEAN DEFAULT FALSE,
-    is_deleted BOOLEAN DEFAULT FALSE,
+    is_admin BOOLEAN DEFAULT FALSE, 
+    is_deleted BOOLEAN DEFAULT FALSE, -- 탈퇴 회원 관리용
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -18,8 +18,8 @@ CREATE TABLE playlists (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     title VARCHAR(100),
-    start_date DATE,
-    end_date DATE,
+    start_date DATE, -- 운동 시작일
+    end_date DATE, -- 운동 종료일
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -27,8 +27,8 @@ CREATE TABLE playlists (
 CREATE TABLE playlist_items (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     playlist_id BIGINT NOT NULL,
-    video_id VARCHAR(20) NOT NULL,
-    memo TEXT,
+    video_id VARCHAR(20) NOT NULL, -- 동영상의 고유 식별자
+    memo TEXT, 
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE
 );
 
@@ -44,9 +44,9 @@ CREATE TABLE workout_logs (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     playlist_id BIGINT,
-    total_time_seconds INT,
+    total_time_seconds INT, -- 동영상 총 길이 
     completed BOOLEAN DEFAULT FALSE,
-    shared_link TEXT,
+    shared_link TEXT, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
