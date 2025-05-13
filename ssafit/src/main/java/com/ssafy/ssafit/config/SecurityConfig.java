@@ -19,12 +19,20 @@ public class SecurityConfig {
         this.jwtFilter = jwtFilter;
     }
 
+    /**
+     * 로그인 후 보안설정
+     * @param http
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/login", "/api/public/**").permitAll()
+                .requestMatchers("/api/login", "/api/public/**", "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

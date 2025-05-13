@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.PlaylistItemDao">
+
+	<!-- playlist_items 테이블에서 playlist_id가 일치하는 item들을 id순으로 오름차순해서 반환합니다. -->
+    <select id="selectByPlaylistId" resultType="PlaylistItem">
+        SELECT * 
+        FROM playlist_items
+        WHERE playlist_id = #{playlistId}
+        ORDER BY id
+    </select>
+
+	<!-- playlist_items 테이블에 새로운 item을 삽입합니다. -->
+    <insert id="insert" parameterType="PlaylistItem">
+        INSERT INTO playlist_items (playlist_id, video_id, memo)
+        VALUES (#{playlistId}, #{videoId}, #{memo})
+    </insert>
+
+	<!-- playlist_items 테이블에 id가 일치하는 item을 삭제합니다. -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM playlist_items 
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
