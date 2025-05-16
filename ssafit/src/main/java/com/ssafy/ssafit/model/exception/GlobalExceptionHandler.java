@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 	// 서버 오류가 발생한 경우
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleAllOtherExceptions(Exception e) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 	}
 
 }

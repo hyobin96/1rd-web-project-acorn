@@ -1,6 +1,10 @@
+DROP DATABASE IF EXISTS ssafit;
+
 CREATE DATABASE IF NOT EXISTS ssafit;
 
 USE ssafit;
+
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -14,6 +18,8 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS playlists;
+
 CREATE TABLE playlists (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -24,6 +30,8 @@ CREATE TABLE playlists (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS playlist_items;
+
 CREATE TABLE playlist_items (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     playlist_id BIGINT NOT NULL,
@@ -32,6 +40,8 @@ CREATE TABLE playlist_items (
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS workout_memos;
+
 CREATE TABLE workout_memos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -39,6 +49,8 @@ CREATE TABLE workout_memos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+DROP TABLE IF EXISTS workout_logs;
 
 CREATE TABLE workout_logs (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -51,6 +63,8 @@ CREATE TABLE workout_logs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS community_posts;
+
 CREATE TABLE community_posts (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -61,12 +75,33 @@ CREATE TABLE community_posts (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS event_posts;
+
 CREATE TABLE event_posts (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(200),
-    content TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT '게시글 고유 ID',
+  title VARCHAR(200) NOT NULL COMMENT '게시글 제목',
+  content TEXT COMMENT '게시글 내용',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시각',
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 시각',
+  is_deleted BOOLEAN DEFAULT FALSE COMMENT '삭제 여부 (소프트 삭제용)',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DROP TABLE IF EXISTS event_files;
+
+CREATE TABLE event_files (
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT '파일 고유 ID',
+  post_id BIGINT NOT NULL COMMENT '첨부된 게시글 ID',
+  original_name VARCHAR(255) COMMENT '사용자가 업로드한 원래 이름',
+  stored_name VARCHAR(255) COMMENT '서버에 저장된 파일 이름 (UUID 포함)',
+  file_path VARCHAR(500) COMMENT '서버 내 저장 경로',
+  uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '업로드 시각',
+  PRIMARY KEY (id),
+  FOREIGN KEY (post_id) REFERENCES event_posts(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+DROP TABLE IF EXISTS shopping_posts;
 
 CREATE TABLE shopping_posts (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
