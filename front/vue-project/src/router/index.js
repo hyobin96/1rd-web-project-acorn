@@ -1,3 +1,4 @@
+import CreatePlaylistView from '@/views/CreatePlaylistView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/create-playlist',
+      name: 'CreatePlayList',
+      component: CreatePlaylistView,
+    }
   ],
 })
 
