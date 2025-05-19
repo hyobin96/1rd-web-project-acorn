@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
 	    
 	    ResponseCookie cookie = ResponseCookie.from("accessToken", token)
 	    		.httpOnly(true)
-	    		.secure(false)
+	    		.secure(true)
 	    		.path("/")
 	    		.maxAge(3600)
 	    		.sameSite("None")
@@ -64,7 +64,6 @@ public class AuthServiceImpl implements AuthService {
 	    
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-	    
 	    return headers;
 	}
 

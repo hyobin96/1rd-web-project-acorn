@@ -1,6 +1,6 @@
 package com.ssafy.ssafit.model.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,12 +48,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 * playlist가 존재한다면 반환
 	 */
 	@Override
-	public Playlist getPlaylist(int id) {
-		Optional<Playlist> playlist = playlistDao.selectPlaylist(id);
+	public List<Playlist> getPlaylist(int id) {
+		List<Playlist> playlist = playlistDao.selectPlaylist(id);
 		if(playlist.isEmpty()) {
 			throw new PlaylistNotSelectedException("playlist가 선택되지 않았습니다.");
 		}
-		return playlist.get();
+		return playlist;
 	}
 
 }

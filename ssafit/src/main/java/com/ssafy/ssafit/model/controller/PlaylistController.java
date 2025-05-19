@@ -1,5 +1,7 @@
 package com.ssafy.ssafit.model.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +19,13 @@ import com.ssafy.ssafit.model.service.PlaylistService;
 
 @RestController
 @RequestMapping("/api/playlist")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class PlaylistController {
 	@Autowired
 	private PlaylistService playlistService;
 
 	@GetMapping("{userId}")
-	public ResponseEntity<Playlist> readPlaylist(@PathVariable("userId") int userId) {
+	public ResponseEntity<List<Playlist>> readPlaylist(@PathVariable("userId") int userId) {
 		return ResponseEntity.ok(playlistService.getPlaylist(userId));
 	}
 

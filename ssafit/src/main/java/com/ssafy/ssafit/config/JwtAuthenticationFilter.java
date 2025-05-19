@@ -32,8 +32,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
                                     throws ServletException, IOException {
 
+    	
     	String token = null;
-
     	// 1. Authorization 헤더 우선 (optional)
     	String authHeader = request.getHeader("Authorization");
     	if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -43,7 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     	// 2. 없으면 쿠키에서 accessToken 찾기
     	if (token == null && request.getCookies() != null) {
     	    for (Cookie cookie : request.getCookies()) {
+    	    	System.out.println(cookie.getName() + " " + cookie.getValue());
     	        if ("accessToken".equals(cookie.getName())) {
+    	        	System.out.println("토큰 찾기");
     	            token = cookie.getValue();
     	            break;
     	        }
@@ -52,6 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     	// 3. 토큰 유효성 검증 및 인증 처리
     	if (token != null && jwtUtil.validateToken(token)) {
+    		System.out.println("검증하기");
     	    String username = jwtUtil.extractUsername(token);
     	    String role = jwtUtil.extractRole(token);
 
