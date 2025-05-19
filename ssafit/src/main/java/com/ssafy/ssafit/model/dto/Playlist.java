@@ -1,8 +1,8 @@
 package com.ssafy.ssafit.model.dto;
 
 public class Playlist {
-	private long id;
-	private long userId;
+	private int id;
+	private int userId;
 	private String title;
 	private String startDate;
 	private String endDate;
@@ -11,7 +11,7 @@ public class Playlist {
 	public Playlist() {
 	}
 
-	public Playlist(long id, long userId, String title, String startDate, String endDate, String createdAt) {
+	public Playlist(int id, int userId, String title, String startDate, String endDate, String createdAt) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -21,19 +21,19 @@ public class Playlist {
 		this.createdAt = createdAt;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public long getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
@@ -71,7 +71,7 @@ public class Playlist {
 
 	@Override
 	public String toString() {
-		return "PlayList [id=" + id + ", userId=" + userId + ", title=" + title + ", startDate=" + startDate
+		return "Playlist [id=" + id + ", userId=" + userId + ", title=" + title + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", createdAt=" + createdAt + "]";
 	}
 

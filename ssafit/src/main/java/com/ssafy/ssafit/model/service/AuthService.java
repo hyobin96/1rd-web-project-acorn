@@ -1,6 +1,7 @@
 package com.ssafy.ssafit.model.service;
 
-import com.ssafy.ssafit.model.dto.JwtResponse;
+import org.springframework.http.HttpHeaders;
+
 import com.ssafy.ssafit.model.dto.LoginRequest;
 
 /**
@@ -10,7 +11,7 @@ public interface AuthService {
 	/**
 	 * 로그인 토큰 발급
 	 * @param request
-	 * @return 로그인 응답 객체를 반환
+	 * @return Cookie를 담은 HttpHeaders를 반환합니다.
 	 */
-	public JwtResponse login(LoginRequest request);
+	public HttpHeaders login(LoginRequest request);
 }

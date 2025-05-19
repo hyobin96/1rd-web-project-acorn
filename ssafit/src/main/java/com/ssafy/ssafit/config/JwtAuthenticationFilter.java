@@ -1,9 +1,8 @@
 package com.ssafy.ssafit.config;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,8 +11,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -31,36 +32,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
                                     throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+    	String token = null;
 
-        // "Bearer <token>" 형식인지 확인
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7); // "Bearer " 제거
-            String tokenUsername = jwtUtil.extractUsername(token);
-            
-            // 클라이언트가 요청에 포함한 userId 또는 username
-            String pathUsername = request.getParameter("username");
+    	// 1. Authorization 헤더 우선 (optional)
+    	String authHeader = request.getHeader("Authorization");
+    	if (authHeader != null && authHeader.startsWith("Bearer ")) {
+    	    token = authHeader.substring(7);
+    	}
 
-            if (!tokenUsername.equals(pathUsername)) {
-                throw new AccessDeniedException("다른 사용자의 요청입니다.");
-            }
-            
-            if (jwtUtil.validateToken(token, pathUsername)) {
-                String username = jwtUtil.extractUsername(token);
-                String role = jwtUtil.extractRole(token);  // "USER", "ADMIN" 등
+    	// 2. 없으면 쿠키에서 accessToken 찾기
+    	if (token == null && request.getCookies() != null) {
+    	    for (Cookie cookie : request.getCookies()) {
+    	        if ("accessToken".equals(cookie.getName())) {
+    	            token = cookie.getValue();
+    	            break;
+    	        }
+    	    }
+    	}
 
-                // 인증 객체 생성 (권한도 함께 설정)
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                username,
-                                null,
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role))
-                        );
+    	// 3. 토큰 유효성 검증 및 인증 처리
+    	if (token != null && jwtUtil.validateToken(token)) {
+    	    String username = jwtUtil.extractUsername(token);
+    	    String role = jwtUtil.extractRole(token);
 
-                // SecurityContextHolder에 인증 정보 등록
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        }
+    	    UsernamePasswordAuthenticationToken authentication =
+    	        new UsernamePasswordAuthenticationToken(
+    	            username,
+    	            null,
+    	            List.of(new SimpleGrantedAuthority("ROLE_" + role))
+    	        );
+
+    	    System.out.println("검증 성공");
+    	    SecurityContextHolder.getContext().setAuthentication(authentication);
+    	}
 
         // 다음 필터로 진행
         filterChain.doFilter(request, response);

@@ -3,8 +3,8 @@ package com.ssafy.ssafit.model.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +31,12 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private JwtUtil jwtUtil; // 토큰을 생성하기 위한 유틸클래스
 	
+	/**
+	 * 아이디, 비밀번호 일치 여부를 판단하고 일치한다면
+	 * 토큰을 생성해 HttpHeader에 쿠키로 담고 HttpHeader를 반환합니다.
+	 */
 	@Override
-	public JwtResponse login(LoginRequest request) {
+	public HttpHeaders login(LoginRequest request) {
 	    Optional<User> optUser = userDao.selectUser(request);
 
 	    // 유저가 존재하지 않는다면 UserNotFoundException 발생
@@ -50,7 +54,18 @@ public class AuthServiceImpl implements AuthService {
 	    String role = user.isAdmin() ? "ADMIN" : "USER";
 	    String token = jwtUtil.generateToken(user.getUsername(), role);
 	    
-	    return new JwtResponse(token, user.getUsername(), role);
+	    ResponseCookie cookie = ResponseCookie.from("accessToken", token)
+	    		.httpOnly(true)
+	    		.secure(false)
+	    		.path("/")
+	    		.maxAge(3600)
+	    		.sameSite("None")
+	    		.build();
+	    
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+	    
+	    return headers;
 	}
 
 

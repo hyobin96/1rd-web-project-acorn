@@ -16,19 +16,19 @@ import com.ssafy.ssafit.model.service.AuthService;
  */
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthController {
 	@Autowired
 	private AuthService authService;
 	
 	/**
-	 * jwt 객체를 body에 담아 반환합니다.
-	 * jwt는 토큰, username, role이 담겨 있습니다.
+	 * ResponseEntity 헤더에 토큰을 쿠키로 담아 반환합니다.
+	 * 자동으로 브라우저에 등록됩니다.
 	 * @param request
 	 * @return ResponseEntity
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request){
-		return ResponseEntity.ok(authService.login(request));
+		return ResponseEntity.ok().headers(authService.login(request)).body("로그인 성공");
 	}
 }

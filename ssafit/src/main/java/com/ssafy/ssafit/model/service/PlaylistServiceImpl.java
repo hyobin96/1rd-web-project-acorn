@@ -25,7 +25,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 */
 	@Override
 	public void deletePlaylistById(int id) {
-		if(playlistDao.deletePlaylistById(id) == 1) {
+		if(playlistDao.deletePlaylistById(id) == 0) {
 			throw new PlaylistNotDeletedException("playlist가 삭제되지 않았습니다.");
 		}
 	}
@@ -36,7 +36,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 */
 	@Override
 	public void createPlaylist(Playlist playlist) {
-		if(playlistDao.insertPlayList(playlist) == 1) {
+		System.out.println("service 도착");
+		if(playlistDao.insertPlaylist(playlist) == 0) {
 			throw new PlaylistNotInsertedException("playlist가 생성되지 않았습니다.");
 		}
 	}
