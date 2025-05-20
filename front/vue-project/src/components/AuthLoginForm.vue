@@ -9,7 +9,10 @@
             <input type="password" id="pw" name="pw" 
             @focus="isPwFocus = true" @blur="isPwFocus = false" v-model="password" autocomplete="off">
             <label for="pw" :class="{floated: isPwFocus || pw}">비밀번호</label></div>
-        <br>
+                    <ul class="find_wrap">
+            <li><a href="">회원가입</a></li>
+            <li><a href="">비밀번호 재설정</a></li>
+        </ul>
         <button @click="login">로그인</button>
     </div>
 </template>
