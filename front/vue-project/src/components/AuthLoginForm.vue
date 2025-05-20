@@ -1,12 +1,16 @@
 <template>
     <div>
         <h2>LoginForm</h2>
-        <span>아이디: </span><input type="text" v-model="username">
+        <div :class="isIdFocus ? 'input_item_id_focus' : 'input_item_id'">
+            <input type="text" id="id" name="id" 
+            @focus="isIdFocus = true" @blur="isIdFocus = false" v-model="username" autocomplete="off">
+            <label for="id" :class="{floated: isIdFocus || id}">아이디</label></div>
+        <div :class="isPwFocus ? 'input_item_pw_focus' : 'input_item_pw'">
+            <input type="password" id="pw" name="pw" 
+            @focus="isPwFocus = true" @blur="isPwFocus = false" v-model="password" autocomplete="off">
+            <label for="pw" :class="{floated: isPwFocus || pw}">비밀번호</label></div>
         <br>
-        <span>비밀번호: </span><input type="password" v-model="password">
-        <br>
-        <button class="btn btn-success" @click="login">로그인</button>
-        <button @click="getPlaylist">playlist</button>
+        <button @click="login">로그인</button>
     </div>
 </template>
 
@@ -53,6 +57,15 @@ const getPlaylist = async () => {
     ).then(response => console.log(response))
 }
 
+const isIdFocus = ref(false)
+const isPwFocus = ref(false)
+
+const id = ref('');
+const pw = ref('');
+
+
+
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
