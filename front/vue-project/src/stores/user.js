@@ -53,11 +53,40 @@ export const useUserStores = defineStore('user-stores', () => {
             return '공백은 사용할 수 없습니다.'
         }
         if (username.length < 8 || username.length > 16){
-            return '아이디는 8~16자여야 합니다.'
+            return '패스워드는 8~16자여야 합니다.'
         }
         //에러 없음
         return null
     }
+
+    //닉네임 유효성 검사
+    const validateNickname = (nickname) => {
+        if (!nickname) {
+            return '닉네임을 입력해주세요.'
+        }
+        if (nickname.includes(' ')){
+            return '공백은 사용할 수 없습니다.'
+        }
+        if (nickname.length < 2 || nickname > 10){
+            return '닉네임은 2~10자여야 합니다.'
+        }
+        return null
+
+    }
+
+    //이메일 유효성 검사
+    const validateEmail = (email) => {
+        if (!email){
+            return '이메일을 입력해주세요.'
+        }
+        if (email.includes(' ')){
+            return '공백은 사용할 수 없습니다.'
+        }
+        if ('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/'.test(email)){
+            return '이메일 형식이 올바르지 않습니다.'
+        }
+        return null
+    } 
 
     return { userId, username, role, login, validateId, validatePassword }
 })
