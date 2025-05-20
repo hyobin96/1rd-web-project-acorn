@@ -7,9 +7,7 @@
             <li><a href="">회원가입</a></li>
             <li><a href="">비밀번호 재설정</a></li>
         </ul>
-        <div class="btn_login_wrap">
-            <button type="submit"><span class="btn_text">로그인</span></button>
-        </div>
+   
     </div>
 </template>
 
