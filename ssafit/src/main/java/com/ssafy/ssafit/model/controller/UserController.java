@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafit.model.dto.User;
 import com.ssafy.ssafit.model.service.UserService;
+
+import jakarta.validation.Valid;
 
 
 
@@ -39,7 +42,12 @@ public class UserController {
 	 * @return 성공 시 200, 실패 시 500
 	 */
 	@PostMapping("")
-	public ResponseEntity<?> regist(@RequestBody User user) {
+	public ResponseEntity<?> regist(@Valid @RequestBody User user, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			String errorMessage = bindingResult.getFieldError().getDefaultMessage();
+	        return ResponseEntity.badRequest().body(Map.of("error", errorMessage));
+		}
+		
 		if(userService.signUp(user)) {
 			Map<String, String> info = new HashMap<>();
 			info.put("id", user.getId() + "");
@@ -48,7 +56,7 @@ public class UserController {
 			return ResponseEntity.ok(info);
 		}
 		
-		return ResponseEntity.internalServerError().body("처리 중 오류가 발생했습니다.");
+		return ResponseEntity.internalServerError().body(Map.of("error", "아이디가 중복입니다."));
 	}
 
 	/**
