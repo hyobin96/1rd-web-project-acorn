@@ -58,9 +58,8 @@ public class JwtUtil {
     /**
      * ✅ 유효한 토큰인지 확인
      */
-    public boolean validateToken(String token, String expectedUsername) {
-        final String username = extractUsername(token);
-        return username.equals(expectedUsername) && !isTokenExpired(token);
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
     }
 
     /**

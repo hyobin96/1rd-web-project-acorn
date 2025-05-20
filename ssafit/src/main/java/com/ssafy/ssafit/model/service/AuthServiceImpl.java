@@ -1,16 +1,18 @@
 package com.ssafy.ssafit.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafit.config.JwtUtil;
 import com.ssafy.ssafit.model.dao.UserDao;
-import com.ssafy.ssafit.model.dto.JwtResponse;
 import com.ssafy.ssafit.model.dto.LoginRequest;
 import com.ssafy.ssafit.model.dto.User;
 import com.ssafy.ssafit.model.exception.InvalidPasswordException;
@@ -31,8 +33,12 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private JwtUtil jwtUtil; // 토큰을 생성하기 위한 유틸클래스
 	
+	/**
+	 * 아이디, 비밀번호 일치 여부를 판단하고 일치한다면
+	 * 토큰을 생성해 HttpHeader에 쿠키로 담고 HttpHeader를 반환합니다.
+	 */
 	@Override
-	public JwtResponse login(LoginRequest request) {
+	public ResponseEntity login(LoginRequest request) {
 	    Optional<User> optUser = userDao.selectUser(request);
 
 	    // 유저가 존재하지 않는다면 UserNotFoundException 발생
@@ -50,7 +56,24 @@ public class AuthServiceImpl implements AuthService {
 	    String role = user.isAdmin() ? "ADMIN" : "USER";
 	    String token = jwtUtil.generateToken(user.getUsername(), role);
 	    
-	    return new JwtResponse(token, user.getUsername(), role);
+	    ResponseCookie cookie = ResponseCookie.from("accessToken", token)
+	    		.httpOnly(true)
+	    		.secure(true)
+	    		.path("/")
+	    		.maxAge(3600)
+	    		.sameSite("None")
+	    		.build();
+	    
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+	    
+	    Map<String, String> info = new HashMap<>();
+	    
+	    info.put("userId", user.getId().toString());
+	    info.put("username", user.getUsername());
+	    info.put("role", role);
+	    
+	    return ResponseEntity.ok().headers(headers).body(info);
 	}
 
 

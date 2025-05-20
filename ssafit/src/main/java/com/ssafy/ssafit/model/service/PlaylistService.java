@@ -1,5 +1,7 @@
 package com.ssafy.ssafit.model.service;
 
+import java.util.List;
+
 import com.ssafy.ssafit.model.dto.Playlist;
 
 public interface PlaylistService {
@@ -23,6 +25,6 @@ public interface PlaylistService {
 	 * 일치하는 playlist가 없다면 에러를 발생한다.
 	 * @param id
 	 */
-	Playlist getPlaylist(int id);
+	List<Playlist> getPlaylist(int id);
 	
 }

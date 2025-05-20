@@ -1,6 +1,6 @@
 package com.ssafy.ssafit.model.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 */
 	@Override
 	public void deletePlaylistById(int id) {
-		if(playlistDao.deletePlaylistById(id) == 1) {
+		if(playlistDao.deletePlaylistById(id) == 0) {
 			throw new PlaylistNotDeletedException("playlist가 삭제되지 않았습니다.");
 		}
 	}
@@ -36,7 +36,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 */
 	@Override
 	public void createPlaylist(Playlist playlist) {
-		if(playlistDao.insertPlayList(playlist) == 1) {
+		System.out.println("service 도착");
+		if(playlistDao.insertPlaylist(playlist) == 0) {
 			throw new PlaylistNotInsertedException("playlist가 생성되지 않았습니다.");
 		}
 	}
@@ -47,12 +48,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 * playlist가 존재한다면 반환
 	 */
 	@Override
-	public Playlist getPlaylist(int id) {
-		Optional<Playlist> playlist = playlistDao.selectPlaylist(id);
+	public List<Playlist> getPlaylist(int id) {
+		List<Playlist> playlist = playlistDao.selectPlaylist(id);
 		if(playlist.isEmpty()) {
 			throw new PlaylistNotSelectedException("playlist가 선택되지 않았습니다.");
 		}
-		return playlist.get();
+		return playlist;
 	}
 
 }

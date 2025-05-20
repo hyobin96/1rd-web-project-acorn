@@ -1,6 +1,6 @@
 package com.ssafy.ssafit.model.dao;
 
-import java.util.Optional;
+import java.util.List;
 
 import com.ssafy.ssafit.model.dto.Playlist;
 
@@ -21,12 +21,12 @@ public interface PlaylistDao {
 	 * @param playList
 	 * @return 변경된 행의 개수
 	 */
-	int insertPlayList(Playlist playList);
+	int insertPlaylist(Playlist playList);
 	
 	/**
 	 * id를 받아서 해당하는 playlist를 선택해서 dto에 담아서 반환
 	 * @param id
 	 * @return PlayList가 들어간 Optional 객체를 반환
 	 */
-	Optional<Playlist> selectPlaylist(int id);
+	List<Playlist> selectPlaylist(int id);
 }
