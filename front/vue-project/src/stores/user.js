@@ -2,27 +2,30 @@ import { defineStore } from "pinia";
 import { ref } from 'vue'
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080/api'
+const API_URL = 'http://localhost:8080/api/auth'
 
 export const useUserStores = defineStore('user-stores', () => {
-    const userId = ref('')
+    const userId = ref(-1)
     const username = ref('')
     const role = ref('')
+    const message = ref('')
 
-    const login = (username, password) => {
-        axios.post(
-            API_URL,
+    const login = async (password) => {
+        await axios.post(
+            `${API_URL}/login`,
             {
-                username,
+                "username":username.value,
                 password,
             },
             {
                 withCredentials: true
             },
         ).then(response => {
-            console.log(response)
+            const {data} = response
+            userId.value = data.userId
+            role.value = data.role
         }).catch(err => {
-            console.log(err)
+            message.value = err.response.data.message
         })
     }
 
@@ -88,5 +91,5 @@ export const useUserStores = defineStore('user-stores', () => {
         return null
     } 
 
-    return { userId, username, role, login, validateId, validatePassword }
+    return { userId, username, role, login, message, }
 })
