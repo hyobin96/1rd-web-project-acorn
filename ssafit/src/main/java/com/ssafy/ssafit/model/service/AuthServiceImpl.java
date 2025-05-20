@@ -1,16 +1,18 @@
 package com.ssafy.ssafit.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafit.config.JwtUtil;
 import com.ssafy.ssafit.model.dao.UserDao;
-import com.ssafy.ssafit.model.dto.JwtResponse;
 import com.ssafy.ssafit.model.dto.LoginRequest;
 import com.ssafy.ssafit.model.dto.User;
 import com.ssafy.ssafit.model.exception.InvalidPasswordException;
@@ -36,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
 	 * 토큰을 생성해 HttpHeader에 쿠키로 담고 HttpHeader를 반환합니다.
 	 */
 	@Override
-	public HttpHeaders login(LoginRequest request) {
+	public ResponseEntity login(LoginRequest request) {
 	    Optional<User> optUser = userDao.selectUser(request);
 
 	    // 유저가 존재하지 않는다면 UserNotFoundException 발생
@@ -64,7 +66,14 @@ public class AuthServiceImpl implements AuthService {
 	    
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-	    return headers;
+	    
+	    Map<String, String> info = new HashMap<>();
+	    
+	    info.put("userId", user.getId().toString());
+	    info.put("username", user.getUsername());
+	    info.put("role", role);
+	    
+	    return ResponseEntity.ok().headers(headers).body(info);
 	}
 
 

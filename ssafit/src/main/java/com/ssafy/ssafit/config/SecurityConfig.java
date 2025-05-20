@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,9 +37,12 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/login"/*, "/api/public/**", "/swagger-ui.html",
+            	.requestMatchers("/api/auth/login", "/swagger-ui.html",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**", "/api/**"*/).permitAll()
+                        "/v3/api-docs/**", "/api/**").permitAll()
+            	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+            	.requestMatchers(HttpMethod.DELETE, "/api/users").hasRole("ADMIN")
+            	.requestMatchers("/api/events").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

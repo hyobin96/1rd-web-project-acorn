@@ -1,6 +1,7 @@
 package com.ssafy.ssafit.model.service;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 
 import com.ssafy.ssafit.model.dto.LoginRequest;
 
@@ -13,5 +14,5 @@ public interface AuthService {
 	 * @param request
 	 * @return Cookie를 담은 HttpHeaders를 반환합니다.
 	 */
-	public HttpHeaders login(LoginRequest request);
+	public ResponseEntity login(LoginRequest request);
 }
