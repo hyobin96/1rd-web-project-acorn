@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <RouterView/> -->
+        <RouterView/>
         <nav class="navbar">
             <div class="logo-container"><a class="logo-icon"><img class="logo-img" src="https://i.imgur.com/9YO79MC.png" alt="LOGO"/></a></div>
         </nav>
@@ -16,9 +16,11 @@
             <div class="playlist-list">
                 <div class="playlist-list-header">
                     <div class="playlist-count">
-                        <span>플레이리스트 7개</span></div>
+                        <span class="playlist-list-header-menu">플레이리스트 7개</span></div>
                     <div class="drop-down">
-                        <button class="category-filter-bar" type="button">업로드 날짜</button>
+                        <button class="category-filter-bar" type="button">
+                        <span class="playlist-list-header-menu">업로드 날짜</span>
+                        </button>
                     </div>
                 </div>
                 <div class="content">
@@ -82,10 +84,13 @@
     border: 1px solid yellow;  
     display: flex; 
     justify-content: space-between;
-    height: 28px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 10px 0;
+    /* height: 28px; */
 }
+
+/* span.playlist-list-header-menu{
+    color: aquamarine;
+} */
 
 span.playlist-title{
     font-size: 20px;
@@ -108,7 +113,7 @@ span.playlist-title{
 .content > #meta > span{
     font-size: 16px;
     line-height: 22px;
-    font-weight: 700;
+    /* font-weight: 700; */
     height: 44px;
 }
 </style>

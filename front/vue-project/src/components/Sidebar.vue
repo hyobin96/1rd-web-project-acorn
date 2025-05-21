@@ -33,13 +33,26 @@
 </script>
 
 <style scoped>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .sidebar-container{
-    width: 250px;
-    height: 911px;
+    width: 280px;
+    height: 100vh;
     border: 1px solid red;
     position: absolute;
     padding-left: 12px;
     padding-right: 12px;
+}
+
+#sidebar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 100%;
 }
 
 /* .sidebar-container > #sidebar{
@@ -49,12 +62,14 @@
 .profile-photo{
     width: 100px;
     height: 100px;
+    margin-bottom: 12px;
 }
 
 .account{
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+    padding-top: 40px;
     border: 1px solid pink;
     align-items: center; /*가운데 정렬*/
     padding-bottom: 15px;
@@ -65,17 +80,32 @@
     align-items: center;
 }
 
+.nav-content > div > svg{
+    margin-left: 15px;
+    /* border: 1px solid brown; */
+}
+
 .nav-content > div > span{
     font-size: 16px;
-    font-weight: 700;
+    /* font-weight: 700; */
     height: 24px;
-    margin-left: 8px;
+    margin-left: 12px;
+}
+
+.user-menu {
+    margin-top: auto; 
+    margin-bottom: 30px;
+}
+
+.user-menu > div > svg{
+    margin-left: 15px;
 }
 
 .user-menu > div > span{
     font-size: 16px;
-    font-weight: 700;
+    /* font-weight: 700; */
     height: 24px;
-    margin-left: 8px;
+    margin-left: 12px;
+    border: 1px solid yellow;
 }
 </style>
