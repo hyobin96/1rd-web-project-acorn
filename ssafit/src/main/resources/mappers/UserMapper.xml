@@ -30,4 +30,25 @@
 		FROM users
 		WHERE username = #{username} AND is_deleted = FALSE;
 	</select>
+	
+	<!-- username이 같은 행을 불러옵니다. -->
+	<select id="selectByUsername" parameterType="String">
+		SELECT count(*)
+		FROM users
+		WHERE username = #{username};
+	</select>
+	
+	<!-- nickname이 같은 행을 불러옵니다. -->
+	<select id="selectByNickname">
+		SELECT count(*)
+		FROM users
+		WHERE nickname = #{nickname};
+	</select>
+	
+	<!-- email이 같은 행을 불러옵니다. -->
+	<select id="selectByEmail">
+		SELECT count(*)
+		FROM users
+		WHERE email = #{email};
+	</select>
 </mapper>

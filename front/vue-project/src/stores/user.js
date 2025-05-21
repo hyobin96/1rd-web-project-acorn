@@ -24,6 +24,7 @@ export const useUserStores = defineStore('user-stores', () => {
             const {data} = response
             userId.value = data.userId
             role.value = data.role
+            message.value = ''
         }).catch(err => {
             message.value = err.response.data.message
         })
@@ -91,5 +92,5 @@ export const useUserStores = defineStore('user-stores', () => {
         return null
     } 
 
-    return { userId, username, role, login, message, }
-})
+    return { userId, username, role, login, message, validateId, validatePassword, validateNickname, validateEmail, }
+}, {persist: true})

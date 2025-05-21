@@ -23,4 +23,10 @@ public interface UserDao {
 	 * @return username, 암호화된 password, role을 담은 User dto를 반환
 	 */
 	Optional<User> selectUser(LoginRequest request);
+
+	int selectByUsername(String username);
+
+	int selectByNickname(String nickname);
+
+	int selectByEmail(String email);
 }
