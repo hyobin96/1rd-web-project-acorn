@@ -44,5 +44,29 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteUserPermanently(int id) {
 		return userDao.deleteUserById(id) == 1;
 	}
+	
+	/**
+	 * username 중복검사
+	 */
+	@Override
+    public boolean existsByUsername(String username) {
+        return userDao.selectByUsername(username) == 0;
+    }
+
+	/**
+	 * nickname 중복검사
+	 */
+	@Override
+    public boolean existsByNickname(String nickname) {
+        return userDao.selectByNickname(nickname) == 0;
+    }
+
+	/**
+	 * email 중복검사
+	 */
+	@Override
+    public boolean existsByEmail(String email) {
+        return userDao.selectByEmail(email) == 0;
+    }
 
 }
