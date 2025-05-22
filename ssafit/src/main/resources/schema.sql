@@ -10,8 +10,8 @@ CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(100),
-    nickname VARCHAR(50),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    nickname VARCHAR(50) NOT NULL UNIQUE,
     is_admin BOOLEAN DEFAULT FALSE, 
     is_deleted BOOLEAN DEFAULT FALSE, -- 탈퇴 회원 관리용
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -36,6 +36,7 @@ CREATE TABLE playlist_items (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     playlist_id BIGINT NOT NULL,
     video_id VARCHAR(20) NOT NULL, -- 동영상의 고유 식별자
+    thumbnails VARCHAR(100) NOT NULL,
     memo TEXT, 
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE
 );
