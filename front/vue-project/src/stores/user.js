@@ -13,7 +13,7 @@ export const useUserStores = defineStore('user-stores', () => {
 
 
     const login = async (password) => {
-        await axios.post(
+        const { data, status } = await axios.post(
             `${API_URL}/login`,
             {
                 "username": username.value,
@@ -22,16 +22,16 @@ export const useUserStores = defineStore('user-stores', () => {
             {
                 withCredentials: true
             },
-        ).then(response => {
-            const { data } = response
+        )
+
+        if (status == 200){
             userId.value = data.userId
             role.value = data.role
             message.value = ''
-        }).catch(err => {
-            // 에러메시지 출력
-            message.value = err.response.data.message
-        })
-
+        }
+        else{
+            message.value = data.message
+        }
         return message.value
     }
 

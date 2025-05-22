@@ -17,9 +17,9 @@ public interface PlaylistItemService {
     
     /**
      * item을 playlist_items 테이블에 추가한다.
-     * @param item
+     * @param items
      */
-    void addItem(PlaylistItem item);
+    void addItem(List<PlaylistItem> items);
     
     /**
      * id가 일치하는 item을 삭제한다.

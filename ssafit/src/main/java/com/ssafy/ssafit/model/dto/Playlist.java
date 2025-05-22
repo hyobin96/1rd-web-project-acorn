@@ -2,7 +2,7 @@ package com.ssafy.ssafit.model.dto;
 
 public class Playlist {
 	private int id;
-	private int userId;
+	private int userId; //user의 id
 	private String title;
 	private String startDate;
 	private String endDate;

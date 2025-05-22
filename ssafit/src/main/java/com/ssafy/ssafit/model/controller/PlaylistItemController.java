@@ -33,12 +33,12 @@ public class PlaylistItemController {
 
     /**
      * item을 playlist_items 테이블에 추가합니다.
-     * @param item
+     * @param items
      * @return 201 코드
      */
     @PostMapping
-    public ResponseEntity<?> addItem(@RequestBody PlaylistItem item) {
-        service.addItem(item);
+    public ResponseEntity<?> addItem(@RequestBody List<PlaylistItem> items) {
+        service.addItem(items);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
