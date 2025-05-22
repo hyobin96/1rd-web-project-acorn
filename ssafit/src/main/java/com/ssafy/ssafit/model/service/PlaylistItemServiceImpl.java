@@ -29,8 +29,8 @@ public class PlaylistItemServiceImpl implements PlaylistItemService {
      * item을 playlist_items 테이블에 추가한다.
      * 만약 추가가 실패한다면 {@link PlaylistItemNotInsertedException}를 던진다.
      */
-    public void addItem(PlaylistItem item) {
-        if (dao.insert(item) == 0) {
+    public void addItem(List<PlaylistItem> items) {
+        if (dao.insert(items) == 0) {
             throw new PlaylistItemNotInsertedException("플레이리스트 아이템 추가 실패");
         }
     }

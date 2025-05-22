@@ -9,7 +9,7 @@
   	</delete>
   	
   	<!-- 새로운 playlist를 삽입한다. -->
-  	<insert id="insertPlaylist" parameterType="Playlist" useGeneratedKeys="true">
+  	<insert id="insertPlaylist" parameterType="Playlist" useGeneratedKeys="true" keyProperty="id">
   		INSERT INTO playlists (user_id, title)
   		VALUES (#{userId}, #{title});
   	</insert>
