@@ -18,10 +18,10 @@ public interface PlaylistItemDao {
     
     /**
      * playlist-items에 item을 삽입합니다.
-     * @param item
+     * @param items
      * @return 삽입한 행의 개수를 반환합니다.
      */
-    int insert(PlaylistItem item);
+    int insert(List<PlaylistItem> items);
     
     /**
      * playlist-items에서 id가 일치하는 item을 삭제합니다.
