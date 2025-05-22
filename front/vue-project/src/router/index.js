@@ -1,4 +1,6 @@
+import Sidebar from '@/components/Sidebar.vue'
 import CreatePlaylistView from '@/views/CreatePlaylistView.vue'
+import MainView from '@/views/MainView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -25,6 +27,18 @@ const router = createRouter({
       path: '/create-playlist',
       name: 'CreatePlayList',
       component: CreatePlaylistView,
+    },
+    {
+      path: '/main',
+      name: 'Main',
+      component: MainView,
+      children: [
+        {
+          path: '',
+          name: 'sidebar',
+          component: Sidebar
+        }
+      ]
     }
   ],
 })
