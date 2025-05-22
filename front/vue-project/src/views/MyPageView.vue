@@ -5,6 +5,13 @@
                 <div class="profile-photo-wrap">
                     <img class="profile-photo" :src="imgSrc" alt="프로필 이미지" />
                     <span class="nickname-on-photo">y</span>
+                    <div class="change-profile-photo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="15" height="15">
+                            <path
+                                fill="green"
+                                d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
+                        </svg>
+                    </div>
                 </div>
                 <div class="delete-profile-photo">
                     <span class="delete-profile-photo-text" @click="handleDeleteProfilePhoto">
@@ -158,12 +165,30 @@ function handleDeleteProfilePhoto() {
     gap: 4px;
 }
 
-button{
+button {
     width: 400px;
     height: 44px;
     margin-left: 50px;
     margin-right: 50px;
     border-radius: 4px;
     border: none;
+}
+
+/* 프사 변경 */
+.change-profile-photo {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: rgb(227, 226, 226);
+    border-radius: 50%;
+    right: 0;
+    bottom: 0;
+}
+
+.change-profile-photo svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>
