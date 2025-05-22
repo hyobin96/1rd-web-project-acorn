@@ -111,3 +111,5 @@ CREATE TABLE shopping_posts (
     is_cash_only BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+

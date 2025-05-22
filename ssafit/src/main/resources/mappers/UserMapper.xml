@@ -11,6 +11,9 @@
 		VALUES (#{username}, #{password}, #{email}, #{nickname});
 	</insert>
 
+	<!-- 회원 정보를 수정합니다. -->
+
+
 	<!-- 회원을 소프트삭제합니다. -->
 	<update id="updateIsDeleted" parameterType="int">
 		UPDATE users

@@ -29,12 +29,13 @@ public class User {
 	private boolean isDeleted;
 	private String createdAt;
 	private String updatedAt;
+	private String profileImage; // 프로필 이미지 파일명 또는 경로
 
 	public User() {
 	}
 
 	public User(Long id, String username, String password, String email, String nickname, boolean isAdmin,
-			boolean isDeleted, String createdAt, String updatedAt) {
+			boolean isDeleted, String createdAt, String updatedAt, String profileImage) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -45,6 +46,7 @@ public class User {
 		this.isDeleted = isDeleted;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+	    this.profileImage = profileImage;
 	}
 
 	public Long getId() {
@@ -118,12 +120,20 @@ public class User {
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	public String getProfileImage() {
+	    return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+	    this.profileImage = profileImage;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", nickname=" + nickname + ", isAdmin=" + isAdmin + ", isDeleted=" + isDeleted + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + "]";
+				+ createdAt + ", updatedAt=" + updatedAt + ", profileImage=" + profileImage + "]";
 	}
 	
 	
