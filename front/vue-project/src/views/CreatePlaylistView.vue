@@ -20,6 +20,7 @@ import DoneButton from '@/components/DoneButton.vue'
 <style scoped>
 .container {
   background-color: #f8f8f8;
+  width: 640px;
   height: 100vh;
   display: flex;
   justify-content: center;
