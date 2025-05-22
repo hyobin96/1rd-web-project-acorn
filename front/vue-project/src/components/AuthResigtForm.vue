@@ -5,7 +5,7 @@
         <form @submit.prevent="regist">
             <div class="d-grid col-8 mx-auto gap-2">
                 <input class="form-control form-control-lg" type="text" placeholder="아이디" v-model="form.username"
-                    @blur="async () => await handlerUsername()" />
+                    @blur="handlerUsername" />
                 <span>{{ errors.username }}</span>
 
                 <input class="form-control form-control-lg" type="password" placeholder="비밀번호" v-model="form.password"
@@ -17,11 +17,11 @@
                 <span>{{ errors.confirmPassword }}</span>
 
                 <input class="form-control form-control-lg" type="text" placeholder="닉네임" v-model="form.nickname"
-                    @blur="async () => await handlerNickname()" />
+                    @blur="handlerNickname()" />
                 <span>{{ errors.nickname }}</span>
 
                 <input class="form-control form-control-lg" type="email" placeholder="이메일" v-model="form.email"
-                    @blur="async () => await handlerEmail()" />
+                    @blur="handlerEmail()" />
                 <span>{{ errors.email }}</span>
             </div>
             <br>
