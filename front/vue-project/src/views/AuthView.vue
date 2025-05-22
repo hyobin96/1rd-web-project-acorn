@@ -1,7 +1,6 @@
 <template>
     <div class="d-flex min-vh-100 align-items-center">
         <div class="container text-center p-4 border rounded shadow" style="max-width: 400px;">
-            <RouterLink :to="{ name: 'login' }" />
             <RouterView />
         </div>
     </div>

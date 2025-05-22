@@ -19,7 +19,7 @@
             <button class="btn btn-outline-info btn-sm">비밀번호 찾기</button>
         </div>
         <br>
-        <button class="btn btn-primary" @click="async () => await store.login(password)">로그인</button>
+        <button class="btn btn-primary" @click="async () => await handlerLogin()">로그인</button>
         <span>{{ store.message }}</span>
     </div>
 </template>
@@ -38,6 +38,15 @@ const isPwFocus = ref(false)
 
 const id = ref('');
 const pw = ref('');
+
+const handlerLogin = async () => {
+    const message = await store.login(password.value)
+    console.log(message)
+    if (!message){
+    console.log(message)
+        router.push({name: 'sidebar'})
+    }
+}
 
 </script>
 

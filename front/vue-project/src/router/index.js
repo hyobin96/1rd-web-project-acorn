@@ -8,11 +8,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/login',
       name: 'auth',
       component: () => import('../views/AuthView.vue'),
       children:[
         {
-          path: '',
+          path: 'login',
           name: 'login',
           component: () => import('../components/AuthLoginForm.vue'),
         },
@@ -30,14 +31,14 @@ const router = createRouter({
     },
     {
       path: '/main',
-      name: 'Main',
+      name: 'main',
       component: MainView,
       children: [
         {
-          path: '',
+          path: 'side',
           name: 'sidebar',
           component: Sidebar
-        }
+        },
       ]
     }
   ],
