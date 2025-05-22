@@ -1,10 +1,40 @@
 import { defineStore } from "pinia";
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+const router = useRouter()
+const API_URL = 'http://localhost:8080/api/auth'
 
 export const useUserStores = defineStore('user-stores', () => {
-    const userId = ref('')
+    const userId = ref(-1)
     const username = ref('')
     const role = ref('')
+    const message = ref('')
 
-    return {userId, username, role}
-})
+    const login = async (password) => {
+        await axios.post(
+            `${API_URL}/login`,
+            {
+                "username": username.value,
+                password,
+            },
+            {
+                withCredentials: true
+            },
+        ).then(response => {
+            const { data } = response
+            userId.value = data.userId
+            role.value = data.role
+            message.value = ''
+            // main화면으로 이동
+            // router.push({name: 'main'})
+        }).catch(err => {
+            // 에러메시지 출력
+            message.value = err.response.data.message
+        })
+    }
+
+    return { userId, username, role, login, message, }
+}, { persist: true })
+// 저장 유지

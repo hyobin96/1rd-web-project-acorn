@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\workspace\Project\ssafit-pjt\ssafit"/>
 			<item value="C:\SSAFY\workspaces\ssafit-pjt\ssafit"/>
 		</list>
 		<list key="projectNameTemplate">

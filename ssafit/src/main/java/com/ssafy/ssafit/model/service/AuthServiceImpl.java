@@ -43,14 +43,14 @@ public class AuthServiceImpl implements AuthService {
 
 	    // 유저가 존재하지 않는다면 UserNotFoundException 발생
 	    if (optUser.isEmpty()) {
-	        throw new UserNotFoundException("존재하지 않는 사용자입니다.");
+	        throw new UserNotFoundException("아이디 또는 비밀번호가 일치하지 않습니다.");
 	    }
 
 	    User user = optUser.get();
 
 	    // 비밀번호가 일치하지 않는다면 InvalidPasswordException 발생
 	    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-	        throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
+	        throw new InvalidPasswordException("아이디 또는 비밀번호가 일치하지 않습니다.");
 	    }
 
 	    String role = user.isAdmin() ? "ADMIN" : "USER";
