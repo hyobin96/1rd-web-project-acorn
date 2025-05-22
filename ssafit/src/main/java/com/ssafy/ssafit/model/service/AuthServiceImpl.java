@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public ResponseEntity login(LoginRequest request) {
-	    Optional<User> optUser = userDao.selectUser(request);
+	    Optional<User> optUser = userDao.selectUser(request.getUsername());
 
 	    // 유저가 존재하지 않는다면 UserNotFoundException 발생
 	    if (optUser.isEmpty()) {
