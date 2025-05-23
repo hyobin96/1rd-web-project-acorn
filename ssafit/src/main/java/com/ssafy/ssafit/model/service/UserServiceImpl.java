@@ -89,7 +89,11 @@ public class UserServiceImpl implements UserService {
 		if(user.getNickname() != null) existingUser.setNickname(user.getNickname());
 		if(user.getGender() != null) existingUser.setGender(user.getGender());
 		if(user.getProfileImage() != null) existingUser.setProfileImage(user.getProfileImage());
-		if(user.getBirthDate() != null) existingUser.setBirthDate(user.getBirthDate());
+		if (user.getBirthDate() != null && !user.getBirthDate().trim().isEmpty()) {
+		    existingUser.setBirthDate(user.getBirthDate());
+		} else {
+		    existingUser.setBirthDate(null);
+		}
 		
 		return userDao.updateUser(existingUser) == 1;
 	}
