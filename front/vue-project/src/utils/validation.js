@@ -42,7 +42,10 @@ export const validateUsername = async (username) => {
 
     } catch (err) {
         //에러 있을 경우 중복된 아이디입니다. 반환
+        console.log(err);
+        
         message = err.response.data.message
+        
     }
 
     return { message, success }

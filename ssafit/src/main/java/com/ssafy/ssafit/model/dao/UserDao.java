@@ -32,4 +32,7 @@ public interface UserDao {
 	int selectByNickname(String nickname);
 
 	int selectByEmail(String email);
+
+	// id(username)으로 회원 조회
+	User findByUsername(String username);
 }

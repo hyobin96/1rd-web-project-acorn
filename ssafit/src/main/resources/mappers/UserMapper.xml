@@ -58,4 +58,11 @@
 		FROM users
 		WHERE email = #{email};
 	</select>
+	
+	<!-- username이 일치하는 회원 정보를 조회합니다. -->
+	<select id="findByUsername" parameterType="String" resultType="User">
+		SELECT *
+		FROM users
+		WHERE username = #{username};
+	</select>
 </mapper>
