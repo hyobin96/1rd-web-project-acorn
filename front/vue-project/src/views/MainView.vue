@@ -45,7 +45,8 @@ const playlistStore = usePlaylistStores()
 
 onMounted(() => {
     playlistStore.getPlaylist()
-    console.log(playlistStore.playlistArr)  
+    console.log(playlistStore.playlistArr)
+    
 })
 
 </script>

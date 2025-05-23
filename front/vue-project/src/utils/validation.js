@@ -31,7 +31,7 @@ export const validateUsername = async (username) => {
     let success = false
     try {
         const res = await axios.get(
-            'check-username',
+            'users/check-username',
             {
                 params: { username }
             }
@@ -114,7 +114,7 @@ export const validateNickname = async (nickname) => {
     let success = false
     try {
         const res = await axios.get(
-            'check-nickname',
+            'users/check-nickname',
             {
                 params: { nickname }
             })
@@ -153,7 +153,7 @@ export const validateEmail = async (email) => {
     let success = false
     try {
         const res = await axios.get(
-            'check-email',
+            'users/check-email',
             {
                 params: { email }
             })
