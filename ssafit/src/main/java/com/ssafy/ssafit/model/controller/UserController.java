@@ -4,14 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,11 +65,24 @@ public class UserController {
 		
 		return ResponseEntity.internalServerError().body(Map.of("error", "아이디가 중복입니다."));
 	}
+	
+    
+    /**
+     * 회원정보 수정
+     * @param user
+     * @return 성공 시 200, 실패 시 500
+     */
+     @PatchMapping("/me")
+     public ResponseEntity<?> updateMyInfo(@RequestBody User user){
+    	 String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(); //유저 네임
+    	 System.out.println(username);
+    	 return null;
+     }
 
 	/**
 	 * 회원탈퇴, 소프트 삭제
 	 * 
-	 * @param userId
+	 * @param user
 	 * @return 성공 시 200, 실패 시 500
 	 */
 	@PutMapping("{userId}")
@@ -121,5 +139,6 @@ public class UserController {
         		? ResponseEntity.ok(Map.of("message", "사용 가능한 이메일입니다."))
         		: ResponseEntity.badRequest().body(Map.of("message", "중복된 이메일입니다."));
     }
+
 
 }

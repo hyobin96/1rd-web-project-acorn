@@ -13,9 +13,12 @@ public interface UserDao {
 	 */
 	int insertUser(User user);
 	
+	int updateUser(User user); //회원정보 수정
+	
 	int updateIsDeleted(int id);
 	
 	int deleteUserById(int id);
+	
 	
 	/**
 	 * 
