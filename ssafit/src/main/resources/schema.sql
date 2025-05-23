@@ -112,4 +112,11 @@ CREATE TABLE shopping_posts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+use ssafit;
 
+ALTER TABLE users
+ADD COLUMN profile_image VARCHAR(500) COMMENT '유저 프로필 이미지 경로 또는 파일명';
+
+ALTER TABLE users
+ADD COLUMN gender ENUM('M', 'F', 'O') DEFAULT NULL COMMENT '성별(M:남성, F:여성, O:선택하지 않음)',
+ADD COLUMN birth_date DATE DEFAULT NULL COMMENT '생년월일';

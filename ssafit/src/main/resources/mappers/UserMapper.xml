@@ -12,7 +12,11 @@
 	</insert>
 
 	<!-- 회원 정보를 수정합니다. -->
-
+	<update id="updateUser" parameterType="User">
+		UPDATE users
+		SET profile_image = #{profileImage}, nickname = #{nickname}, gender = #{gender}, birth_date = #{birthDate}, updated_at = NOW()
+		WHERE id = #{id};
+	</update>
 
 	<!-- 회원을 소프트삭제합니다. -->
 	<update id="updateIsDeleted" parameterType="int">

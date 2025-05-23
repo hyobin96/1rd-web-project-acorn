@@ -28,14 +28,31 @@ public class User {
 	private boolean isAdmin;
 	private boolean isDeleted;
 	private String createdAt;
-	private String updatedAt;
+	private String updatedAt; 
 	private String profileImage; // 프로필 이미지 파일명 또는 경로
+	private String gender;    // 성별
+	private String birthDate; // 생년월일
 
 	public User() {
 	}
-
+	
+	//회원가입용 생성자
 	public User(Long id, String username, String password, String email, String nickname, boolean isAdmin,
-			boolean isDeleted, String createdAt, String updatedAt, String profileImage) {
+			boolean isDeleted, String createdAt) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.nickname = nickname;
+		this.isAdmin = isAdmin;
+		this.isDeleted = isDeleted;
+		this.createdAt = createdAt;
+	}
+	
+	//전체 생성자
+	public User(Long id, String username, String password, String email, String nickname, boolean isAdmin,
+			boolean isDeleted, String createdAt, String updatedAt, String profileImage, String gender, String birthDate) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -46,7 +63,9 @@ public class User {
 		this.isDeleted = isDeleted;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-	    this.profileImage = profileImage;
+		this.profileImage =profileImage;
+		this.gender = gender;
+		this.birthDate = birthDate;
 	}
 
 	public Long getId() {
@@ -128,14 +147,27 @@ public class User {
 	public void setProfileImage(String profileImage) {
 	    this.profileImage = profileImage;
 	}
+	
+	public String getGender() {
+	    return gender;
+	}
+	public void setGender(String gender) {
+	    this.gender = gender;
+	}
+	public String getBirthDate() {
+	    return birthDate;
+	}
+	public void setBirthDate(String birthDate) {
+	    this.birthDate = birthDate;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", nickname=" + nickname + ", isAdmin=" + isAdmin + ", isDeleted=" + isDeleted + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + ", profileImage=" + profileImage + "]";
+				+ createdAt + ", updatedAt=" + updatedAt + ", profileImage=" + profileImage + ", gender=" + gender
+				+ ", birthDate=" + birthDate + "]";
 	}
-	
-	
+
 
 }
