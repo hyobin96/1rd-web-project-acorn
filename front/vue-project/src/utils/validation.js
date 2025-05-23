@@ -1,6 +1,5 @@
 // 회원가입 시 입력들의 유효성 검사를 위한 유틸 js
-import axios from 'axios'
-const API_URL = 'http://localhost:8080/api/users'
+import axios from '@/api/axios'
 // 아이디 유효성 검사
 export const validateUsername = async (username) => {
     if (!username) {
@@ -29,22 +28,24 @@ export const validateUsername = async (username) => {
     }
     //중복 검사
     let message = ''
-    await axios.get(
-        `${API_URL}/check-username`,
-        {
-            params: { username }
-        }).then(response => {
-            console.dir(response)
-            message = response.data.message
-        }).catch(err => {
-            console.dir(err)
-            message = err.response.data.message
-        })
-    //에러 없을 경우 사용 가능한 아이디입니다가 반환
-    return {
-        message,
-        success: true,
+    let success = false
+    try {
+        const res = await axios.get(
+            'check-username',
+            {
+                params: { username }
+            }
+        )
+        //에러 없을 경우 사용 가능한 아이디입니다가 반환
+        message = res.data.message
+        success = true
+
+    } catch (err) {
+        //에러 있을 경우 중복된 아이디입니다. 반환
+        message = err.response.data.message
     }
+
+    return { message, success }
 }
 
 // 패스워드 유효성 검사
@@ -110,22 +111,21 @@ export const validateNickname = async (nickname) => {
     }
     //중복 검사
     let message = ''
-    await axios.get(
-        `${API_URL}/check-nickname`,
-        {
-            params: { nickname }
-        }).then(response => {
-            console.dir(response)
-            message = response.data.message
-        }).catch(err => {
-            console.dir(err)
-            message = err.response.data.message
-        })
-    //에러 없을 경우 사용 가능한 닉네임입니다가 반환
-    return {
-        message,
-        success: true,
+    let success = false
+    try {
+        const res = await axios.get(
+            'check-nickname',
+            {
+                params: { nickname }
+            })
+        message = res.data.message
+        success = true
+    } catch (err) {
+        message = err.response.data.message
     }
+
+    //에러 없을 경우 사용 가능한 닉네임입니다가 반환
+    return { message, success }
 }
 
 //이메일 유효성 검사
@@ -150,20 +150,18 @@ export const validateEmail = async (email) => {
     }
     //중복 검사
     let message = ''
-    await axios.get(
-        `${API_URL}/check-email`,
-        {
-            params: { email }
-        }).then(response => {
-            console.dir(response)
-            message = response.data.message
-        }).catch(err => {
-            console.dir(err)
-            message = err.response.data.message
-        })
-    //에러 없을 경우 사용 가능한 이메일입니다가 반환
-    return {
-        message,
-        success: true,
+    let success = false
+    try {
+        const res = await axios.get(
+            'check-email',
+            {
+                params: { email }
+            })
+        message = res.data.message
+        success = true
+    } catch (err) {
+        message = err.response.data.message
     }
+    //에러 없을 경우 사용 가능한 이메일입니다가 반환
+    return { message, success, }
 } 

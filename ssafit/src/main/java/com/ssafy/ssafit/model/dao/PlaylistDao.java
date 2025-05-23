@@ -2,6 +2,7 @@ package com.ssafy.ssafit.model.dao;
 
 import java.util.List;
 
+import com.ssafy.ssafit.model.dto.LoadingPlaylist;
 import com.ssafy.ssafit.model.dto.Playlist;
 
 /**
@@ -14,7 +15,7 @@ public interface PlaylistDao {
 	 * @param id
 	 * @return 변경된 행의 개수
 	 */
-	int deletePlaylistById(int id);
+	int deletePlaylistById(long id);
 	
 	/**
 	 * playList를 playlists에 삽입
@@ -24,9 +25,11 @@ public interface PlaylistDao {
 	int insertPlaylist(Playlist playList);
 	
 	/**
-	 * id를 받아서 해당하는 playlist를 선택해서 dto에 담아서 반환
+	 * id를 받아서 해당하는 playlist, item을 선택해서 dto에 담아서 반환
+	 * 유저의 플레이리스트와 아이템들을 로딩하는데 사용
 	 * @param id
-	 * @return PlayList가 들어간 Optional 객체를 반환
+	 * @return 
 	 */
-	List<Playlist> selectPlaylist(int id);
+	List<LoadingPlaylist> selectPlaylist(long id);
+
 }

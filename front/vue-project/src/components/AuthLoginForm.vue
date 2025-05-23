@@ -19,8 +19,8 @@
             <button class="btn btn-outline-info btn-sm">비밀번호 찾기</button>
         </div>
         <br>
-        <button class="btn btn-primary" @click="async () => await handlerLogin()">로그인</button>
-        <span>{{ store.message }}</span>
+        <span>{{ message }}</span>
+        <button class="btn btn-primary" @click="store.login(password).then(res => message = res)">로그인</button>
     </div>
 </template>
 
@@ -31,6 +31,7 @@ import { useRouter } from 'vue-router'
 
 const store = useUserStores()
 const password = ref('')
+const message = ref('')
 const router = useRouter()
 
 const isIdFocus = ref(false)
@@ -38,15 +39,6 @@ const isPwFocus = ref(false)
 
 const id = ref('');
 const pw = ref('');
-
-const handlerLogin = async () => {
-    const message = await store.login(password.value)
-    console.log(message)
-    if (!message){
-    console.log(message)
-        router.push({name: 'sidebar'})
-    }
-}
 
 </script>
 

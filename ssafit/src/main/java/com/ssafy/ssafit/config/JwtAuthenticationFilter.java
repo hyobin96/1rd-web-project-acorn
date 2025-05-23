@@ -67,6 +67,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     	    System.out.println("검증 성공");
     	    SecurityContextHolder.getContext().setAuthentication(authentication);
+    	    System.out.println(authentication.getPrincipal().toString());
+    	    System.out.println(SecurityContextHolder.getContext());
     	}
 
         // 다음 필터로 진행
