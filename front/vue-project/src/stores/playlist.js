@@ -1,5 +1,6 @@
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import axios from '@/api/axios'
+import axios2 from 'axios'
 import { defineStore } from 'pinia';
 import { useUserStores } from './user';
 
@@ -12,7 +13,13 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
     const link = ref('')
 
     const playlistArr = ref([])
-    
+    const playlist1 = ref({})
+    const playlist2 = ref({})
+    const playlist3 = ref({})
+
+    const initialState = []
+    const mainPlaylist = reactive([])
+
     const playlistId = computed(() => {
         const index = link.value.indexOf('=')
         return link.value.substring(index + 1)
@@ -22,7 +29,7 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
     const savePlaylist = async () => {
         try {
             //유튜브로 API호출해서 playlistItems 가져오기
-            const { data, status } = await axios.get(youtube_api,
+            const { data, status } = await axios2.get(youtube_api,
                 {
                     params: {
                         part: 'snippet',
@@ -30,8 +37,9 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
                         playlistId: playlistId.value,
                         key: YOUTUBE_API_KEY,
                     },
-                }
+                },
             )
+            console.log("youtube", data)
             //플레이리스트 생성
             const res = await axios.post('playlist',
                 {
@@ -46,7 +54,10 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
             for (let i = 0; i < items.length; i++) {
                 let playlistId = id
                 let videoId = items[i].snippet.resourceId.videoId
-                let thumbnails = items[i].snippet.thumbnails.default.url
+                let thumbs = items[i].snippet.thumbnails;
+                let thumbnails = thumbs.high?.url ||
+                    thumbs.medium?.url ||
+                    thumbs.default?.url || 'https://via.placeholder.com/320x180?text=No+Thumbnail'
                 arr.push({ playlistId, videoId, thumbnails })
             }
             try {
@@ -57,16 +68,29 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
                 alert("플레이리스트 삽입 실패")
                 console.log(err)
             }
+            alert("플레이리스트 등록 성공")
 
         } catch (err) {
             alert("유튜브 api 요청 실패")
             console.log(err)
         }
+
     }
 
-    const getPlaylist = () => {
-        axios.get('playlist',).then(res => console.log(res))
+    //플레이리스트 로딩
+    const getPlaylist = async () => {
+        mainPlaylist.splice(0, mainPlaylist.length, ...initialState)
+        try {
+            const res = await axios.get('playlist',)
+            playlistArr.value = res.data
+            let i = 0
+            for(const key in playlistArr.value){
+                mainPlaylist.push(playlistArr.value[key])
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
-    return { title, link, playlistId, savePlaylist, getPlaylist, playlistArr }
+    return { title, link, playlistId, savePlaylist, getPlaylist, playlistArr, playlist1, playlist2, playlist3, mainPlaylist }
 })

@@ -10,9 +10,7 @@
         </div>
         <main>
             <div class="favorite-playlist-section">
-                <div class="favorite-playlist"><span class="favorite-playlist-name">사용자 설정 영상 제목1</span></div>
-                <div class="favorite-playlist"><span class="favorite-playlist-name">사용자 설정 영상 제목1</span></div>
-                <div class="favorite-playlist"><span class="favorite-playlist-name">사용자 설정 영상 제목1</span></div>
+                <MainPlaylistItem v-for="playlist in playlistStore.mainPlaylist.slice(0, 3)" :playlist="playlist" />
             </div>
             <div class="playlist-list">
                 <div class="playlist-list-header">
@@ -26,11 +24,7 @@
                     </div>
                 </div>
                 <div class="content">
-                    <div id="thumbnail"><a href="/watch?v=rlh76p4T6qw&list=WL&index=2"
-                            title="𝗽𝗹𝗮𝘆𝗹𝗶𝘀𝘁 이런날 딱이잖아, 고개 끄덕여지는 적당한 리듬의 플레이리스트🎧|R&B Pop| 2시간"><img
-                                src="https://i.ytimg.com/vi/rlh76p4T6qw/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLAvireZUSZi88uqAprb2NOLfQ3xSQ"
-                                class="playlist-thumbnail"></a></div>
-                    <div id="meta"><span class="playlist-title">사용자 설정 플리 제목</span></div>
+                    <PlaylistDropdownItem v-for="playlist in playlistStore.mainPlaylist" :playlist="playlist" />
                 </div>
             </div>
         </main>
@@ -38,15 +32,16 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { usePlaylistStores } from '@/stores/playlist';
+import MainPlaylistItem from '@/components/MainPlaylistItem.vue';
+import PlaylistDropdownItem from '@/components/PlaylistDropdownItem.vue';
 
 const playlistStore = usePlaylistStores()
 
-onMounted(() => {
-    playlistStore.getPlaylist()
-    console.log(playlistStore.playlistArr)
-    
+onMounted(async () => {
+    await playlistStore.getPlaylist()
+    console.log("onMounted", playlistStore.playlistArr)
 })
 
 </script>
@@ -54,7 +49,7 @@ onMounted(() => {
 <style scoped>
 .navbar {
     border: 2px solid yellowgreen;
-    width: 1050px;
+    width: 1262.5px;
     height: 215px;
     margin: 0 auto;
 }
@@ -74,11 +69,9 @@ onMounted(() => {
 }
 
 .favorite-playlist-section {
-    width: 1050px;
-    height: 365.33px;
     border: 1px solid darkblue;
+    width: fit-content;
     margin: 0 auto;
-    display: flex;
 }
 
 .favorite-playlist {
@@ -89,11 +82,11 @@ onMounted(() => {
 }
 
 .playlist-list {
-    width: 1050px;
+    width: 1262.5px;
     border: 1px solid red;
     margin: 0 auto;
-    /* padding-top: 40px; */
-    /* padding-bottom: 40px; */
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 .playlist-list-header {
@@ -114,12 +107,14 @@ span.playlist-title {
 
 .playlist-thumbnail {
     width: 240px;
+    height: 50px;
 }
 
 .content {
     padding-top: 8px;
     padding-bottom: 8px;
-    display: flex;
+    overflow-y: auto;
+    height: 200px;
 }
 
 #thumbnail {
@@ -131,5 +126,13 @@ span.playlist-title {
     line-height: 22px;
     /* font-weight: 700; */
     height: 44px;
+}
+
+.favorite-playlist img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    /* inline 공간 제거 */
 }
 </style>
