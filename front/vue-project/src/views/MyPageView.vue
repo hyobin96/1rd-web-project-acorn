@@ -76,19 +76,28 @@ const email = ref("")
 
 const selectedProfileFile = ref(null);
 
-//마운트 시 유저 정보 불러오기
-onMounted(async () => {
+
+const BASE_URL = "https://localhost:9443";
+
+async function loadUserInfo() {
     try {
         const res = await api.get("/users/me");
-        imgSrc.value = res.data.profileImage || defaultImg;
+        imgSrc.value = res.data.profileImage
+            ? `${BASE_URL}${res.data.profileImage}?t=${Date.now()}`
+            : defaultImg;
+
         nickname.value = res.data.nickname || "";
         email.value = res.data.email || "";
         gender.value = res.data.gender || "";
         birthDate.value = res.data.birthDate || "";
     } catch (err) {
-        console.log("에러 메시지:", err.response.data);
+        console.log("에러 메시지:", err.response?.data || err);
     }
-})
+}
+
+onMounted(() => {
+    loadUserInfo();
+});
 
 function triggerProfileInput() {
     console.log("트리거 함수 실행됨", profileInput.value);
@@ -98,7 +107,7 @@ function triggerProfileInput() {
 function handleProfileImageChange(event) {
     const file = event.target.files[0];
     if (!file) return;
-    imgSrc.value = URL.createObjectURL(file); 
+    imgSrc.value = URL.createObjectURL(file);
     selectedProfileFile.value = file;
 }
 
@@ -106,7 +115,7 @@ async function handleSubmit(e) {
     e.preventDefault();
     try {
 
-        if(selectedProfileFile.value){
+        if (selectedProfileFile.value) {
             const formData = new FormData();
             formData.append("file", selectedProfileFile.value);
 
@@ -114,10 +123,9 @@ async function handleSubmit(e) {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             console.log(imgSrc.value);
-            
-            imgSrc.value = res.data.profileImageUrl; 
-            console.log(imgSrc.value);
-            
+
+            await loadUserInfo();
+
         }
 
         await api.patch("/users/me", {
@@ -126,7 +134,7 @@ async function handleSubmit(e) {
         });
         alert("성별/생년월일 정보 수정 완료~!")
     } catch (err) {
-        console.log("에러 메시지: ", err);
+        console.log("에러 메시지: ", err.response.data);
         alert("성별/생년월일 정보 수정 실패~!")
     }
 }
