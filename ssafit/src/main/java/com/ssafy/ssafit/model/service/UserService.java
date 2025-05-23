@@ -1,5 +1,7 @@
 package com.ssafy.ssafit.model.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ssafy.ssafit.model.dto.LoginRequest;
 import com.ssafy.ssafit.model.dto.User;
 
@@ -45,4 +47,21 @@ public interface UserService {
 	 * @return
 	 */
 	boolean existsByEmail(String email);
+
+	/**
+	 * 회원정보 수정
+	 * @param username 
+	 * @param username
+	 * @param user
+	 * @return
+	 */
+	boolean updateUserInfo(String username, User user);
+
+	/**
+	 *회원정보 조회 
+	 */
+	User getMyInfo(String username);
+
+	String updateProfileImage(String username, MultipartFile file);
+
 }

@@ -58,7 +58,7 @@ public class SecurityConfig {
         // 🔹 Vue 개발 서버 주소를 정확히 명시
         config.setAllowedOrigins(List.of("http://localhost:5173"));
 
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // withCredentials: true 와 짝꿍
         config.setMaxAge(3600L);

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.ssafit.model.dto.User;
 import com.ssafy.ssafit.model.service.UserService;
@@ -66,6 +67,13 @@ public class UserController {
 		return ResponseEntity.internalServerError().body(Map.of("error", "아이디가 중복입니다."));
 	}
 	
+    @GetMapping("/me")
+    public ResponseEntity<User> getMyInfo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getMyInfo(username);
+        return ResponseEntity.ok(user);
+    }
+	
     
     /**
      * 회원정보 수정
@@ -74,9 +82,33 @@ public class UserController {
      */
      @PatchMapping("/me")
      public ResponseEntity<?> updateMyInfo(@RequestBody User user){
-    	 String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(); //유저 네임
-    	 System.out.println(username);
-    	 return null;
+    	 //1. 인증된 사용자 정보 추출
+    	 String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    	 
+    	 //2. Service에 업데이트 요청
+    	 boolean isUpdated = userService.updateUserInfo(username, user);
+    	 
+    	 if(isUpdated) {
+    		 return ResponseEntity.ok("회원정보가 수정되었습니다.");
+    	 } else {
+    		 return ResponseEntity.internalServerError().body("회원정보 수정에 실패했습니다.");
+    	 }
+     }
+     
+     /**
+      * 프로필 이미지 저장 
+      */
+     @PostMapping("/me/profile-image")
+     public ResponseEntity<?> uploadProfileImage(@RequestParam("file") MultipartFile file){
+    	 String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    	 
+    	 String profileImageUrl = userService.updateProfileImage(username, file);
+    	 
+    	 if (profileImageUrl != null) {
+    	        return ResponseEntity.ok(Map.of("profileImageUrl", profileImageUrl));
+    	    } else {
+    	        return ResponseEntity.internalServerError().body(Map.of("error", "이미지 업로드 실패"));
+    	    }
      }
 
 	/**

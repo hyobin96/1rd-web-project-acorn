@@ -1,8 +1,14 @@
 package com.ssafy.ssafit.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.ssafit.model.dao.UserDao;
 import com.ssafy.ssafit.model.dto.User;
@@ -15,6 +21,9 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
 	}
+	
+	@Value("${profile.upload.dir:/uploads}")
+    private String uploadDir;
 
 	// 암호화에 사용할 인코더
 	@Autowired
@@ -68,5 +77,72 @@ public class UserServiceImpl implements UserService {
     public boolean existsByEmail(String email) {
         return userDao.selectByEmail(email) == 0;
     }
+
+	/**
+	 * 회원정보 수정 
+	 */
+	@Override
+	public boolean updateUserInfo(String username, User user) {
+		User existingUser = userDao.findByUsername(username);
+		if(existingUser == null) return false;
+		
+		if(user.getNickname() != null) existingUser.setNickname(user.getNickname());
+		if(user.getGender() != null) existingUser.setGender(user.getGender());
+		if(user.getProfileImage() != null) existingUser.setProfileImage(user.getProfileImage());
+		if(user.getBirthDate() != null) existingUser.setBirthDate(user.getBirthDate());
+		
+		return userDao.updateUser(existingUser) == 1;
+	}
+
+	/**
+	 * 회원정보 조회
+	 */
+	@Override
+	public User getMyInfo(String username) {
+		User user = userDao.findByUsername(username);
+		if(user == null) return null;
+		
+		User currentUser = new User();
+		currentUser.setNickname(user.getNickname());
+		currentUser.setEmail(user.getEmail());
+		currentUser.setGender(user.getGender());
+		currentUser.setProfileImage(user.getProfileImage());
+		currentUser.setBirthDate(user.getBirthDate());
+		
+		return currentUser;
+	}
+
+	@Override
+	public String updateProfileImage(String username, MultipartFile file) {
+        User user = userDao.findByUsername(username);
+        if (user == null) return null;
+
+        String originalFilename = file.getOriginalFilename();
+        String ext = "";
+        if (originalFilename != null && originalFilename.contains(".")) {
+            ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+        String savedFileName = UUID.randomUUID().toString() + ext;
+
+        File dir = new File(uploadDir);
+        if (!dir.exists()) dir.mkdirs();
+        
+        File dest = new File(dir, savedFileName);
+        try {
+        	System.out.println("파일 저장 경로: " + dest.getAbsolutePath());
+        	
+            file.transferTo(dest);
+
+            String profileImageUrl = "/uploads/" + savedFileName;
+
+            user.setProfileImage(profileImageUrl);
+            userDao.updateUser(user);
+
+            return profileImageUrl;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+	}
 
 }
