@@ -31,7 +31,7 @@ export const validateUsername = async (username) => {
     let success = false
     try {
         const res = await axios.get(
-            'check-username',
+            'users/check-username',
             {
                 params: { username }
             }
@@ -42,7 +42,10 @@ export const validateUsername = async (username) => {
 
     } catch (err) {
         //에러 있을 경우 중복된 아이디입니다. 반환
+        console.log(err);
+        
         message = err.response.data.message
+        
     }
 
     return { message, success }
@@ -114,7 +117,7 @@ export const validateNickname = async (nickname) => {
     let success = false
     try {
         const res = await axios.get(
-            'check-nickname',
+            'users/check-nickname',
             {
                 params: { nickname }
             })
@@ -153,7 +156,7 @@ export const validateEmail = async (email) => {
     let success = false
     try {
         const res = await axios.get(
-            'check-email',
+            'users/check-email',
             {
                 params: { email }
             })
