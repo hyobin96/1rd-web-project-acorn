@@ -38,7 +38,7 @@
 import { useUserStores } from '@/stores/user';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import axios from '@/api/axios'
 import {
     validateUsername,
     validatePassword,
@@ -114,8 +114,7 @@ const regist = async () => {
     }
     const { confirmPassword, ...payload } = form
     await axios.post(
-        'http://localhost:8080/api/users',
-        form,
+        'users',form,
     ).then(response => {
         alert('회원가입 성공!')
     }).catch(err => {

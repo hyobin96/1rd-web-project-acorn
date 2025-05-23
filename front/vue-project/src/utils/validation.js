@@ -1,6 +1,5 @@
 // 회원가입 시 입력들의 유효성 검사를 위한 유틸 js
-import axios from 'axios'
-const API_URL = 'http://localhost:8080/api/users'
+import axios from '@/api/axios'
 // 아이디 유효성 검사
 export const validateUsername = async (username) => {
     if (!username) {
@@ -32,7 +31,7 @@ export const validateUsername = async (username) => {
     let success = false
     try {
         const res = await axios.get(
-            `${API_URL}/check-username`,
+            'check-username',
             {
                 params: { username }
             }
@@ -115,7 +114,7 @@ export const validateNickname = async (nickname) => {
     let success = false
     try {
         const res = await axios.get(
-            `${API_URL}/check-nickname`,
+            'check-nickname',
             {
                 params: { nickname }
             })
@@ -154,7 +153,7 @@ export const validateEmail = async (email) => {
     let success = false
     try {
         const res = await axios.get(
-            `${API_URL}/check-email`,
+            'check-email',
             {
                 params: { email }
             })

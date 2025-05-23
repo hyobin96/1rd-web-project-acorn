@@ -58,13 +58,16 @@ public class PlaylistServiceImpl implements PlaylistService {
 	 */
 	@Override
 	public Map<Long, List<LoadingPlaylist>> getPlaylist() {
+		System.out.println("getPlaylist service까지는 도착");
 		// 토큰을 등록한 SecurityContext에서 username 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authentication);
+		System.out.println(authentication.getPrincipal());
 		String username = authentication.getPrincipal().toString();
+		System.out.println(username);
 
 		// users 테이블에서 username이 일치하는 user 가져오기
 		User user = userDao.selectUser(username).get();
-
 		// userId가 일치하는 playlist중에서 playlistId가 일치하는 item들을 가져옵니다.
 		List<LoadingPlaylist> playlist = playlistDao.selectPlaylist(user.getId());
 		if (playlist.isEmpty()) {

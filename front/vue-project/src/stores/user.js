@@ -1,11 +1,10 @@
 import { defineStore } from "pinia";
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import axios from '@/api/axios'
 
 
 export const useUserStores = defineStore('user-stores', () => {
-    const API_URL = 'http://localhost:8080/api/auth'
     const router = useRouter()
     const userId = ref(-1)
     const username = ref('')
@@ -15,7 +14,7 @@ export const useUserStores = defineStore('user-stores', () => {
         let message = ''
         try {
             const { data } = await axios.post(
-                `${API_URL}/login`,
+                'auth/login',
                 {
                     "username": username.value,
                     password,
