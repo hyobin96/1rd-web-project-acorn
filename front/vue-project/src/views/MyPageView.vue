@@ -1,14 +1,15 @@
 <template>
-    <form class="account-container">
+    <form class="account-container" @submit="handleSubmit">
         <div class="account-img">
             <div class="account">
                 <div class="profile-photo-wrap">
                     <img class="profile-photo" :src="imgSrc" alt="프로필 이미지" />
+                    <input ref="profileInput" type="file" accept="image/*" style="display: none"
+                        @change="handleProfileImageChange" />
                     <span class="nickname-on-photo">y</span>
-                    <div class="change-profile-photo">
+                    <div class="change-profile-photo" @click="triggerProfileInput">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="15" height="15">
-                            <path
-                                fill="green"
+                            <path fill="green"
                                 d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
                         </svg>
                     </div>
@@ -22,29 +23,29 @@
             <div class="account-info">
                 <div class="nickname">
                     <label>닉네임</label>
-                    <input type="text" />
+                    <input type="text" v-model="nickname" />
                 </div>
                 <div class="email">
                     <label>이메일</label>
-                    <input type="text" value="test@email.com" readonly />
+                    <input type="text" v-model="email" readonly />
                 </div>
                 <div class="gender">
                     <label>성별</label>
                     <div class="gender-options">
                         <label>
-                            <input type="radio" name="gender" value="male" /> 남성
+                            <input type="radio" name="gender" value="male" v-model="gender" /> 남성
                         </label>
                         <label>
-                            <input type="radio" name="gender" value="female" /> 여성
+                            <input type="radio" name="gender" value="female" v-model="gender" /> 여성
                         </label>
                         <label>
-                            <input type="radio" name="gender" value="none" /> 선택하지 않음
+                            <input type="radio" name="gender" value="none" v-model="gender" /> 선택하지 않음
                         </label>
                     </div>
                 </div>
-                <div class="birthday">
-                    <label for="birthday">생년월일</label>
-                    <input type="date" id="birthday" name="birthday" />
+                <div class="birthdate">
+                    <label for="birthdate">생년월일</label>
+                    <input type="date" id="birthdate" name="birthdate" v-model="birthDate" />
                 </div>
                 <div class="withdraw">
                     <label>
@@ -62,14 +63,72 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const defaultImg = "기본이미지url"; // 실제 기본 이미지 경로로 변경
-const imgSrc = ref(
-    "https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp"
-);
+import { ref, onMounted } from "vue";
+import api from "@/api/axios";
+import defaultImg from "@/assets/default-profile.png"; //기본 프로필 이미지
 
-function handleDeleteProfilePhoto() {
-    imgSrc.value = defaultImg;
+const imgSrc = ref(defaultImg);
+const nickname = ref("");
+const gender = ref("");
+const birthDate = ref("");
+const profileInput = ref(null);
+const email = ref("")
+
+const selectedProfileFile = ref(null);
+
+//마운트 시 유저 정보 불러오기
+onMounted(async () => {
+    try {
+        const res = await api.get("/users/me");
+        imgSrc.value = res.data.profileImage || defaultImg;
+        nickname.value = res.data.nickname || "";
+        email.value = res.data.email || "";
+        gender.value = res.data.gender || "";
+        birthDate.value = res.data.birthDate || "";
+    } catch (err) {
+        console.log("에러 메시지:", err.response.data);
+    }
+})
+
+function triggerProfileInput() {
+    console.log("트리거 함수 실행됨", profileInput.value);
+    if (profileInput.value) profileInput.value.click();
+}
+
+function handleProfileImageChange(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    imgSrc.value = URL.createObjectURL(file); 
+    selectedProfileFile.value = file;
+}
+
+async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+
+        if(selectedProfileFile.value){
+            const formData = new FormData();
+            formData.append("file", selectedProfileFile.value);
+
+            const res = await api.post("/users/me/profile-image", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+            console.log(imgSrc.value);
+            
+            imgSrc.value = res.data.profileImageUrl; 
+            console.log(imgSrc.value);
+            
+        }
+
+        await api.patch("/users/me", {
+            gender: gender.value,
+            birthDate: birthDate.value
+        });
+        alert("성별/생년월일 정보 수정 완료~!")
+    } catch (err) {
+        console.log("에러 메시지: ", err);
+        alert("성별/생년월일 정보 수정 실패~!")
+    }
 }
 </script>
 
