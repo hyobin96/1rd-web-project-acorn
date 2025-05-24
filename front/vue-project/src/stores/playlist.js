@@ -10,17 +10,16 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
 
     const userStore = useUserStores()
     const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
-    const link = ref('')
-    
+
     const currentPlaylistId = ref(0)
     const currentPlaylistItemId = ref(0)
-    
-    const playlistArr = ref([])
-    
-    const title = ('')
-    const initialState = []
-    const mainPlaylist = reactive([])
 
+    const playlistArr = ref([])
+
+    // CreatePlaylistName 컴포넌트의 플레이리스트 제목
+    const title = ref('')
+    // CreatePlaylistURL 컴포넌트의 플레이리스트 링크
+    const link = ref('')
     const playlistId = computed(() => {
         const index = link.value.indexOf('=')
         return link.value.substring(index + 1)
@@ -96,19 +95,19 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
     const moveNextPlay = () => {
         if (currentPlaylistItemId.value + 1 === playlistArr.value[currentPlaylistId.value].length) {
             currentPlaylistItemId.value = 0
-            console.log(Object.keys(playlistArr.value).length)
-            if (currentPlaylistId.value + 1 === playlistArr.value.length + 1) {
-                currentPlaylistId.value = 0
-            }
-            // else{
-            //     currentPlaylistId.value++
-            // }
+            currentPlaylistId.value++
         }
-        else{
+        else {
             currentPlaylistItemId.value++
+        }
+
+        if (currentPlaylistId.value === playlistArr.value.length) {
+            currentPlaylistId.value = 0
         }
     }
 
-    return { title, link, playlistId, savePlaylist, getPlaylist, playlistArr, 
-        currentPlaylistItemId, mainPlaylist, currentPlaylistId, moveNextPlay,}
+    return {
+        title, link, playlistId, savePlaylist, getPlaylist, playlistArr,
+        currentPlaylistItemId, currentPlaylistId, moveNextPlay,
+    }
 }, { persist: true })

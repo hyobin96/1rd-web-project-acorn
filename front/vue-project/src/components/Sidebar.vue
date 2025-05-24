@@ -4,7 +4,7 @@
             <div class="account">
                 <img class="profile-photo"
                     src="https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp" />
-                <span>사용자 설정 닉네임</span>
+                <span>{{ store.nickname }}</span>
             </div>
             <div class="nav-content">
                 <div class="create-playlist"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16"
@@ -60,6 +60,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useUserStores } from '@/stores/user';
+import { computed } from 'vue';
+const store = useUserStores()
 const router = useRouter()
 </script>
 
@@ -100,9 +103,9 @@ body {
 .account {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding-top: 40px;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
     align-items: center;
     /*가운데 정렬*/
     padding-bottom: 15px;

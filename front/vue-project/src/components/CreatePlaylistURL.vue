@@ -9,16 +9,9 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
-import axios from 'axios'
-import { useUserStores } from '@/stores/user';
 import { usePlaylistStores } from '@/stores/playlist';
 
-const userStore = useUserStores()
 const playlistStore = usePlaylistStores()
-
-const youtube_api = "https://www.googleapis.com/youtube/v3/playlistItems"
-const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
 
 function logLink() {
   console.log('링크:', playlistStore.link);

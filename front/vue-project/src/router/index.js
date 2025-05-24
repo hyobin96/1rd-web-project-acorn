@@ -44,7 +44,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/detail-playlist/:playlistId',
+      path: '/detail-playlist/:index',
       name: 'DetailPlayList',
       component: DetailView
     },
