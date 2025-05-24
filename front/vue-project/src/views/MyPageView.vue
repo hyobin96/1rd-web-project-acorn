@@ -130,10 +130,11 @@ async function handleSubmit(e) {
         }
         
         await api.patch("/users/me", {
+            nickname: nickname.value,
             gender: gender.value,
             birthDate: birthDate.value
         });
-        
+
         await loadUserInfo();
         alert("성별/생년월일 정보 수정 완료~!")
     } catch (err) {
