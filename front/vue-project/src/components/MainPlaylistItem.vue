@@ -1,15 +1,23 @@
 <template>
-    <div class="playlist" v-if="playlist[0]['thumbnails'] !== null">
-        <RouterLink :to="{name: 'DetailPlayList'}">
-            <p class="favorite-playlist-name">{{ playlist[0]['playlistTitle'] }}</p>
-            <img :src="playlist[0]['thumbnails']" alt="썸네일" />
+    <div class="playlist" v-if="store.playlistArr[0]['thumbnails'] !== null">
+        <RouterLink :to="{ name: 'DetailPlayList', params: { index } }">
+            <p class="favorite-playlist-name">{{ title }}</p>
+            <img :src="thumbnails" alt="썸네일" />
         </RouterLink>
     </div>
 </template>
 
 <script setup>
-defineProps(['playlist',])
-
+import { usePlaylistStores } from '@/stores/playlist';
+import { computed } from 'vue';
+const store = usePlaylistStores()
+const props = defineProps(['index',])
+const title = computed(() => {
+    return store.playlistArr[props.index][0].playlistTitle
+})
+const thumbnails = computed(() => {
+    return store.playlistArr[props.index][0].thumbnails
+})
 </script>
 
 <style scoped>
@@ -17,9 +25,8 @@ img {
     height: 300px;
 }
 
-.playlist{
+.playlist {
     margin: 10px;
     display: inline-block;
 }
-
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RouterView />
+        <Sidebar />
         <nav class="navbar">
             <div class="logo-container"><a class="logo-icon"><img class="logo-img" src="https://i.imgur.com/9YO79MC.png"
                         alt="LOGO" /></a></div>
@@ -10,7 +10,7 @@
         </div>
         <main>
             <div class="favorite-playlist-section">
-                <MainPlaylistItem v-for="playlist in playlistStore.mainPlaylist.slice(0, 3)" :playlist="playlist" />
+                <MainPlaylistItem v-for="(playlist, index) in playlistStore.playlistArr.slice(0, 3)" :index="index" />
             </div>
             <div class="playlist-list">
                 <div class="playlist-list-header">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="content">
-                    <PlaylistDropdownItem v-for="playlist in playlistStore.mainPlaylist" :playlist="playlist" />
+                    <PlaylistDropdownItem v-for="(playlist, index) in playlistStore.playlistArr" :index="index" />
                 </div>
             </div>
         </main>
@@ -34,13 +34,18 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { usePlaylistStores } from '@/stores/playlist';
+import { useUserStores } from '@/stores/user';
 import MainPlaylistItem from '@/components/MainPlaylistItem.vue';
 import PlaylistDropdownItem from '@/components/PlaylistDropdownItem.vue';
+import Sidebar from '@/components/Sidebar.vue';
 
+const userStore = useUserStores()
 const playlistStore = usePlaylistStores()
 
 onMounted(async () => {
     await playlistStore.getPlaylist()
+    playlistStore.currentPlaylistId = 0
+    playlistStore.currentPlaylistItemId = 0
     console.log("onMounted", playlistStore.playlistArr)
 })
 

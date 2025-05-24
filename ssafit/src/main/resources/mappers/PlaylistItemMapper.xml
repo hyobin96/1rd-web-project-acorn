@@ -14,9 +14,9 @@
 
 	<!-- playlist_items 테이블에 새로운 item을 삽입합니다. -->
     <insert id="insert" parameterType="PlaylistItem">
-        INSERT INTO playlist_items (playlist_id, video_id, thumbnails)
+        INSERT INTO playlist_items (playlist_id, video_id, thumbnails, title)
         VALUES <foreach collection="items" item="item" separator=",">
-        (#{item.playlistId}, #{item.videoId}, #{item.thumbnails})
+        (#{item.playlistId}, #{item.videoId}, #{item.thumbnails}, #{item.title})
     </foreach>
     </insert>
 
