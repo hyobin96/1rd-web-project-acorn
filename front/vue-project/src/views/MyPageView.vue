@@ -124,14 +124,18 @@ async function handleSubmit(e) {
             });
             console.log(imgSrc.value);
 
-            await loadUserInfo();
-
+            
         }
-
+        console.log(nickname.value)
+        console.log(gender.value)
+        console.log(birthDate.value)
         await api.patch("/users/me", {
+            nickname: nickname.value,
             gender: gender.value,
             birthDate: birthDate.value
         });
+
+        await loadUserInfo();
         alert("성별/생년월일 정보 수정 완료~!")
     } catch (err) {
         console.log("에러 메시지: ", err.response.data);
