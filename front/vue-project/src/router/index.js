@@ -1,6 +1,8 @@
+import EventBoardHeader from '@/components/EventBoardHeader.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import CreatePlaylistView from '@/views/CreatePlaylistView.vue'
 import DetailView from '@/views/DetailView.vue'
+import EventBoardView from '@/views/EventBoardView.vue'
 import MainView from '@/views/MainView.vue'
 import MyPageView from '@/views/MyPageView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -52,6 +54,18 @@ const router = createRouter({
       path: '/mypage',
       name: 'mypage',
       component: MyPageView
+    },
+    {
+      path: '/event',
+      name: 'event-board',
+      component: EventBoardView,
+      children: [
+        {
+          path: 'event-header',
+          name: 'event-header',
+          component:  () => import('../components/EventBoardHeader.vue')
+        }
+      ]
     }
   ],
 })

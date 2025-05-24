@@ -58,7 +58,11 @@ public class EventPostServiceImpl implements EventPostService {
      */
     @Override
     public List<EventPost> getAllPosts() {
-        return eventPostDao.selectAllPosts();
+        List<EventPost> posts = eventPostDao.selectAllPosts();
+    	for (EventPost post : posts) {
+            post.setFileList(eventPostDao.selectFilesByPostId(post.getId()));
+        }
+        return posts;
     }
 
     /**
