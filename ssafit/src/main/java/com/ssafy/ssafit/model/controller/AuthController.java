@@ -16,7 +16,7 @@ import com.ssafy.ssafit.model.service.AuthService;
  */
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
 public class AuthController {
 	@Autowired
 	private AuthService authService;

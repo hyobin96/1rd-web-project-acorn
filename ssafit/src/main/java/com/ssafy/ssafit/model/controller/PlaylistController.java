@@ -21,7 +21,7 @@ import com.ssafy.ssafit.model.service.PlaylistService;
 
 @RestController
 @RequestMapping("/api/playlist")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
 public class PlaylistController {
 	@Autowired
 	private PlaylistService playlistService;
