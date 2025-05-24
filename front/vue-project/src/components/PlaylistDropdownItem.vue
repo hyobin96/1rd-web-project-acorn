@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RouterLink :to="{name: 'DetailPlayList'}">
+        <RouterLink :to="{name: 'DetailPlayList', params:{playlistId: playlist[0].playlistId}}">
             <img :src="playlist[0].thumbnails" alt=""> <span>{{ playlist[0].playlistTitle }}</span>
         </RouterLink>
     </div>

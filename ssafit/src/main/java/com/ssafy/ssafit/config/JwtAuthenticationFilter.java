@@ -43,9 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     	// 2. 없으면 쿠키에서 accessToken 찾기
     	if (token == null && request.getCookies() != null) {
     	    for (Cookie cookie : request.getCookies()) {
-    	    	System.out.println(cookie.getName() + " " + cookie.getValue());
     	        if ("accessToken".equals(cookie.getName())) {
-    	        	System.out.println("토큰 찾기");
     	            token = cookie.getValue();
     	            break;
     	        }
@@ -54,7 +52,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     	// 3. 토큰 유효성 검증 및 인증 처리
     	if (token != null && jwtUtil.validateToken(token)) {
-    		System.out.println("검증하기");
     	    String username = jwtUtil.extractUsername(token);
     	    String role = jwtUtil.extractRole(token);
 
@@ -65,10 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     	            List.of(new SimpleGrantedAuthority("ROLE_" + role))
     	        );
 
-    	    System.out.println("검증 성공");
     	    SecurityContextHolder.getContext().setAuthentication(authentication);
-    	    System.out.println(authentication.getPrincipal().toString());
-    	    System.out.println(SecurityContextHolder.getContext());
     	}
 
         // 다음 필터로 진행

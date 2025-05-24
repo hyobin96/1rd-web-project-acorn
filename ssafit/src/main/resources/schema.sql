@@ -37,6 +37,7 @@ CREATE TABLE playlist_items (
     playlist_id BIGINT NOT NULL,
     video_id VARCHAR(20) NOT NULL, -- 동영상의 고유 식별자
     thumbnails VARCHAR(100) NOT NULL,
+    title VARCHAR(100) NOT NULL,
     memo TEXT, 
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE
 );

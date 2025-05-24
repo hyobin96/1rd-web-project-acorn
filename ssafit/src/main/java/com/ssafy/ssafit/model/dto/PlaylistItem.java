@@ -3,6 +3,7 @@ package com.ssafy.ssafit.model.dto;
 public class PlaylistItem {
 	private Long id;
 	private Long playlistId; // playlist의 id
+	private String title;
 	private String videoId;
 	private String thumbnails;
 	private String memo;
@@ -11,13 +12,12 @@ public class PlaylistItem {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PlaylistItem(Long id, Long playlistId, String videoId, String thumbnails, String memo) {
-		super();
-		this.id = id;
-		this.playlistId = playlistId;
-		this.videoId = videoId;
-		this.thumbnails = thumbnails;
-		this.memo = memo;
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Long getId() {
@@ -62,8 +62,8 @@ public class PlaylistItem {
 
 	@Override
 	public String toString() {
-		return "PlaylistItem [id=" + id + ", playlistId=" + playlistId + ", videoId=" + videoId + ", thumbnails="
-				+ thumbnails + ", memo=" + memo + "]";
+		return "PlaylistItem [id=" + id + ", playlistId=" + playlistId + ", title=" + title + ", videoId=" + videoId
+				+ ", thumbnails=" + thumbnails + ", memo=" + memo + "]";
 	}
 
 }

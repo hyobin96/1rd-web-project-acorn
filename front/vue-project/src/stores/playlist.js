@@ -7,16 +7,17 @@ import { useUserStores } from './user';
 const youtube_api = "https://www.googleapis.com/youtube/v3/playlistItems"
 
 export const usePlaylistStores = defineStore('playlist-stores', () => {
+
     const userStore = useUserStores()
     const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
-    const title = ref('')
     const link = ref('')
-
+    
+    const currentPlaylistId = ref(0)
+    const currentPlaylistItemId = ref(0)
+    
     const playlistArr = ref([])
-    const playlist1 = ref({})
-    const playlist2 = ref({})
-    const playlist3 = ref({})
-
+    
+    const title = ('')
     const initialState = []
     const mainPlaylist = reactive([])
 
@@ -44,7 +45,7 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
             const res = await axios.post('playlist',
                 {
                     userId: userStore.userId,
-                    title: title.value,
+                    title: title.value
                 }
             )
             //플레이리스트 삽입
@@ -58,7 +59,8 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
                 let thumbnails = thumbs.high?.url ||
                     thumbs.medium?.url ||
                     thumbs.default?.url || 'https://via.placeholder.com/320x180?text=No+Thumbnail'
-                arr.push({ playlistId, videoId, thumbnails })
+                let title = items[i].snippet.title
+                arr.push({ playlistId, videoId, thumbnails, title })
             }
             try {
                 await axios.post('playlistItem',
@@ -79,18 +81,34 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
 
     //플레이리스트 로딩
     const getPlaylist = async () => {
-        mainPlaylist.splice(0, mainPlaylist.length, ...initialState)
+        playlistArr.value = []
         try {
             const res = await axios.get('playlist',)
-            playlistArr.value = res.data
-            let i = 0
-            for(const key in playlistArr.value){
-                mainPlaylist.push(playlistArr.value[key])
+            for (const key in res.data) {
+                playlistArr.value.push(res.data[key])
             }
+            console.log(res)
         } catch (err) {
             console.log(err)
         }
     }
 
-    return { title, link, playlistId, savePlaylist, getPlaylist, playlistArr, playlist1, playlist2, playlist3, mainPlaylist }
-})
+    const moveNextPlay = () => {
+        if (currentPlaylistItemId.value + 1 === playlistArr.value[currentPlaylistId.value].length) {
+            currentPlaylistItemId.value = 0
+            console.log(Object.keys(playlistArr.value).length)
+            if (currentPlaylistId.value + 1 === playlistArr.value.length + 1) {
+                currentPlaylistId.value = 0
+            }
+            // else{
+            //     currentPlaylistId.value++
+            // }
+        }
+        else{
+            currentPlaylistItemId.value++
+        }
+    }
+
+    return { title, link, playlistId, savePlaylist, getPlaylist, playlistArr, 
+        currentPlaylistItemId, mainPlaylist, currentPlaylistId, moveNextPlay,}
+}, { persist: true })

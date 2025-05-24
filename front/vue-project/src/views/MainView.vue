@@ -10,7 +10,7 @@
         </div>
         <main>
             <div class="favorite-playlist-section">
-                <MainPlaylistItem v-for="playlist in playlistStore.mainPlaylist.slice(0, 3)" :playlist="playlist" />
+                <MainPlaylistItem v-for="playlist in playlistStore.playlistArr.slice(0, 3)" :playlist="playlist" />
             </div>
             <div class="playlist-list">
                 <div class="playlist-list-header">
@@ -41,6 +41,8 @@ const playlistStore = usePlaylistStores()
 
 onMounted(async () => {
     await playlistStore.getPlaylist()
+    playlistStore.currentPlaylistId = 0
+    playlistStore.currentPlaylistItemId = 0
     console.log("onMounted", playlistStore.playlistArr)
 })
 
