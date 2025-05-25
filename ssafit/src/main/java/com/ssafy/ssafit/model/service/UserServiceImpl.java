@@ -117,6 +117,9 @@ public class UserServiceImpl implements UserService {
 		return currentUser;
 	}
 
+	/** 
+	 *프로필 이미 저장
+	 */
 	@Override
 	public String updateProfileImage(String username, MultipartFile file) {
 		User user = userDao.findByUsername(username);

@@ -1,5 +1,6 @@
 import EventBoardHeader from '@/components/EventBoardHeader.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import AdminView from '@/views/AdminView.vue'
 import CreatePlaylistView from '@/views/CreatePlaylistView.vue'
 import DetailView from '@/views/DetailView.vue'
 import EventBoardView from '@/views/EventBoardView.vue'
@@ -56,7 +57,7 @@ const router = createRouter({
       component: MyPageView
     },
     {
-      path: '/event',
+      path: '/events',
       name: 'event-board',
       component: EventBoardView,
       children: [
@@ -64,6 +65,18 @@ const router = createRouter({
           path: 'event-header',
           name: 'event-header',
           component:  () => import('../components/EventBoardHeader.vue')
+        }
+      ]
+    },
+    {
+      path: '/admin',
+      name: 'adminpage',
+      component: AdminView,
+      children: [
+        {
+          path: 'event-management',
+          name: 'event-management',
+          component:  () => import('../components/EventManagementForm.vue')
         }
       ]
     }

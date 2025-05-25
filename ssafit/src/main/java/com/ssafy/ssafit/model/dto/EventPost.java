@@ -13,7 +13,7 @@ public class EventPost {
 	private String endDate; //행사 종료일
 	private String createdAt; // DB의 TIMESTAMP -> String으로 조회
 	private String updatedAt;
-	private List<EventFile> fileList;
+	private List<EventFile> fileList; 
 
 	public Long getId() {
 		return id;
@@ -70,6 +70,7 @@ public class EventPost {
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
 
 	public List<EventFile> getFileList() {
 		return fileList;
@@ -85,5 +86,7 @@ public class EventPost {
 				+ ", endDate=" + endDate + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", fileList="
 				+ fileList + "]";
 	}
+
+
 
 }

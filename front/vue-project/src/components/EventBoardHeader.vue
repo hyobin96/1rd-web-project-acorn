@@ -1,6 +1,6 @@
 <template>
         <div class="event-board-header">
-            <div class="total-event-count">전체 ??건</div>
+            <div class="total-event-count">전체 {{totalCount}}건</div>
             <ul>
                 <li><a>진행중</a></li>
                 <li><a>종료</a></li>
@@ -9,6 +9,12 @@
 </template>
 
 <script setup>
+
+defineProps({
+    totalCount:{
+        type: Number,
+    }
+})
 
 </script>
 
