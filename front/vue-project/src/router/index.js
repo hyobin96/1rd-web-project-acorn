@@ -1,6 +1,8 @@
 import Sidebar from '@/components/Sidebar.vue'
+import AdminView from '@/views/AdminView.vue'
 import CreatePlaylistView from '@/views/CreatePlaylistView.vue'
 import DetailView from '@/views/DetailView.vue'
+import EventBoardView from '@/views/EventBoardView.vue'
 import MainView from '@/views/MainView.vue'
 import MyPageView from '@/views/MyPageView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -44,7 +46,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/detail-playlist',
+      path: '/detail-playlist/:index',
       name: 'DetailPlayList',
       component: DetailView
     },
@@ -52,6 +54,30 @@ const router = createRouter({
       path: '/mypage',
       name: 'mypage',
       component: MyPageView
+    },
+    {
+      path: '/events',
+      name: 'event-board',
+      component: EventBoardView,
+      children: [
+        {
+          path: 'event-header',
+          name: 'event-header',
+          component:  () => import('../components/EventBoardHeader.vue')
+        }
+      ]
+    },
+    {
+      path: '/admin',
+      name: 'adminpage',
+      component: AdminView,
+      children: [
+        {
+          path: 'event-management',
+          name: 'event-management',
+          component:  () => import('../components/EventManagementForm.vue')
+        }
+      ]
     }
   ],
 })
