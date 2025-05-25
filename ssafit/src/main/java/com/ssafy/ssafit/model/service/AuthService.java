@@ -15,4 +15,10 @@ public interface AuthService {
 	 * @return Cookie를 담은 HttpHeaders를 반환합니다.
 	 */
 	public ResponseEntity login(LoginRequest request);
+	
+	/**
+	 * 쿠키의 수명을 0으로 하고 헤더에 담아 반환합니다.
+	 * @return 헤더에 쿠키가 담긴 ResponseEntity 반환
+	 */
+	public ResponseEntity logout();
 }

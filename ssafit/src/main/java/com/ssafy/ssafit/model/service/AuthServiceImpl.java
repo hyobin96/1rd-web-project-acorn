@@ -71,10 +71,30 @@ public class AuthServiceImpl implements AuthService {
 	    
 	    info.put("userId", user.getId().toString());
 	    info.put("username", user.getUsername());
+	    info.put("nickname", user.getNickname());
+	    info.put("email", user.getEmail());
+	    info.put("profileImage", user.getProfileImage());
 	    info.put("role", role);
 	    
 	    return ResponseEntity.ok().headers(headers).body(info);
 	}
 
-
+	/**
+	 * 쿠키의 수명을 0으로 해서 즉시 만료시키도록 하여 반환한다.
+	 */
+	@Override
+	public ResponseEntity logout() {
+		ResponseCookie deleteCookie = ResponseCookie.from("accessToken", "")
+		        .httpOnly(true)
+		        .secure(true)
+		        .path("/")
+		        .maxAge(0) // 즉시 만료
+		        .sameSite("None")
+		        .build();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.SET_COOKIE, deleteCookie.toString());
+		
+		return ResponseEntity.ok().headers(headers).build();
+	}
 }

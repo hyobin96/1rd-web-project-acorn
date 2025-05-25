@@ -44,7 +44,6 @@ public class PlaylistController {
 
 	@PostMapping("")
 	public ResponseEntity<?> addPlaylist(@RequestBody Playlist playlist) {
-		System.out.println(playlist);
 		playlistService.createPlaylist(playlist);
 		return ResponseEntity.status(HttpStatus.CREATED).body(playlist);
 	}
