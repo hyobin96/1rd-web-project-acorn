@@ -1,5 +1,7 @@
 package com.ssafy.ssafit.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -26,6 +28,8 @@ public class User {
 	private String nickname;
 	
 	private boolean isAdmin;
+	
+	@JsonProperty("isDeleted")
 	private boolean isDeleted;
 	private String createdAt;
 	private String updatedAt; 

@@ -2,29 +2,36 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <!-- users db에서 사용하는 sql문을 담은 mapper -->
 <mapper namespace="com.ssafy.ssafit.model.dao.UserDao">
 	<!-- 회원을 등록합니다. 생성된 id를 자동으로 user에 넣습니다. -->
-	<insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO users (username, password, email, nickname)
-		VALUES (#{username}, #{password}, #{email}, #{nickname});
+	<insert id="insertUser" parameterType="User"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO users (username,
+		password, email, nickname)
+		VALUES (#{username}, #{password}, #{email},
+		#{nickname});
 	</insert>
 
 	<!-- 회원 정보를 수정합니다. -->
 	<update id="updateUser" parameterType="User">
 		UPDATE users
-		SET profile_image = #{profileImage}, nickname = #{nickname}, gender = #{gender}, birth_date = #{birthDate}, updated_at = NOW()
-		WHERE id = #{id};
+		SET
+		profile_image = #{profileImage}, nickname = #{nickname}, gender =
+		#{gender}, birth_date = #{birthDate}, updated_at = NOW()
+		WHERE id =
+		#{id};
 	</update>
 
 	<!-- 회원을 소프트삭제합니다. -->
 	<update id="updateIsDeleted" parameterType="int">
 		UPDATE users
-		SET is_deleted = true
+		SET
+		is_deleted = true
 		WHERE id = #{id};
 	</update>
-	
+
 	<!-- 회원을 하드삭제합니다. -->
 	<delete id="deleteUserById" parameterType="int">
 		DELETE FROM users
@@ -35,41 +42,56 @@
 	<select id="selectUser" parameterType="String" resultType="User">
 		SELECT id, username, password, is_admin
 		FROM users
-		WHERE username = #{username} AND is_deleted = FALSE;
+		WHERE username =
+		#{username} AND is_deleted = FALSE;
 	</select>
-	
+
 	<!-- username이 같은 행의 개수를 반환합니다. -->
 	<select id="selectByUsername" parameterType="String">
 		SELECT count(*)
-		FROM users
+		FROM
+		users
 		WHERE username = #{username};
 	</select>
-	
+
 	<!-- nickname이 같은 행의 개수를 반환합니다. -->
 	<select id="selectByNickname">
 		SELECT count(*)
 		FROM users
-		WHERE nickname = #{nickname};
+		WHERE nickname =
+		#{nickname};
 	</select>
-	
+
 	<!-- email이 같은 행을 개수를 반환합니다. -->
 	<select id="selectByEmail">
 		SELECT count(*)
 		FROM users
 		WHERE email = #{email};
 	</select>
-	
+
 	<!-- username이 일치하는 회원 정보를 조회합니다. -->
-	<select id="findByUsername" parameterType="String" resultType="User">
+	<select id="findByUsername" parameterType="String"
+		resultType="User">
 		SELECT *
 		FROM users
 		WHERE username = #{username};
 	</select>
-	
-	<!-- 모든 회원 정보를 조회합니다 -->
+
+	<!-- 일반 회원 정보를 조회합니다 -->
 	<select id="selectAllUsers" resultType="User">
-		SELECT *
+		SELECT
+		id,
+		username,
+		password,
+		email,
+		nickname,
+		is_deleted AS isDeleted,
+		created_at,
+		updated_at,
+		profile_image,
+		gender,
+		birth_date
 		FROM users
-		WHERE is_admin = false;
+		WHERE is_admin = FALSE;
 	</select>
 </mapper>
