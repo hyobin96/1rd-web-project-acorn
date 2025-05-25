@@ -24,11 +24,15 @@ public class EventPostController {
      * 이벤트 게시글 등록
      */
     @PostMapping
-    public ResponseEntity<?> create(@ModelAttribute EventPost post,
-                                    @RequestParam(value = "files", required = false) List<MultipartFile> files) {
+    public ResponseEntity<?> create(@ModelAttribute EventPost post,  // 기본 텍스트 데이터
+    								@RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,  // 썸네일
+                                    @RequestParam(value = "files", required = false) List<MultipartFile> files) { // 본문 이미지들
         System.out.println("도착");
         System.out.println(post);
-    	eventPostService.createPost(post, files);
+        System.out.println("썸네일: " + (thumbnail != null ? thumbnail.getOriginalFilename() : "없음"));
+        System.out.println("본문 이미지 개수: " + (files != null ? files.size() : "없음"));
+        
+    	eventPostService.createPost(post, thumbnail, files);
         return ResponseEntity.ok().build();
     }
 

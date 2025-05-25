@@ -17,18 +17,18 @@ import com.ssafy.ssafit.model.dto.User;
 public class UserServiceImpl implements UserService {
 	// db에 접근하기 위한 dao
 	private UserDao userDao;
-	
+
 	public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
+
 	@Value("${profile.upload.dir:/uploads}")
-    private String uploadDir;
+	private String uploadDir;
 
 	// 암호화에 사용할 인코더
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	/**
 	 * 회원등록
 	 */
@@ -53,49 +53,49 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteUserPermanently(int id) {
 		return userDao.deleteUserById(id) == 1;
 	}
-	
+
 	/**
 	 * username 중복검사
 	 */
 	@Override
-    public boolean existsByUsername(String username) {
-        return userDao.selectByUsername(username) == 0;
-    }
+	public boolean existsByUsername(String username) {
+		return userDao.selectByUsername(username) == 0;
+	}
 
 	/**
 	 * nickname 중복검사
 	 */
 	@Override
-    public boolean existsByNickname(String nickname) {
-        return userDao.selectByNickname(nickname) == 0;
-    }
+	public boolean existsByNickname(String nickname) {
+		return userDao.selectByNickname(nickname) == 0;
+	}
 
 	/**
 	 * email 중복검사
 	 */
 	@Override
-    public boolean existsByEmail(String email) {
-        return userDao.selectByEmail(email) == 0;
-    }
+	public boolean existsByEmail(String email) {
+		return userDao.selectByEmail(email) == 0;
+	}
 
 	/**
-	 * 회원정보 수정 
+	 * 회원정보 수정
 	 */
 	@Override
 	public boolean updateUserInfo(String username, User user) {
 		User existingUser = userDao.findByUsername(username);
-		if(existingUser == null) return false;
-		
-		if(user.getNickname() != null) existingUser.setNickname(user.getNickname());
-		if(user.getGender() != null) existingUser.setGender(user.getGender());
-		if(user.getProfileImage() != null) existingUser.setProfileImage(user.getProfileImage());
+		if (existingUser == null)
+			return false;
+
+		existingUser.setNickname(user.getNickname());
+		existingUser.setGender(user.getGender());
 		if (user.getBirthDate() != null && !user.getBirthDate().trim().isEmpty()) {
 		    existingUser.setBirthDate(user.getBirthDate());
 		} else {
 		    existingUser.setBirthDate(null);
 		}
-		
-		return userDao.updateUser(existingUser) == 1;
+
+		return userDao.updateUser(existingUser) >= 0;
 	}
 
 	/**
@@ -104,49 +104,53 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getMyInfo(String username) {
 		User user = userDao.findByUsername(username);
-		if(user == null) return null;
-		
+		if (user == null)
+			return null;
+
 		User currentUser = new User();
 		currentUser.setNickname(user.getNickname());
 		currentUser.setEmail(user.getEmail());
 		currentUser.setGender(user.getGender());
 		currentUser.setProfileImage(user.getProfileImage());
 		currentUser.setBirthDate(user.getBirthDate());
-		
+
 		return currentUser;
 	}
 
+	/** 
+	 *프로필 이미 저장
+	 */
 	@Override
 	public String updateProfileImage(String username, MultipartFile file) {
-        User user = userDao.findByUsername(username);
-        if (user == null) return null;
+		User user = userDao.findByUsername(username);
+		if (user == null)
+			return null;
 
-        String originalFilename = file.getOriginalFilename();
-        String ext = "";
-        if (originalFilename != null && originalFilename.contains(".")) {
-            ext = originalFilename.substring(originalFilename.lastIndexOf("."));
-        }
-        String savedFileName = UUID.randomUUID().toString() + ext;
+		String originalFilename = file.getOriginalFilename();
+		String ext = "";
+		if (originalFilename != null && originalFilename.contains(".")) {
+			ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+		}
+		String savedFileName = UUID.randomUUID().toString() + ext;
 
-        File dir = new File(uploadDir);
-        if (!dir.exists()) dir.mkdirs();
-        
-        File dest = new File(dir, savedFileName);
-        try {
-        	System.out.println("파일 저장 경로: " + dest.getAbsolutePath());
-        	
-            file.transferTo(dest);
+		File dir = new File(uploadDir);
+		if (!dir.exists())
+			dir.mkdirs();
 
-            String profileImageUrl = "/uploads/" + savedFileName;
+		File dest = new File(dir, savedFileName);
+		try {
+			file.transferTo(dest);
 
-            user.setProfileImage(profileImageUrl);
-            userDao.updateUser(user);
+			String profileImageUrl = "/uploads/" + savedFileName;
 
-            return profileImageUrl;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+			user.setProfileImage(profileImageUrl);
+			System.out.println(user);
+			int tmp = userDao.updateUser(user);
+			return profileImageUrl;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
