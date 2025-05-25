@@ -61,6 +61,16 @@ const handleContentImageChange = (event) => {
 
 const submitForm = async () => {
     try {
+
+        // 날짜 유효성 검사
+        const start = new Date(form.value.startDate);
+        const end = new Date(form.value.endDate);
+
+        if(start >= end){
+            alert('이벤트 시작일은 종료일보다 빠르거나 같아야 합니다.');
+            return;
+        }
+
         // 폼데이터로 바꿔 보내기
         const formData = new FormData()
         formData.append('title', form.value.title)
