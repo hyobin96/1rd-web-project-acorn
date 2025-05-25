@@ -76,7 +76,12 @@ const router = createRouter({
           path: 'event-management',
           name: 'event-management',
           component:  () => import('../components/EventManagementForm.vue')
-        }
+        },{
+          path: 'user-management',
+          name: 'user-management',
+          component:  () => import('../components/UserList.vue')
+        },
+
       ]
     }
   ],

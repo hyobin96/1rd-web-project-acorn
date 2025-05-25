@@ -2,7 +2,9 @@
     <div class="layout">
         <div class="nav">
             <div class="user-management">
-                <p>사용자 관리</p>
+                <p>
+                    <RouterLink :to="{ name: 'user-management' }">사용자 관리</RouterLink>
+                </p>
             </div>
             <div class="event-management">
                 <p>
@@ -22,7 +24,8 @@
 <style scoped>
 .layout {
     display: flex;
-    height: 100vh; /* 전체 화면 높이 */
+    height: 100vh;
+    /* 전체 화면 높이 */
 }
 
 .nav {
@@ -49,7 +52,7 @@
     overflow: auto;
 }
 
-a { 
+a {
     text-decoration: none;
     color: inherit;
 }
