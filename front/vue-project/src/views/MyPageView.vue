@@ -66,7 +66,9 @@
 import { ref, onMounted } from "vue";
 import api from "@/api/axios";
 import defaultImg from "@/assets/default-profile.png"; //기본 프로필 이미지
+import { useUserStores } from "@/stores/user";
 
+const store = useUserStores()
 const imgSrc = ref(defaultImg);
 const nickname = ref("");
 const gender = ref("");
@@ -123,12 +125,10 @@ async function handleSubmit(e) {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             console.log(imgSrc.value);
-
+            store.imgSrc = imgSrc.value
             
         }
-        console.log(nickname.value)
-        console.log(gender.value)
-        console.log(birthDate.value)
+        
         await api.patch("/users/me", {
             nickname: nickname.value,
             gender: gender.value,
