@@ -27,7 +27,7 @@
 	<!-- 게시글 수정 -->
     <update id="updatePost">
         UPDATE event_posts 
-        SET title = #{title}, content = #{content} 
+        SET title = #{title}, content = #{content}, start_date =#{startDate}, end_date= #{endDate}
         WHERE id = #{id}
     </update>
 

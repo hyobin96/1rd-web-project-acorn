@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm" class="event-create-section">
             <button type="submit">이벤트 생성</button>
 
             <div>
@@ -28,12 +28,14 @@
                 <input type="file" id="contentImage" @change="handleContentImageChange" multiple />
             </div>
         </form>
+        <EventList/>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import api from '@/api/axios.js';
+import EventList from './EventList.vue';
 
 //입력 폼 데이터
 const form = ref({
@@ -116,4 +118,8 @@ const submitForm = async () => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.event-create-section{
+    margin-bottom: 20px;
+}
+</style>
