@@ -1,5 +1,7 @@
 package com.ssafy.ssafit.model.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.ssafit.model.dto.LoginRequest;
@@ -62,6 +64,14 @@ public interface UserService {
 	 */
 	User getMyInfo(String username);
 
+	/**
+	 * 사용자의 프로필 이미지 업로드 및 저장
+	 */
 	String updateProfileImage(String username, MultipartFile file);
+
+	/**
+	 * 전체 회원 조회
+	 */
+	List<User> getAllUsers();
 
 }

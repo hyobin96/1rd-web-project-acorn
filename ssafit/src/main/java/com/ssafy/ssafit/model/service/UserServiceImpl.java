@@ -2,6 +2,7 @@ package com.ssafy.ssafit.model.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,9 @@ public class UserServiceImpl implements UserService {
 		return currentUser;
 	}
 
+	/**
+	 * 사용자의 프로필 이미지 업로드 및 저장
+	 */
 	@Override
 	public String updateProfileImage(String username, MultipartFile file) {
         User user = userDao.findByUsername(username);
@@ -147,6 +151,14 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return null;
         }
+	}
+
+	/**
+	 * 전체 회원 조회
+	 */
+	@Override
+	public List<User> getAllUsers() {
+		return userDao.selectAllUsers();
 	}
 
 }

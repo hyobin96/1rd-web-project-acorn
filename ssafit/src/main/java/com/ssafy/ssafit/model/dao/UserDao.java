@@ -1,5 +1,6 @@
 package com.ssafy.ssafit.model.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.ssafy.ssafit.model.dto.LoginRequest;
@@ -35,4 +36,7 @@ public interface UserDao {
 
 	// id(username)으로 회원 조회
 	User findByUsername(String username);
+
+	// 전체 회원 조회
+	List<User> selectAllUsers();
 }

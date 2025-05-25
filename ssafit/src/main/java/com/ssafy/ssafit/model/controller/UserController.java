@@ -172,5 +172,11 @@ public class UserController {
         		: ResponseEntity.badRequest().body(Map.of("message", "중복된 이메일입니다."));
     }
 
-
+    /**
+     * 전체 회원 조회
+     */
+    @GetMapping("")
+    public ResponseEntity<?> getAllUsers(){
+    	return ResponseEntity.ok(userService.getAllUsers());
+    }
 }

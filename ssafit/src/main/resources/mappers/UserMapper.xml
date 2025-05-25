@@ -65,4 +65,11 @@
 		FROM users
 		WHERE username = #{username};
 	</select>
+	
+	<!-- 모든 회원 정보를 조회합니다 -->
+	<select id="selectAllUsers" resultType="User">
+		SELECT *
+		FROM users
+		WHERE is_admin = false;
+	</select>
 </mapper>
