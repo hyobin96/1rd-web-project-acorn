@@ -23,7 +23,7 @@
 		SELECT
 		p.id AS playlist_id, 
 		p.title AS playlist_title,
-		pi.id AS item_id,
+		pi.id AS playlistItemId,
 		pi.video_id, 
 		pi.thumbnails,
 		pi.title AS playlistItemTitle

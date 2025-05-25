@@ -84,7 +84,7 @@ const BASE_URL = "https://localhost:9443";
 async function loadUserInfo() {
     try {
         const res = await api.get("/users/me");
-        imgSrc.value = res.data.profileImage
+        store.profileImage = imgSrc.value = res.data.profileImage
             ? `${BASE_URL}${res.data.profileImage}?t=${Date.now()}`
             : defaultImg;
 

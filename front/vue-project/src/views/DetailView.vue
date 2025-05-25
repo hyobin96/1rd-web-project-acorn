@@ -5,20 +5,9 @@
         </div>
         <div class="content">
             <div class="video-section">
-                    <DetailVideo />
-                <div class="memo-container">
-                    <div class="memo-count"><span>메모 n개</span></div>
-                    <div class="memo">
-                        <div class="creation-box">
-                            <input type="text" @keyup.enter="registMemo" v-model="memo">
-                            <div class="buttons">
-                                <div class="cancle-button"><button @click="cancleMemo">취소</button></div>
-                                <div class="regist-button" :class="{ active: memo.trim() }"><button @click="registMemo"
-                                        :disabled="!memo.trim()">등록</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <DetailVideo />
+                <MemoForm />
+                <MemoList />
             </div>
             <div class="playlist-detail-sidebar">
                 <div class="sidebar-timer">
@@ -47,47 +36,20 @@ import { useRoute } from 'vue-router';
 import { usePlaylistStores } from '@/stores/playlist';
 import DetailVideo from '@/components/DetailVideo.vue';
 import DetailSideNextVideos from '@/components/DetailSideNextVideos.vue';
+import MemoForm from '@/components/MemoForm.vue';
+import MemoList from '@/components/MemoList.vue';
 
 const store = usePlaylistStores()
 const route = useRoute()
 store.currentPlaylistId = route.params.index
 
-const memo = ref('');
-const memoList = ref([])
 const playlistTitle = computed(() => {
     return store.playlistArr[route.params.index][0].playlistTitle
 })
 
-function registMemo() {
-    const newMemo = memo.value.trim()
-    if (newMemo) {
-        memoList.value.push(newMemo)
-        memo.value = ''
-    }
-}
-
-function cancleMemo() {
-    memo.value = '';
-}
-
 </script>
 
 <style scoped>
-input,
-button {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    background: none;
-    font: inherit;
-    color: inherit;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
 .playlist-name {
     width: 1200px;
     height: 215px;
@@ -100,54 +62,20 @@ button {
     justify-content: center;
 }
 
-.memo-count {
-    padding-top: 12px;
-    /* border: 1px solid salmon; */
-}
+
 
 .playlist-detail-sidebar {
     width: 300px;
     /* border: 1px solid yellow; */
 }
 
-.creation-box>input {
-    width: 884px;
-    border-bottom: 2px solid rgb(254, 0, 0);
-    /*밑줄 색 미정 */
-    margin-top: 8px;
-}
+
 
 .buttons {
     /* border: 1px solid firebrick; */
     display: flex;
     justify-content: flex-end;
     margin-right: 16px;
-}
-
-.cancle-button {
-    margin-top: 8px;
-    margin-left: 8px;
-    /* font-size: 10px; */
-    font-family: Roboto, Arial, sans-serif;
-    border-radius: 15px;
-    width: 40px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
-}
-
-.regist-button {
-    margin-top: 8px;
-    margin-left: 8px;
-    background-color: rgb(182, 179, 179);
-    /*버튼 색 미정 */
-    /* font-size: 10px; */
-    font-family: Roboto, Arial, sans-serif;
-    border-radius: 13px;
-    width: 40px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
 }
 
 .sidebar-timer {
@@ -175,7 +103,7 @@ button {
     margin-left: 10px;
     justify-content: space-between;
     overflow-y: auto;
-    height:400px;
+    height: 400px;
 }
 
 .sidebar-next-videos>svg {

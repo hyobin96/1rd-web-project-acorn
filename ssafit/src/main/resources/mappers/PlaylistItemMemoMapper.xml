@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.ssafit.model.dao.PlaylistItemMemoDao">
+	
+	<!-- playlistItemsId가 일치하는 memo들을 리스트에 담아 반환합니다. -->
+	<select id="selectAllMemo" parameterType="long" resultType="playlistItemMemo">
+		SELECT *
+		FROM playlist_items_memos
+		WHERE playlist_items_id = #{playlistItemsId}
+		ORDER BY id DESC;
+	</select>
+
+	<!-- memo를 새로 등록합니다. -->
+	<insert id="insertMemo" parameterType="PlaylistItemMemo">
+		INSERT INTO playlist_items_memos (playlist_items_id, memo)
+		VALUES (#{playlistItemsId}, #{memo});
+	</insert>
+
+	<!-- memo의 id가 일치하는 memo를 수정합니다. -->
+	<update id="updateMemo" parameterType="PlaylistItemMemo">
+		UPDATE playlist_items_memos
+		SET memo = #{memo}
+		WHERE id = #{id}
+	</update>
+
+	<!-- id가 일치하는 memo를 삭제합니다. -->
+	<delete id="deleteMemo" parameterType="long">
+		DELETE FROM playlist_items_memos
+		WHERE id = #{id}
+	</delete>
+</mapper>

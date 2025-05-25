@@ -40,6 +40,7 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
                 },
             )
             console.log("youtube", data)
+            console.log("user", userStore.userId)
             //플레이리스트 생성
             const res = await axios.post('playlist',
                 {

@@ -31,4 +31,13 @@ public class AuthController {
 	public ResponseEntity<?> login(@RequestBody LoginRequest request){
 		return authService.login(request);
 	}
+	
+	/**
+	 * ResponseEntity 헤더에 쿠키를 즉시만료로 하여 반환합니다.
+	 * @return ResponseEntity
+	 */
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(){
+		return authService.logout();
+	}
 }
