@@ -85,18 +85,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean updateUserInfo(String username, User user) {
 		User existingUser = userDao.findByUsername(username);
-		if(existingUser == null) return false;
-		
-		if(user.getNickname() != null) existingUser.setNickname(user.getNickname());
-		if(user.getGender() != null) existingUser.setGender(user.getGender());
-		if(user.getProfileImage() != null) existingUser.setProfileImage(user.getProfileImage());
+		if (existingUser == null)
+			return false;
+
+		existingUser.setNickname(user.getNickname());
+		existingUser.setGender(user.getGender());
 		if (user.getBirthDate() != null && !user.getBirthDate().trim().isEmpty()) {
 		    existingUser.setBirthDate(user.getBirthDate());
 		} else {
 		    existingUser.setBirthDate(null);
 		}
 		
-		return userDao.updateUser(existingUser) == 1;
+		return userDao.updateUser(existingUser) >= 0;
 	}
 
 	/**

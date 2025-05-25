@@ -10,18 +10,18 @@ import java.util.List;
  */
 public interface EventPostService {
 
-    // 게시글 등록
-    void createPost(EventPost post, List<MultipartFile> files);
+	// 게시글 등록
+	void createPost(EventPost post, MultipartFile thumbnail, List<MultipartFile> files);
 
-    // 게시글 조회
-    EventPost getPost(Long id);
+	// 게시글 조회
+	EventPost getPost(Long id);
 
-    // 전체 게시글 조회
-    List<EventPost> getAllPosts();
+	// 전체 게시글 조회
+	List<EventPost> getAllPosts();
 
-    // 게시글 수정
-    void updatePost(EventPost post);
+	// 게시글 수정
+	void updatePost(EventPost post);
 
-    // 게시글 삭제
-    void deletePost(Long id);
+	// 게시글 삭제
+	void deletePost(Long id);
 }

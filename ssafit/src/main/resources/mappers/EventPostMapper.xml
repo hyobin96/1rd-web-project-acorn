@@ -5,55 +5,61 @@
 <mapper namespace="com.ssafy.ssafit.model.dao.EventPostDao">
 
 	<!-- 게시글 등록 -->
-    <insert id="insertPost" parameterType="EventPost" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO event_posts (title, content)
-        VALUES (#{title}, #{content})
-    </insert>
+	<insert id="insertPost" parameterType="EventPost"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO event_posts (title, content, start_date, end_date)
+		VALUES (#{title}, #{content}, #{startDate}, #{endDate})
+
+	</insert>
 
 	<!-- 게시글 조회 -->
-    <select id="selectPost" resultType="com.ssafy.ssafit.model.dto.EventPost">
-        SELECT * 
-        FROM event_posts
-        WHERE id = #{id}
-    </select>
+	<select id="selectPost"
+		resultType="com.ssafy.ssafit.model.dto.EventPost">
+		SELECT *
+		FROM event_posts
+		WHERE id = #{id}
+	</select>
 
 	<!-- 게시글 모두 조회 -->
-    <select id="selectAllPosts" resultType="com.ssafy.ssafit.model.dto.EventPost">
-        SELECT * 
-        FROM event_posts 
-        ORDER BY created_at DESC
-    </select>
+	<select id="selectAllPosts"
+		resultType="com.ssafy.ssafit.model.dto.EventPost">
+		SELECT *
+		FROM event_posts
+		ORDER BY created_at DESC
+	</select>
 
 	<!-- 게시글 수정 -->
-    <update id="updatePost">
-        UPDATE event_posts 
-        SET title = #{title}, content = #{content} 
-        WHERE id = #{id}
-    </update>
+	<update id="updatePost">
+		UPDATE event_posts
+		SET title = #{title}, content = #{content}, start_date =#{startDate}, end_date= #{endDate}
+		WHERE id = #{id}
+	</update>
 
 	<!-- 게시글 삭제 -->
-    <delete id="deletePost">
-        DELETE FROM event_posts 
-        WHERE id = #{id}
-    </delete>
+	<delete id="deletePost">
+		DELETE FROM event_posts
+		WHERE id = #{id}
+	</delete>
 
 	<!-- 파일 등록 -->
-    <insert id="insertFile">
-        INSERT INTO event_files (post_id, original_name, stored_name, file_path)
-        VALUES (#{postId}, #{originalName}, #{storedName}, #{filePath})
-    </insert>
+	<insert id="insertFile">
+        INSERT INTO event_files (post_id, original_name, stored_name, file_path, file_type, is_thumbnail)
+        VALUES (#{postId}, #{originalName}, #{storedName}, #{filePath}, #{fileType}, #{isThumbnail})
+
+	</insert>
 
 	<!-- 파일 조회 -->
-    <select id="selectFilesByPostId" resultType="com.ssafy.ssafit.model.dto.EventFile">
-        SELECT * 
-        FROM event_files 
-        WHERE post_id = #{postId}
-    </select>
+	<select id="selectFilesByPostId"
+		resultType="com.ssafy.ssafit.model.dto.EventFile">
+		SELECT *
+		FROM event_files
+		WHERE post_id = #{postId}
+	</select>
 
 	<!-- 파일 삭제 -->
-    <delete id="deleteFilesByPostId">
-        DELETE FROM event_files 
-        WHERE post_id = #{postId}
-    </delete>
+	<delete id="deleteFilesByPostId">
+		DELETE FROM event_files
+		WHERE post_id = #{postId}
+	</delete>
 
 </mapper>
