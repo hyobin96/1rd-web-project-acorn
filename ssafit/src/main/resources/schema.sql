@@ -1,3 +1,4 @@
+ 
 DROP DATABASE IF EXISTS ssafit;
 
 CREATE DATABASE IF NOT EXISTS ssafit;
@@ -37,7 +38,6 @@ CREATE TABLE playlist_items (
     playlist_id BIGINT NOT NULL,
     video_id VARCHAR(20) NOT NULL, -- 동영상의 고유 식별자
     thumbnails VARCHAR(100) NOT NULL,
-    title VARCHAR(100) NOT NULL,
     memo TEXT, 
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE
 );
@@ -114,6 +114,17 @@ CREATE TABLE shopping_posts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS playlist_items_memos;
+
+CREATE TABLE playlist_items_memos (
+	`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `playlist_items_id` bigint NOT NULL,
+    `memo` text,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시각',
+	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 시각',
+    CONSTRAINT `playlist_items_idfk_1` FOREIGN KEY (`playlist_items_id`) REFERENCES `playlist_items` (`id`) ON DELETE CASCADE
+);
+
 use ssafit;
 
 ALTER TABLE users
@@ -124,3 +135,18 @@ ADD COLUMN gender ENUM('M', 'F', 'O') DEFAULT NULL COMMENT '성별(M:남성, F:�
 ADD COLUMN birth_date DATE DEFAULT NULL COMMENT '생년월일';
 
 ALTER TABLE users MODIFY gender VARCHAR(10);
+
+ALTER TABLE event_posts
+ADD COLUMN start_date DATE COMMENT '행사 시작일' AFTER content,
+ADD COLUMN end_date DATE COMMENT '행사 종료일' AFTER start_date;
+
+ALTER TABLE event_files
+ADD COLUMN file_type VARCHAR(100) COMMENT '파일의 역할 구분 (썸네일, 컨텐츠 이미지 등)' AFTER uploaded_at,
+ADD COLUMN is_thumbnail BOOLEAN DEFAULT FALSE COMMENT '썸네일 여부' AFTER file_type;
+
+ALTER TABLE event_posts
+MODIFY COLUMN content TEXT NULL COMMENT '게시글 텍스트 내용 (선택사항)';
+
+UPDATE users
+SET is_admin = true
+WHERE username = 'admin';
