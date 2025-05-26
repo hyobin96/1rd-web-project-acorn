@@ -73,7 +73,8 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
                 console.log(err)
             }
             alert("플레이리스트 등록 성공")
-
+            title.value = ''
+            link.value = ''
         } catch (err) {
             alert("유튜브 api 요청 실패")
             console.log(err)
