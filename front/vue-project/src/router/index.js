@@ -90,7 +90,7 @@ const router = createRouter({
   ],
 })
 
-const publicPages = ['/login', '/register']
+const publicPages = ['/login', '/regist']
 
 router.beforeEach(async (to, from) => {
   if (publicPages.includes(to.path)) {

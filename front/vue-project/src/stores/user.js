@@ -14,7 +14,7 @@ export const useUserStores = defineStore('user-stores', () => {
     const role = ref('')
     const profileImage = ref(defaultProfile)
 
-    // 로그인 과정정
+    // 로그인 과정
     const login = async (password) => {
         let message = ''
         try {
@@ -35,6 +35,7 @@ export const useUserStores = defineStore('user-stores', () => {
             nickname.value = data.nickname
             email.value = data.email
             role.value = data.role
+            
             profileImage.value = url + data.profileImage
             message = ''
             router.push({ name: 'sidebar' })

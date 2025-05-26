@@ -3,7 +3,7 @@
     <input
       v-model="playlistStore.title"
       type="text"
-      placeholder="플레이리스트 이름"
+      placeholder="플레이리스트 이름을 입력해주세요"
       class="input-box"
     />
   </div>

@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    src: url('./fonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
+        url('./fonts/SpoqaHanSansNeo-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    src: url('./fonts/SpoqaHanSansNeo-Bold.woff2') format('woff2'),
+        url('./fonts/SpoqaHanSansNeo-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+:root {
+  --bs-font-sans-serif: 'Spoqa Han Sans Neo', sans-serif;
+}

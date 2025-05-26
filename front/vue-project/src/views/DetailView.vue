@@ -47,7 +47,7 @@ const playlistTitle = computed(() => {
 
 <style scoped>
 .playlist-name {
-    width: 1200px;
+    width: 1262.5px;
     height: 215px;
     border: 1px solid navajowhite;
     margin: 0 auto;

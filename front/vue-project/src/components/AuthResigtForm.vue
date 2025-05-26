@@ -1,33 +1,33 @@
 <template>
-    <div class="container">
-        <h2>회원가입</h2>
-        <br>
-        <form @submit.prevent="regist">
-            <div class="d-grid col-8 mx-auto gap-2">
-                <input class="form-control form-control-lg" type="text" placeholder="아이디" v-model="form.username"
-                    @blur="handlerUsername" />
+    <div class="signup-container">
+        <div class="title">
+            <h2>회원가입</h2>
+        </div>
+        <form @submit.prevent="regist" class="form-container">
+            <div class="content">
+                <input type="text" placeholder="아이디" v-model="form.username" @blur="handlerUsername" class="id" />
                 <span>{{ errors.username }}</span>
 
-                <input class="form-control form-control-lg" type="password" placeholder="비밀번호" v-model="form.password"
-                    @blur="handlerPassword" />
+                <input type="password" placeholder="비밀번호" v-model="form.password" @blur="handlerPassword" class="pw" />
                 <span>{{ errors.password }}</span>
 
-                <input class="form-control form-control-lg" type="password" placeholder="비밀번호 확인"
-                    v-model="form.confirmPassword" @blur="handlerConfirmPassword" />
+                <input type="password" placeholder="비밀번호 확인" v-model="form.confirmPassword"
+                    @blur="handlerConfirmPassword" class="check-pw" />
                 <span>{{ errors.confirmPassword }}</span>
 
-                <input class="form-control form-control-lg" type="text" placeholder="닉네임" v-model="form.nickname"
-                    @blur="handlerNickname()" />
+                <input type="text" placeholder="닉네임" v-model="form.nickname" @blur="handlerNickname()"
+                    class="nickname" />
                 <span>{{ errors.nickname }}</span>
 
-                <input class="form-control form-control-lg" type="email" placeholder="이메일" v-model="form.email"
-                    @blur="handlerEmail()" />
+                <input type="email" placeholder="이메일" v-model="form.email" @blur="handlerEmail()" class="email" />
                 <span>{{ errors.email }}</span>
             </div>
             <br>
-            <div class="d-flex justify-content-center gap-2">
-                <button type="submit" class="btn btn-outline-info">등록</button>
-                <button type="reset" @click="router.push({ name: 'login' })" class="btn btn-outline-info">취소</button>
+            <div class="butttons">
+                <div class="signup"><button type="submit">회원가입하기</button></div>
+                <div class="check-has-id"><span>이미 아이디가 있으신가요?</span>
+                    <button type="reset" @click="router.push({ name: 'login' })">로그인</button>
+                </div>
             </div>
         </form>
 
@@ -114,7 +114,7 @@ const regist = async () => {
     }
     const { confirmPassword, ...payload } = form
     await axios.post(
-        'users',form,
+        'users', form,
     ).then(response => {
         alert('회원가입 성공!')
     }).catch(err => {
@@ -125,4 +125,77 @@ const regist = async () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.signup-container {
+    width: 500px;
+    margin: 120px auto;
+    height: 632.75px;
+    border: 1px solid yellow;
+    border-radius: 15px;
+}
+
+.title {
+    padding-top: 52px;
+    padding-bottom: 34px;
+    /* border: 1px solid violet; */
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content span {
+    color: rgb(138, 138, 138);
+    font-size: 14px;
+    margin-top: -8px;
+    margin-bottom: 4px;
+}
+
+.content>input {
+    width: 400px;
+    margin-bottom: 16px;
+    height: 43.9px;
+    border-radius: 4px;
+    padding-left: 15px;
+    border: 2px solid #b9b9b9;
+}
+
+.butttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 버튼 속성 초기화 */
+button {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.signup>button {
+    width: 400px;
+    height: 43.9px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding-left: 15px;
+    border: 2px solid #b9b9b9;
+}
+
+.check-has-id > span{
+    /* border: 1px solid firebrick; */
+    margin-right: 5px;
+}
+
+.check-has-id > button{
+    text-decoration: underline;
+}
+
+</style>
