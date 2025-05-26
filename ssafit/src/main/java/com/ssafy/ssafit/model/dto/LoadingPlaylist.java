@@ -7,6 +7,15 @@ public class LoadingPlaylist {
 	private String playlistItemTitle;
 	private String videoId;
 	private String thumbnails;
+	private String createdAt;
+	
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
 
 	public LoadingPlaylist() {
 		// TODO Auto-generated constructor stub

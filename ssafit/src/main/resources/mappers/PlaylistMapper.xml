@@ -26,7 +26,8 @@
 		pi.id AS playlistItemId,
 		pi.video_id, 
 		pi.thumbnails,
-		pi.title AS playlistItemTitle
+		pi.title AS playlistItemTitle,
+		p.created_at AS createdAt
 		FROM playlists p
 		LEFT JOIN playlist_items pi
 		ON p.id = pi.playlist_id

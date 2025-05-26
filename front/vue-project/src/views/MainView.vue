@@ -15,7 +15,7 @@
             <div class="playlist-list">
                 <div class="playlist-list-header">
                     <div class="playlist-count">
-                        <span class="playlist-list-header-menu">플레이리스트 7개</span>
+                        <span class="playlist-list-header-menu">플레이리스트 {{ playlistCount }}개</span>
                     </div>
                     <div class="drop-down">
                         <button class="category-filter-bar" type="button">
@@ -42,11 +42,14 @@ import Sidebar from '@/components/Sidebar.vue';
 const userStore = useUserStores()
 const playlistStore = usePlaylistStores()
 
+const playlistCount = computed(() => {
+    return playlistStore.playlistArr.length
+})
+
 onMounted(async () => {
     await playlistStore.getPlaylist()
     playlistStore.currentPlaylistId = 0
     playlistStore.currentPlaylistItemId = 0
-    console.log("onMounted", playlistStore.playlistArr)
 })
 
 </script>

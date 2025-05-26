@@ -50,4 +50,13 @@ public class AuthController {
 	public ResponseEntity<?> loginCheck(){
 		return ResponseEntity.ok().build();
 	}
+	
+	/**
+	 * 권한이 admin인지 체크합니다.
+	 * @return
+	 */
+	@GetMapping("/admin")
+	public ResponseEntity<?> adminCheck(){
+		return ResponseEntity.ok().build();
+	}
 }

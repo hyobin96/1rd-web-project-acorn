@@ -17,7 +17,7 @@ const router = createRouter({
       redirect: '/login',
       name: 'auth',
       component: () => import('../views/AuthView.vue'),
-      children:[
+      children: [
         {
           path: 'login',
           name: 'login',
@@ -65,7 +65,7 @@ const router = createRouter({
         {
           path: 'event-header',
           name: 'event-header',
-          component:  () => import('../components/EventBoardHeader.vue')
+          component: () => import('../components/EventBoardHeader.vue')
         }
       ]
     },
@@ -73,15 +73,16 @@ const router = createRouter({
       path: '/admin',
       name: 'adminpage',
       component: AdminView,
+      meta: { requiresAdmin: true },
       children: [
         {
           path: 'event-management',
           name: 'event-management',
-          component:  () => import('../components/EventManagementForm.vue')
-        },{
+          component: () => import('../components/EventManagementForm.vue')
+        }, {
           path: 'user-management',
           name: 'user-management',
-          component:  () => import('../components/UserList.vue')
+          component: () => import('../components/UserList.vue')
         },
 
       ]
@@ -91,21 +92,37 @@ const router = createRouter({
 
 const publicPages = ['/login', '/register']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   if (publicPages.includes(to.path)) {
-    return next()
+    return true
   }
 
-  try {
-    // 서버에 인증 확인 요청
-    await axios.get('auth')  // 이 API는 인증이 안되면 403 반환해야 함
-    next()
-  } catch (err) {
-    if (err.response?.status === 403) {
-      return next('/')  // 인증 안 된 경우 로그인 페이지로
+  // 관리자인지 확인
+  if (to.meta.requiresAdmin) {
+    try {
+      await axios.get('auth/admin')
+      return true
+    } catch (err) {
+      if (err.response?.status === 403) {
+        return '/'
+      }
+      console.error('인증 확인 실패:', err)
+      return false
     }
-    console.error('인증 확인 실패:', err)
-    next(false)  // 기타 에러 시 페이지 이동 막기
+  }
+  // 로그인했는지 확인
+  else {
+    try {
+      // 서버에 인증 확인 요청
+      await axios.get('auth')  // 이 API는 인증이 안되면 403 반환해야 함
+      return true
+    } catch (err) {
+      if (err.response?.status === 403) {
+        return '/'  // 인증 안 된 경우 로그인 페이지로
+      }
+      console.error('인증 확인 실패:', err)
+      return false  // 기타 에러 시 페이지 이동 막기
+    }
   }
 })
 
