@@ -1,5 +1,11 @@
 <template>
-    <nav class="sidebar-container">
+    <nav class="sidebar-container" v-if="visible">
+        <div class="menubar" @click="emit('closeSidebar')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                width="18" height="18">
+                <path
+                    d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
+            </svg>
+        </div>
         <div id="sidebar">
             <div class="account">
                 <img class="profile-photo" :src="store.profileImage" />
@@ -16,13 +22,6 @@
                     </ModalView>
                 </div>
 
-                <!-- <div class="dashboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16"
-                        height="16">
-                        <path
-                            d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64L0 400c0 44.2 35.8 80 80 80l400 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 416c-8.8 0-16-7.2-16-16L64 64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z" />
-                    </svg>
-                    <span>대시보드</span>
-                </div> -->
                 <div class="event-page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18"
                         height="18">
                         <path
@@ -30,13 +29,7 @@
                     </svg>
                     <span @click="router.push('/events')" style="cursor: pointer;">이벤트</span>
                 </div>
-                <!-- <div class="challenge-age"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="16"
-                        height="16">
-                        <path
-                            d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM609.3 512l-137.8 0c5.4-9.4 8.6-20.3 8.6-32l0-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2l61.4 0C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z" />
-                    </svg>
-                    <span>소셜</span>
-                </div> -->
+
             </div>
             <div class="user-menu">
                 <div class="mypage">
@@ -67,6 +60,12 @@ const store = useUserStores()
 const router = useRouter()
 const showModal = ref(false)
 
+const props = defineProps({
+    visible: Boolean
+})
+
+const emit = defineEmits(['closeSidebar'])
+
 </script>
 
 <style scoped>
@@ -81,9 +80,23 @@ body {
     width: 280px;
     height: 100vh;
     border: 1px solid red;
-    position: absolute;
+    position: fixed;
+    /* 절대 위치가 아니라 화면 고정 */
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+    /* 투명하게 보일 가능성 방지 */
     padding-left: 12px;
     padding-right: 12px;
+}
+
+.menubar {
+    /* border: 1px solid palevioletred; */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer; 
 }
 
 #sidebar {
@@ -101,7 +114,8 @@ body {
     width: 100px;
     height: 100px;
     margin-bottom: 12px;
-    border-radius: 50%; /* 프사 원형 */
+    border-radius: 50%;
+    /* 프사 원형 */
 }
 
 .account {
@@ -151,15 +165,13 @@ body {
 }
 
 .create-playlist,
-.event-page
-{
+.event-page {
     /* border: 1px solid wheat; */
     margin-top: 8px;
 }
 
 .mypage,
-.logout
-{
+.logout {
     /* border: 1px solid red; */
     margin-top: 8px;
 }

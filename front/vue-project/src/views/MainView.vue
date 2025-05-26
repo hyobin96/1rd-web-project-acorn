@@ -1,6 +1,11 @@
 <template>
     <div>
-        <Sidebar />
+        <div class="menubar" @click="isSidebarVisible = !isSidebarVisible"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="18" height="18">
+                <path
+                    d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
+            </svg>
+        </div>
+        <Sidebar :visible="isSidebarVisible" @closeSidebar="isSidebarVisible = false" />
         <nav class="navbar">
             <div class="logo-container"><a class="logo-icon"><img class="logo-img" src="@/assets/logo.png"
                         alt="LOGO" /></a></div>
@@ -10,7 +15,7 @@
         </div>
         <main>
             <div class="favorite-playlist-section">
-                <MainPlaylistItem v-for="(playlist, index) in playlistStore.playlistArr.slice(0, 3)" :index="index" />
+                <MainPlaylistItem />
             </div>
             <div class="playlist-list">
                 <div class="playlist-list-header">
@@ -41,6 +46,8 @@ import Sidebar from '@/components/Sidebar.vue';
 
 const userStore = useUserStores()
 const playlistStore = usePlaylistStores()
+
+const isSidebarVisible = ref(false)
 
 const playlistCount = computed(() => {
     return playlistStore.playlistArr.length
@@ -117,8 +124,9 @@ onMounted(async () => {
 }
 
 .favorite-playlist-section {
-    border: 1px solid darkblue;
-    width: fit-content;
+    border: 1px solid yellow;
+    /* width: fit-content; */
+    width: 1262.5px;
     margin: 0 auto;
 }
 
@@ -189,5 +197,12 @@ span.playlist-title {
 
 .category-filter-bar {
     padding-right: 15px;
+}
+
+.menubar {
+    position: fixed;  /* 화면 고정 위치 */
+    top: 10px;         /* 화면 위에서 20px 아래 */
+    left: 10px;       /* 화면 오른쪽에서 20px 떨어짐 */
+    cursor: pointer;   /* 커서가 손 모양으로 변경 */
 }
 </style>
