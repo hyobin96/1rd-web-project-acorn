@@ -1,3 +1,4 @@
+import EventBoardHeader from '@/components/EventBoardHeader.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import AdminView from '@/views/AdminView.vue'
 import CreatePlaylistView from '@/views/CreatePlaylistView.vue'

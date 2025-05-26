@@ -16,7 +16,7 @@ import com.ssafy.ssafit.model.service.AuthService;
  */
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
 public class AuthController {
 	@Autowired
 	private AuthService authService;
@@ -30,5 +30,14 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request){
 		return authService.login(request);
+	}
+	
+	/**
+	 * ResponseEntity 헤더에 쿠키를 즉시만료로 하여 반환합니다.
+	 * @return ResponseEntity
+	 */
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(){
+		return authService.logout();
 	}
 }

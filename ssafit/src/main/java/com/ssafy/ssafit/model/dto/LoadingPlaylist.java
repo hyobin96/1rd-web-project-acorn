@@ -4,21 +4,12 @@ public class LoadingPlaylist {
 	private long playlistId;
 	private String playlistTitle;
 	private long playlistItemId;
+	private String playlistItemTitle;
 	private String videoId;
 	private String thumbnails;
 
 	public LoadingPlaylist() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public LoadingPlaylist(long playlistId, String playlistTitle, long playlistItemId, String videoId,
-			String thumbnails) {
-		super();
-		this.playlistId = playlistId;
-		this.playlistTitle = playlistTitle;
-		this.playlistItemId = playlistItemId;
-		this.videoId = videoId;
-		this.thumbnails = thumbnails;
 	}
 
 	public long getPlaylistId() {
@@ -61,10 +52,19 @@ public class LoadingPlaylist {
 		this.thumbnails = thumbnails;
 	}
 
+	public String getPlaylistItemTitle() {
+		return playlistItemTitle;
+	}
+
+	public void setPlaylistItemTitle(String playlistItemTitle) {
+		this.playlistItemTitle = playlistItemTitle;
+	}
+
 	@Override
 	public String toString() {
 		return "LoadingPlaylist [playlistId=" + playlistId + ", playlistTitle=" + playlistTitle + ", playlistItemId="
-				+ playlistItemId + ", videoId=" + videoId + ", thumbnails=" + thumbnails + "]";
+				+ playlistItemId + ", playlistItemTitle=" + playlistItemTitle + ", videoId=" + videoId + ", thumbnails="
+				+ thumbnails + "]";
 	}
 
 }

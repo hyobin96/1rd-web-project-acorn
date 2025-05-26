@@ -37,6 +37,7 @@ CREATE TABLE playlist_items (
     playlist_id BIGINT NOT NULL,
     video_id VARCHAR(20) NOT NULL, -- 동영상의 고유 식별자
     thumbnails VARCHAR(100) NOT NULL,
+    title VARCHAR(100) NOT NULL,
     memo TEXT, 
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE
 );
@@ -121,3 +122,5 @@ ADD COLUMN profile_image VARCHAR(500) COMMENT '유저 프로필 이미지 경로
 ALTER TABLE users
 ADD COLUMN gender ENUM('M', 'F', 'O') DEFAULT NULL COMMENT '성별(M:남성, F:여성, O:선택하지 않음)',
 ADD COLUMN birth_date DATE DEFAULT NULL COMMENT '생년월일';
+
+ALTER TABLE users MODIFY gender VARCHAR(10);

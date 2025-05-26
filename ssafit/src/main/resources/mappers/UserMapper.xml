@@ -40,7 +40,7 @@
 
 	<!-- username이 일치하고 소프트삭제되지 않은 회원을 찾아 username과 암호화된 password, 권한을 반환합니다. -->
 	<select id="selectUser" parameterType="String" resultType="User">
-		SELECT id, username, password, is_admin
+		SELECT *
 		FROM users
 		WHERE username =
 		#{username} AND is_deleted = FALSE;

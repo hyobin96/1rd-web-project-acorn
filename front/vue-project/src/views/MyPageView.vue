@@ -66,7 +66,9 @@
 import { ref, onMounted } from "vue";
 import api from "@/api/axios";
 import defaultImg from "@/assets/default-profile.png"; //기본 프로필 이미지
+import { useUserStores } from "@/stores/user";
 
+const store = useUserStores()
 const imgSrc = ref(defaultImg);
 const nickname = ref("");
 const gender = ref("");
@@ -82,7 +84,7 @@ const BASE_URL = "https://localhost:9443";
 async function loadUserInfo() {
     try {
         const res = await api.get("/users/me");
-        imgSrc.value = res.data.profileImage
+        store.profileImage = imgSrc.value = res.data.profileImage
             ? `${BASE_URL}${res.data.profileImage}?t=${Date.now()}`
             : defaultImg;
 
@@ -123,15 +125,17 @@ async function handleSubmit(e) {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             console.log(imgSrc.value);
-
-            await loadUserInfo();
-
+            store.imgSrc = imgSrc.value
+            
         }
-
+        
         await api.patch("/users/me", {
+            nickname: nickname.value,
             gender: gender.value,
             birthDate: birthDate.value
         });
+
+        await loadUserInfo();
         alert("성별/생년월일 정보 수정 완료~!")
     } catch (err) {
         console.log("에러 메시지: ", err.response.data);

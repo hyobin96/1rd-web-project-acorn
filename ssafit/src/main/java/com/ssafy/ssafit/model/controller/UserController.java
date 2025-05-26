@@ -84,7 +84,6 @@ public class UserController {
      public ResponseEntity<?> updateMyInfo(@RequestBody User user){
     	 //1. 인증된 사용자 정보 추출
     	 String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    	 
     	 //2. Service에 업데이트 요청
     	 boolean isUpdated = userService.updateUserInfo(username, user);
     	 
@@ -106,6 +105,7 @@ public class UserController {
     	 
     	 if (profileImageUrl != null) {
     	        return ResponseEntity.ok(Map.of("profileImageUrl", profileImageUrl));
+    	        
     	    } else {
     	        return ResponseEntity.internalServerError().body(Map.of("error", "이미지 업로드 실패"));
     	    }
