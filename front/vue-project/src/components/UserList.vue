@@ -18,7 +18,7 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.nickname }}</td>
                     <td>{{ formatDate(user.createdAt) }}</td>
-                    <td><button @click="editEvent(user)">{{ user.isDeleted === true || user.isDeleted === 'true' || user.isDeleted === 1 || user.isDeleted === '1' ? '정지 회원' : '정상 회원' }}</button></td>
+                    <td><button @click="editEvent(user)"> {{ user.isDeleted ? '정지 회원' : '정상 회원' }}</button></td>
                 </tr>
             </tbody>
         </table>
@@ -40,37 +40,38 @@ function formatDate(dateStr) {
 
 /* 사용자 정보 로딩하기 */
 async function loadUserInfo() {
-  try {
-    const { data } = await api.get("/users");
-  console.log("서버에서 받아온 원본 데이터:", data); 
-    users.value = data.map(user => ({
-      ...user,
-      isDeleted: user.isDeleted === true || user.isDeleted === 'true' || user.isDeleted === 1 || user.isDeleted === '1'
-    }));
+    try {
+        const { data } = await api.get("/users");
+        console.log("서버에서 받아온 원본 데이터:", data);
+        users.value = data.map(user => ({
+            ...user,
+            isDeleted: user.isDeleted === true || user.isDeleted === 'true' || user.isDeleted === 1 || user.isDeleted === '1'
+        }));
 
-  } catch (err) {
-    console.log(err.response?.data || err.message);
-  }
+    } catch (err) {
+        console.log(err.response?.data || err.message);
+    }
 }
 
 /* 사용자 정지하기 */
 async function editEvent(user) {
-    if (user.isDeleted) {
-        alert('이미 정지된 사용자입니다.');
-        return;
-    }
+    
+    const isRestore = user.isDeleted;
+    const action = isRestore ? '정상' : '정지';
+    const url = user.isDeleted
+    ? `/users/${user.id}/restore` //복구
+    : `/users/${user.id}`; //정지
 
-    if (!confirm('정지 처리 하시겠습니까?')) return;
+    if (!confirm(`${action} 처리 하시겠습니까?`)) return;
     try {
-        await api.put(`/users/${user.id}`)
-        console.log(`유저는 왜 정지가 계속 되는가?` ,user.isDeleted);
-        
-        alert('정지 처리 완료!')
-        await loadUserInfo(); 
+        await api.put(url)
+
+        alert(`${action} 처리 완료!`)
+        await loadUserInfo();
 
     } catch (err) {
         console.log(err.response?.data || err.message);
-        alert('정지 처리 실패!');
+        alert(`${action} 처리 실패!`);
 
     }
 }
