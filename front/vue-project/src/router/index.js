@@ -7,6 +7,7 @@ import EventBoardView from '@/views/EventBoardView.vue'
 import MainView from '@/views/MainView.vue'
 import MyPageView from '@/views/MyPageView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import axios from '@/api/axios'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -86,6 +87,26 @@ const router = createRouter({
       ]
     }
   ],
+})
+
+const publicPages = ['/login', '/register']
+
+router.beforeEach(async (to, from, next) => {
+  if (publicPages.includes(to.path)) {
+    return next()
+  }
+
+  try {
+    // 서버에 인증 확인 요청
+    await axios.get('auth')  // 이 API는 인증이 안되면 403 반환해야 함
+    next()
+  } catch (err) {
+    if (err.response?.status === 403) {
+      return next('/')  // 인증 안 된 경우 로그인 페이지로
+    }
+    console.error('인증 확인 실패:', err)
+    next(false)  // 기타 에러 시 페이지 이동 막기
+  }
 })
 
 export default router

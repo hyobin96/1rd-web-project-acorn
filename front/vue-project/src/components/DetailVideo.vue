@@ -1,22 +1,64 @@
 <template>
     <div class="video-container">
-        <iframe :src="src" frameborder="0"></iframe>
+        <iframe :src="src" ref="iframeRef" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
     </div>
     <div class="video-title">{{ title }}</div>
 </template>
 
 <script setup>
-import { compile, computed, onMounted, ref } from 'vue';
-import { usePlaylistStores } from '@/stores/playlist';
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { usePlaylistStores } from '@/stores/playlist'
+
 const store = usePlaylistStores()
+const iframeRef = ref(null)
+let player = null
+let intervalId = null
+
 const src = computed(() => {
-    return `https://www.youtube.com/embed/${store.playlistArr[store.currentPlaylistId][store.currentPlaylistItemId].videoId}`
-})
-const title = computed(() => {
-    return store.playlistArr[store.currentPlaylistId][store.currentPlaylistItemId].playlistItemTitle
+    const item = store.playlistArr[store.currentPlaylistId][store.currentPlaylistItemId]
+    return `https://www.youtube.com/embed/${item.videoId}?enablejsapi=1`
 })
 
+const title = computed(() => {
+    const item = store.playlistArr[store.currentPlaylistId][store.currentPlaylistItemId]
+    return item.playlistItemTitle
+})
+
+const setupPlayer = () => {
+    player = new window.YT.Player(iframeRef.value, {
+        events: {
+            onReady: () => {
+                intervalId = setInterval(() => {
+                    const current = player.getCurrentTime()
+                    const duration = player.getDuration()
+                    if (duration > 0) {
+                        store.progress = (current / duration) * 100
+                        store.duration = duration
+                    }
+                }, 500)
+            }
+        }
+    })
+}
+
+onMounted(() => {
+    if (!window.YT) {
+        const tag = document.createElement('script')
+        tag.src = 'https://www.youtube.com/iframe_api'
+        document.body.appendChild(tag)
+        window.onYouTubeIframeAPIReady = setupPlayer
+    } else {
+        setupPlayer()
+    }
+})
+
+onUnmounted(() => {
+    clearInterval(intervalId)
+})
 </script>
+
 
 <style scoped>
 iframe {
@@ -33,17 +75,16 @@ iframe {
     align-items: center;
     width: 900px;
     height: 506.3px;
-    border: 1px solid red;
+    border: 2px solid #42b983; /* Vue 기본 테마 색 */
 }
 
 .video-title {
     width: 900px;
     height: 28px;
     font-size: 20px;
-    /* border: 1px solid rebeccapurple; */
     margin-top: 12px;
     margin-bottom: 24px;
     font-weight: 700;
-    word-break: break-all;
+    word-break: break-word;
 }
 </style>

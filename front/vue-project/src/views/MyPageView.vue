@@ -47,7 +47,7 @@
                     <label for="birthdate">생년월일</label>
                     <input type="date" id="birthdate" name="birthdate" v-model="birthDate" />
                 </div>
-                <div class="withdraw">
+                <div class="withdraw" @click="store.withdraw">
                     <label>
                         탈퇴하기
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="16" height="16">
