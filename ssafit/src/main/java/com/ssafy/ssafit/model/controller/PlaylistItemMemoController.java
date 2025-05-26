@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.ssafit.model.dto.PlaylistItemMemo;
 import com.ssafy.ssafit.model.service.PlaylistItemMemoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/memo")
 @CrossOrigin("*")
@@ -31,6 +33,7 @@ public class PlaylistItemMemoController {
 	 * @param playlistItemsId
 	 * @return
 	 */
+	@Operation(summary = "메모 조회", description = "해당 영상에 등록한 메모들을 조회합니다.")
 	@GetMapping("{playlistItemsId}")
 	public ResponseEntity<?> getMemos(@PathVariable long playlistItemsId) {
 		List<PlaylistItemMemo> list = memoService.getMemos(playlistItemsId);
@@ -46,6 +49,7 @@ public class PlaylistItemMemoController {
 	 * @param memo
 	 * @return
 	 */
+	@Operation(summary = "메모 등록", description = "해당 영상에 메모를 등록합니다.")
 	@PostMapping
 	public ResponseEntity<?> registMemo(@RequestBody PlaylistItemMemo memo) {
 		return memoService.registMemo(memo) ? ResponseEntity.status(HttpStatus.CREATED).build()
@@ -57,6 +61,7 @@ public class PlaylistItemMemoController {
 	 * @param memo
 	 * @return
 	 */
+	@Operation(summary = "메모 수정")
 	@PutMapping
 	public ResponseEntity<?> modifyMemo(@RequestBody PlaylistItemMemo memo) {
 		return memoService.modifyMemo(memo) ? ResponseEntity.ok(Map.of("message", "수정 완료"))
@@ -68,6 +73,7 @@ public class PlaylistItemMemoController {
 	 * @param id
 	 * @return
 	 */
+	@Operation(summary = "메모 삭제")
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> removeMemo(@PathVariable long id) {
 		return memoService.removeMemo(id) ? ResponseEntity.ok().build()

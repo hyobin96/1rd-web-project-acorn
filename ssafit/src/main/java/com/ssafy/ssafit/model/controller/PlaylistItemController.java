@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.ssafit.model.dto.PlaylistItem;
 import com.ssafy.ssafit.model.service.PlaylistItemService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 
 /**
  * playlist-item에 접근하기 위한 controller
@@ -26,6 +28,7 @@ public class PlaylistItemController {
      * @param playlistId
      * @return 200코드와 List<PlaylistItem>
      */
+    @Operation(summary = "영상 목록 조회", description = "playlist에 담긴 영상들을 조회합니다.")
     @GetMapping("/{playlistId}")
     public ResponseEntity<List<PlaylistItem>> getItems(@PathVariable Long playlistId) {
         return ResponseEntity.ok(service.getItems(playlistId));
@@ -36,6 +39,7 @@ public class PlaylistItemController {
      * @param items
      * @return 201 코드
      */
+    @Operation(summary = "영상 등록", description = "playlistItem들을 db에 등록합니다.")
     @PostMapping
     public ResponseEntity<?> addItem(@RequestBody List<PlaylistItem> items) {
         service.addItem(items);
@@ -47,6 +51,7 @@ public class PlaylistItemController {
      * @param id
      * @return 204 코드
      */
+    @Operation(summary = "영상 삭제", description = "id가 일치하는 playlistItem을 삭제합니다.")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteItem(@PathVariable Long id) {
         service.deleteItem(id);
