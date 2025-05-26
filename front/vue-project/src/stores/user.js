@@ -61,6 +61,21 @@ export const useUserStores = defineStore('user-stores', () => {
         profileImage.value = defaultProfile
     }
 
-    return { userId, username, role, login, nickname, email, profileImage, logout }
+    // 회원탈퇴 과정
+    const withdraw = async () => {
+        try{
+            await axios.put(
+                `users/${userId.value}`,
+            )
+        } catch(err){
+            console.log(err)
+        }
+        alert('탈퇴 완료')
+        reset()
+        router.replace('/')
+    }
+
+    return { userId, username, role, login, nickname, 
+        email, profileImage, logout, withdraw }
 }, { persist: true })
 // 저장 유지

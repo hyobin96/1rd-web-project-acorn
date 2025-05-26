@@ -117,11 +117,17 @@ public class UserController {
 	 * @param user
 	 * @return 성공 시 200, 실패 시 500
 	 */
-	@PutMapping("{userId}")
-	public ResponseEntity<?> withdrawUser(@PathVariable("userId") int id) {
-		return userService.withdrawUser(id) ? ResponseEntity.ok().build()
-				: ResponseEntity.internalServerError().body("처리 중 오류가 발생했습니다.");
-	}
+ 	@PutMapping("{userId}")
+ 	public ResponseEntity<?> withdrawUser(@PathVariable("userId") int id) {
+ 		return userService.withdrawUser(id) ? ResponseEntity.ok().build()
+ 				: ResponseEntity.internalServerError().body("처리 중 오류가 발생했습니다.");
+ 	}
+ 	
+//	@PutMapping("{userId}")
+//	public ResponseEntity<?> withdrawUser(@PathVariable("userId") int id) {
+//		return userService.withdrawUser(id) ? ResponseEntity.ok().build()
+//				: ResponseEntity.internalServerError().body("처리 중 오류가 발생했습니다.");
+//	}
 
 	/**
 	 * 회원탈퇴, 영구 삭제

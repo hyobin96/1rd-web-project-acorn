@@ -15,6 +15,8 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
     const currentPlaylistItemId = ref(0)
 
     const playlistArr = ref([])
+    const progress = ref(0) //진행률
+    const duration = ref(0) //전체 시간
 
     // CreatePlaylistName 컴포넌트의 플레이리스트 제목
     const title = ref('')
@@ -109,6 +111,6 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
 
     return {
         title, link, playlistId, savePlaylist, getPlaylist, playlistArr,
-        currentPlaylistItemId, currentPlaylistId, moveNextPlay,
+        currentPlaylistItemId, currentPlaylistId, moveNextPlay, progress, duration,
     }
 }, { persist: true })

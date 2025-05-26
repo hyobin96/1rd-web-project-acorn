@@ -6,7 +6,6 @@
       placeholder="플레이리스트 이름"
       class="input-box"
     />
-    <button class="input-btn" @click="logName">입력</button>
   </div>
 </template>
 
@@ -31,15 +30,15 @@ function logName() {
   flex: 1;
   padding: 8px;
   border: 1px solid #ccc;
-  border-right: none;
-  font-size: 13px;
+  /* border-right: none; */
+  font-size: 16px;
 }
 
-.input-btn {
+/* .input-btn {
   background-color: #bfbfbf;
   color: white;
   border: none;
   padding: 0 12px;
   font-size: 13px;
-}
+} */
 </style>
