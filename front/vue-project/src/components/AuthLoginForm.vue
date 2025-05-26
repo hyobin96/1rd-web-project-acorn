@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="login-container">
-            <h2>로고</h2>
+            <h2>arcon</h2>
         </div>
         <div class="id-container">
             <input type="text" id="id" name="id" v-model="store.username" autocomplete="off" placeholder="아이디를 입력해주세요">
@@ -35,9 +35,19 @@ const router = useRouter()
 
 </script>
 
+<style>
+@font-face {
+    font-family: 'Cafe24Danjunghae';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Danjunghae.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+
 <style scoped>
+
 .container {
-    border: 1px solid darkblue;
+    /* border: 1px solid darkblue; */
     width: 500px;
     margin: 120px auto;
     height: 632.75px;
@@ -47,12 +57,22 @@ const router = useRouter()
     /* 세로 중앙 정렬 */
     align-items: center;
     /* 가로 중앙 정렬 */
-    /* background: #D0D7D9; */
+    background: #fcfdd0;
+    border-radius: 15px;
 }
 
 .login-container {
     /* margin-top: ; */
-    padding-bottom: 20px;
+    margin-bottom: 34px;
+}
+
+/* 로고 크기 */
+h2 {
+    font-family: 'Cafe24Danjunghae';
+    font-size: 40px;
+    letter-spacing: -6px;
+    /* 자간 줄이기 */
+    color: #353535;
 }
 
 /* 인풋 창 크기 조정 */
@@ -94,15 +114,16 @@ button {
 .login-button {
     width: 400px;
     height: 43.9px;
-    border: 2px solid #b9b9b9; 
+    /* border: 2px solid #b9b9b9; */
     display: flex;
     justify-content: center;
-    background: #9CA6A4;
+    background: #e49732;
     /* #F2F2F2 */
+    border-radius: 4px;
 }
 
 .login-button>button {
-    color: #F2F2F2;
+    color: #353535;
     font-weight: 700;
     width: 100%;
     height: 100%;

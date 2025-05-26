@@ -8,17 +8,6 @@
 </script>
 
 <style>
-/* html{
-    display: flex;
-    width: 100%;
-    margin:auto;
-    justify-content:center;
-} */
-/* .container {
-    display: flex;
-    justify-content: center;
-} */
-
 
 @font-face {
     font-family: 'Spoqa Han Sans Neo';
