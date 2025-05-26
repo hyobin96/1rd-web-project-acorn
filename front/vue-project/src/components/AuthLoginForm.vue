@@ -57,13 +57,13 @@ const router = useRouter()
     /* 세로 중앙 정렬 */
     align-items: center;
     /* 가로 중앙 정렬 */
-    background: #fcfdd0;
     border-radius: 15px;
 }
 
 .login-container {
     /* margin-top: ; */
     margin-bottom: 34px;
+    /* border: 1px solid tan; */
 }
 
 /* 로고 크기 */
