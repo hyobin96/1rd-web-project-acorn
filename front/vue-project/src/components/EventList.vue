@@ -146,7 +146,7 @@ onMounted(() => {
 <style scoped>
 table {
     border-collapse: collapse;
-    /*테투가 겹치는 것 방지 */
+    /*테두리가 겹치는 것 방지 */
 }
 
 th,

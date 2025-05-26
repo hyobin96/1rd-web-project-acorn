@@ -42,6 +42,7 @@ public class SecurityConfig {
                         "/v3/api-docs/**", "/api/users/check-username",
                         "/api/users/check-nickname", "/api/users/check-email").permitAll()
             	.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+            	.requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
             	.requestMatchers(HttpMethod.DELETE, "/api/users").hasRole("ADMIN")
             	.requestMatchers("/api/events").hasRole("ADMIN")
                 .anyRequest().authenticated()
