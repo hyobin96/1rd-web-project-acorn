@@ -3,8 +3,8 @@
         <div class="event-board-header">
             <div class="total-event-count">전체 {{ totalCount }}건</div>
             <ul>
-                <li><a>진행중</a></li>
-                <li><a>종료</a></li>
+                <li><a @click="$emit('changeTab', 'inProgress')">진행중</a></li>
+                <li><a @click="$emit('changeTab', 'ended')">종료</a></li>
             </ul>
         </div>
     </div>
@@ -17,6 +17,10 @@ defineProps({
         type: Number,
     }
 })
+
+defineEmits(['changeTab'])
+
+
 
 </script>
 
