@@ -19,6 +19,8 @@ import com.ssafy.ssafit.model.dto.LoadingPlaylist;
 import com.ssafy.ssafit.model.dto.Playlist;
 import com.ssafy.ssafit.model.service.PlaylistService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/playlist")
 @CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
@@ -31,17 +33,20 @@ public class PlaylistController {
 	 * @return 각 playlist에 해당하는 item들을 map에 담아 반환합니다.
 	 * 		   key는 playlistId이고 value는 List<LoadingPlaylist> 입니다.
 	 */
+	@Operation(summary = "플레이리스트 가져오기", description = "해당 유저가 등록한 playlist와 item들을 가져옵니다.")
 	@GetMapping
 	public ResponseEntity<Map<Long, List<LoadingPlaylist>>> readPlaylist() {
 		return ResponseEntity.ok(playlistService.getPlaylist());
 	}
-
+	
+	@Operation(summary = "플레이리스트 삭제", description = "id가 일치하는 playlist를 삭제")
 	@DeleteMapping("{playlistId}")
 	public ResponseEntity<?> deletePlaylist(@PathVariable("playlistId") long id) {
 		playlistService.deletePlaylistById(id);
 		return ResponseEntity.noContent().build();
 	}
 
+	@Operation(summary = "플레이리스트 등록")
 	@PostMapping("")
 	public ResponseEntity<?> addPlaylist(@RequestBody Playlist playlist) {
 		playlistService.createPlaylist(playlist);
