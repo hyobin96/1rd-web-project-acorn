@@ -6,7 +6,7 @@
                     <img class="profile-photo" :src="imgSrc" alt="프로필 이미지" />
                     <input ref="profileInput" type="file" accept="image/*" style="display: none"
                         @change="handleProfileImageChange" />
-                    <span class="nickname-on-photo">y</span>
+                    <!-- <span class="nickname-on-photo">y</span> -->
                     <div class="change-profile-photo" @click="triggerProfileInput">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="15" height="15">
                             <path fill="green"
@@ -27,7 +27,7 @@
                 </div>
                 <div class="email">
                     <label>이메일</label>
-                    <input type="text" v-model="email" readonly />
+                    <input type="text" v-model="email" readonly class="email-input" />
                 </div>
                 <div class="gender">
                     <label>성별</label>
@@ -148,11 +148,13 @@ async function handleSubmit(e) {
 .account-container {
     width: 500px;
     margin: 120px auto;
+    /* border: 1px solid darkblue; */
 }
 
 .account {
     padding-top: 52px;
     text-align: center;
+    /* border: 1px solid darkgoldenrod; */
 }
 
 .profile-photo-wrap {
@@ -261,5 +263,11 @@ button {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.email-input {
+  background-color: #f0f0f0;   /* 연한 회색 */
+  color: #888;                 /* 글씨도 연하게 (선택) */
+  cursor: not-allowed;         /* 마우스 올리면 비활성화 느낌 (선택) */
 }
 </style>
