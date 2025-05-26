@@ -73,7 +73,7 @@ iframe {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 900px;
+    width: 962.5px;
     height: 506.3px;
     border: 2px solid #42b983; /* Vue 기본 테마 색 */
 }
