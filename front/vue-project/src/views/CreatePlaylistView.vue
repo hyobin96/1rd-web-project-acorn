@@ -3,7 +3,7 @@
     <div class="playlist-card">
       <h2 class="title">새 플레이리스트</h2>
       <CreatePlaylistName />
-      <CreatePlaylistURL />
+      <CreatePlaylistURL @close = "$emit('close')"/>
     </div>
   </div>
 </template>
@@ -13,6 +13,8 @@ import CreatePlaylistName from '@/components/CreatePlaylistName.vue'
 import CreatePlaylistURL from '@/components/CreatePlaylistURL.vue'
 import ExercisePlanForm from '@/components/ExercisePlanForm.vue'
 import DoneButton from '@/components/DoneButton.vue'
+
+defineEmits(['close'])
 </script>
 
 <style scoped>

@@ -4,13 +4,17 @@
       <input v-model="playlistStore.link" type="url" placeholder="링크를 붙여 넣어주세요" class="input-box" />
     </div>
     <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
-    <button class="input-btn" @click="logLink">저장</button>
+      <button class="input-btn" @click="logLink">저장</button>
+      <button class="input-btn" @click="$emit('close')">취소</button>
+    
   </div>
 </template>
 
 <script setup>
 import {ref} from 'vue';
 import { usePlaylistStores } from '@/stores/playlist';
+
+defineEmits(['close'])
 
 const playlistStore = usePlaylistStores()
 const errorMessage = ref('')
