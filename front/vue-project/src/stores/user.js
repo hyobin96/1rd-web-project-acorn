@@ -13,6 +13,11 @@ export const useUserStores = defineStore('user-stores', () => {
     const email = ref('')
     const role = ref('')
     const profileImage = ref(defaultProfile)
+    const rewardPoints = ref(0)
+
+    const setRewardPoints = (point) => {
+        rewardPoints.value = point;
+    }
 
     // 로그인 과정
     const login = async (password) => {
@@ -35,8 +40,9 @@ export const useUserStores = defineStore('user-stores', () => {
             nickname.value = data.nickname
             email.value = data.email
             role.value = data.role
-            
             profileImage.value = url + data.profileImage
+            rewardPoints.value = data.rewardPoints
+            
             message = ''
             router.push({ name: 'sidebar' })
         } catch (err) {
@@ -60,6 +66,7 @@ export const useUserStores = defineStore('user-stores', () => {
         email.value = ''
         role.value = ''
         profileImage.value = defaultProfile
+        rewardPoints.value = 0 
     }
 
     // 회원탈퇴 과정
@@ -77,6 +84,6 @@ export const useUserStores = defineStore('user-stores', () => {
     }
 
     return { userId, username, role, login, nickname, 
-        email, profileImage, logout, withdraw }
+        email, profileImage, logout, withdraw, rewardPoints, setRewardPoints }
 }, { persist: true })
 // 저장 유지

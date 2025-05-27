@@ -25,6 +25,23 @@
 
                 </div>
                 <div class="nav-content">
+
+                    <!-- 도토리 보상 -->
+                    <div class="acorn-reward">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            width="18" height="18" viewBox="0 0 256 256" xml:space="preserve">
+                            <g style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+                                transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                                <path
+                                    d="M 88.903 13.267 c -5.406 -4.439 -15.075 -3.289 -21.139 0.569 l -1.856 -1.857 c -12.381 -12.38 -32.527 -12.38 -44.909 0 c -2.131 2.132 -2.877 5.125 -2.256 7.868 C -5.127 44.336 -1.945 60.401 5.193 80.294 c 0.303 0.844 0.967 1.509 1.811 1.812 c 8.173 2.932 15.696 5.2 23.425 5.2 c 11.131 0 22.688 -4.713 37.204 -18.92 c 0.476 0.081 0.956 0.129 1.437 0.129 c 2.169 0 4.337 -0.825 5.987 -2.476 c 5.998 -5.997 9.301 -13.972 9.301 -22.454 s -3.303 -16.456 -9.301 -22.454 l -2.916 -2.916 c 4.274 -2.188 10.262 -2.517 12.952 -0.309 c 1.28 1.052 3.171 0.866 4.223 -0.416 C 90.37 16.21 90.184 14.318 88.903 13.267 z M 10.367 76.931 C 4.039 58.983 2.04 46.006 22.071 25.026 l 7.631 7.63 l 32.57 32.571 C 41.292 85.257 28.314 83.259 10.367 76.931 z M 70.814 61.795 c -0.96 0.96 -2.519 0.96 -3.48 0.005 l -28.15 -28.149 L 25.243 19.709 c -0.961 -0.961 -0.961 -2.524 0 -3.486 c 5.021 -5.021 11.615 -7.53 18.21 -7.53 c 6.594 0 13.19 2.511 18.21 7.53 l 9.151 9.151 C 80.855 35.416 80.855 51.754 70.814 61.795 z"
+                                    style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                    transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" fill="black" stroke="black"
+                                    stroke-width="5" />
+                            </g>
+                        </svg><span>{{ store.rewardPoints }}개</span>
+                    </div>
+
+                    <!-- 플레이리스트 만들기 -->
                     <div class="create-playlist"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                             width="18" height="18">
                             <path
@@ -35,6 +52,7 @@
                         </ModalView>
                     </div>
 
+                    <!-- 이벤트 -->
                     <div class="event-page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18"
                             height="18">
                             <path
@@ -66,19 +84,32 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useUserStores } from '@/stores/user';
-import { computed, ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ModalView from '@/views/ModalView.vue';
 import CreatePlaylistView from '@/views/CreatePlaylistView.vue';
+import api from '@/api/axios';
 
 const store = useUserStores()
 const router = useRouter()
 const showModal = ref(false)
+const userStore = useUserStores()
 
 const props = defineProps({
     visible: Boolean
 })
 
 const emit = defineEmits(['closeSidebar'])
+
+// 사이드바 진입시 포인트 정보 불러오기
+onMounted(async () => {
+    try {
+        const res = await api.get(`users/attendance?username=${userStore.username}`
+        )
+        userStore.setRewardPoints(res.data.rewardPoints)
+    } catch (err) {
+        userStore.setRewardPoints(err.response.data.rewardPoints)
+    }
+})
 
 </script>
 
@@ -106,6 +137,7 @@ body {
     /* transform: translateX(-100%); */
     /* transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); */
 }
+
 /* 
 .sidebar-container.active {
     transform: translateX(0);
@@ -208,7 +240,7 @@ body {
     opacity: 1;
 }
 
-.sidebar-slide-enter-active{
+.sidebar-slide-enter-active {
     transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.3s;
 }
 
