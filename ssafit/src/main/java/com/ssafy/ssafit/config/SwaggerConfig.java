@@ -14,9 +14,9 @@ public class SwaggerConfig {
 	@Bean
 	public OpenAPI openAPI() {
 		return new OpenAPI()
-				.info(new Info().title("SSAFIT")
-						.description("자신만의 커스텀 운동 영상")
-						.version("v0.0.1")
+				.info(new Info().title("acorn")
+						.description("개인 맞춤 운동 습관 형성 서비스 개발")
+						.version("v1.0.0")
 						);
 		
 	}
