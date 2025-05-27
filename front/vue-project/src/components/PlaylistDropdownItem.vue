@@ -1,20 +1,26 @@
 <template>
-    <RouterLink :to="{ name: 'DetailPlayList', params: { index } }">
-        <div class="playlist-item">
+    <div class="playlist-item">
+        <RouterLink :to="{ name: 'DetailPlayList', params: { index } }">
             <div class="thumbnail-img"><img :src="thumbnails" alt=""></div>
-            <div class="playlist-info">
-                <div class="title"><span>{{ title }}</span></div>
-                <div class="created-time"><span>{{ createdAt }}</span></div>
+        </RouterLink>
+        <div class="playlist-info" v-if="!isDeleted">
+            <div class="title"><span>{{ title }}</span></div>
+            <div class="created-time"><span>{{ createdAt }}</span></div>
+            <div v-if="isEditing">
+                <button @click="deleteHandler">삭제</button>
             </div>
         </div>
-    </RouterLink>
+    </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { usePlaylistStores } from '@/stores/playlist';
-const props = defineProps(['index'])
+const props = defineProps(['index', 'isEditing', 'deleteArr'])
+const emit = defineEmits(['delete',])
 const store = usePlaylistStores()
+
+const isDeleted = ref(false)
 
 // 썸네일 링크
 const thumbnails = computed(() => {
@@ -29,6 +35,18 @@ const createdAt = computed(() => {
     console.log(store.playlistArr[props.index][0])
     return store.playlistArr[props.index][0].createdAt
 })
+
+
+const updateHandler = () => {
+
+}
+
+const deleteHandler = () => {
+    const playlistId = store.playlistArr[props.index][0].playlistId
+    emit('delete', playlistId, props.index)
+    // store.playlistArr.splice(props.index, 1)
+    isDeleted.value = true
+}
 </script>
 
 <style scoped>

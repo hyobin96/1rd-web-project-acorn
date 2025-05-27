@@ -96,22 +96,39 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
         }
     }
 
-    const moveNextPlay = () => {
-        if (currentPlaylistItemId.value + 1 === playlistArr.value[currentPlaylistId.value].length) {
-            currentPlaylistItemId.value = 0
-            currentPlaylistId.value++
+    const updatePlaylist = async () => {
+    }
+    const deletePlaylist = async (deleteArr) => {
+        try {
+            for (const playlistId of deleteArr) {
+                await axios.delete(`playlist/${playlistId}`)
+            }
+            alert('플레이리스트 삭제 성공')
+            getPlaylist()
+        } catch (err) {
+            console.log(err)
+            alert('플레이리스트 삭제 실패')
         }
-        else {
-            currentPlaylistItemId.value++
-        }
+    }
 
-        if (currentPlaylistId.value === playlistArr.value.length) {
-            currentPlaylistId.value = 0
+    const deletePlaylistItem = async (index) => {
+        const playlistItemId = playlistArr.value[currentPlaylistId.value][index].playlistItemId
+        try{
+            axios.delete(`playlistItem/${playlistItemId}`)
+            alert('영상 삭제 완료')
+            getPlaylist()
+        }catch(err){
+            alert('영상 삭제 실패')
+            console.log(err)
         }
+    }
+
+    const updatePlaylistItem = async () => {
+        
     }
 
     return {
         title, link, playlistId, savePlaylist, getPlaylist, playlistArr,
-        currentPlaylistItemId, currentPlaylistId, moveNextPlay, progress, duration,
+        currentPlaylistItemId, currentPlaylistId, progress, duration, updatePlaylist, deletePlaylist, deletePlaylistItem,
     }
 }, { persist: true })
