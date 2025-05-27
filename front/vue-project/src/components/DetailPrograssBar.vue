@@ -14,14 +14,16 @@ const store = usePlaylistStores()
 
 <style scoped>
 .progress-container {
-    height: 10px;
+    margin-top: 5px;
+    width: 94%;
+    height: 25px;
     background-color: #eee;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .progress-bar {
     height: 100%;
-    background-color: #42b983;
+    background-color: #f9a63a;
     transition: width 0.2s linear;
 }
 </style>

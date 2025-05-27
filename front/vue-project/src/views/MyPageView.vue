@@ -179,7 +179,7 @@ async function handleSubmit(e) {
     transform: translate(-50%, -50%);
     font-weight: bold;
     font-size: 22px;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 .delete-profile-photo {

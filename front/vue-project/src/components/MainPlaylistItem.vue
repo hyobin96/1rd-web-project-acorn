@@ -46,10 +46,6 @@ img {
     padding-left: 3px;
 }
 
-img {
-    border: 1px solid gold;
-}
-
 /* 플레이리스트가 없을 때의 안내 박스 스타일 */
 .playlist-placeholder {
     border: 1px dashed gray;

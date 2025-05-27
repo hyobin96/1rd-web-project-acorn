@@ -44,7 +44,7 @@ const router = createRouter({
           path: 'side',
           name: 'sidebar',
           component: Sidebar
-        },
+        }
       ]
     },
     {

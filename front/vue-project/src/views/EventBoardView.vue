@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div class="logo-container">
+        <router-link to="/main" style="display: inline-block;">
+            <Logo class="logo"/>
+        </router-link>
+        </div>
+        </div>
         <EventBoardHeader :totalCount="eventStore.events.length" @changeTab="handleTabChange" />
         <div class="event-item-container">
             <div class="event-item" v-for="event in filteredEvents" :key="event.id">
@@ -18,8 +24,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            </div>
 </template>
 
 <script setup>
@@ -27,6 +32,7 @@ import EventBoardHeader from '@/components/EventBoardHeader.vue'
 import { ref, onMounted, computed } from 'vue';
 import api from '@/api/axios';
 import { useEventStore } from '@/stores/event';
+import Logo from '../components/Logo.vue'
 
 const eventStore = useEventStore()
 const selectedTab = ref('')
@@ -66,7 +72,7 @@ async function loadEventInfo() {
     }
 }
 
-function handleTabChange(tab){
+function handleTabChange(tab) {
     selectedTab.value = tab;
 }
 
@@ -92,31 +98,35 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+
 .event-item-container {
-    border: 1px solid hotpink;
-    width: 1200px;
-    /*임의로 정한 컨텐츠 가로 길이 */
+    /* border: 1px solid hotpink; */
+    width: 1262.5px;
     margin: 0 auto;
     /* 가운데 정렬 */
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .event-item {
-    width: 50%;
+    width: calc(50% - 10px);
     /* event-item-container의 반을 차지 */
     height: 360px;
-    border: 1px solid navy;
+    border: 1px solid #D9D9D9;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    /* margin-right: 5px; */
+    /* margin: 0 auto; */
 }
 
 .event-info-container {
     width: 100%;
     /* event-item-container의 반을 차지 */
     height: 360px;
-    border: 1px solid navy;
+    /* border: 1px solid navy; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -136,13 +146,22 @@ onMounted(() => {
 
 .event-info {
     flex: 2;
-    border: 1px solid yellowgreen;
+    border-top: 1px solid #D9D9D9;
+    background-color: #eee;
     display: flex;
     flex-direction: column;
+    padding-top: 5px;
+}
+
+.event-title {
+    /* border: 1px solid darkcyan; */
+    margin-bottom: 3px;
 }
 
 /* 이벤트 제목 */
 .event-title>span {
+    /* border: 1px solid darkblue; */
+    margin-top: 12px;
     margin-left: 8px;
     font-size: 20px;
     font-weight: 700;
@@ -150,7 +169,17 @@ onMounted(() => {
 
 /* 이벤트 진행 상태 */
 .event-status>span {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin-left: 8px;
+    display: inline-block;
+    cursor: pointer;
+
+}
+
+.logo-container{
+    width: 100%;
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  align-items: center;     /* 필요에 따라 세로 방향도 */
 }
 </style>

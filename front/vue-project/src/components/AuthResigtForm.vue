@@ -130,7 +130,7 @@ const regist = async () => {
     width: 500px;
     margin: 120px auto;
     height: 632.75px;
-    border: 1px solid yellow;
+    border: 1px solid #D9D9D9;
     border-radius: 15px;
 }
 
@@ -161,7 +161,7 @@ const regist = async () => {
     height: 43.9px;
     border-radius: 4px;
     padding-left: 15px;
-    border: 2px solid #b9b9b9;
+    border: 2px solid #D9D9D9;
 }
 
 .butttons{
@@ -186,7 +186,8 @@ button {
     border-radius: 4px;
     margin-bottom: 16px;
     padding-left: 15px;
-    border: 2px solid #b9b9b9;
+    border: 2px solid #D9D9D9;
+    background-color: #f9a63a;
 }
 
 .check-has-id > span{
@@ -195,6 +196,8 @@ button {
 }
 
 .check-has-id > button{
+    /* border: 1px solid red; */
+    color: #f9a63a;
     text-decoration: underline;
 }
 

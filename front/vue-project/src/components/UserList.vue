@@ -89,7 +89,7 @@ table {
 
 th,
 td {
-    border: 1px solid rgba(255, 106, 0, 0.534);
+    border: 1px solid #D9D9D9;
     text-align: center;
     min-width: 200px;
 }

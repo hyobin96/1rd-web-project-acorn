@@ -47,7 +47,7 @@ const router = useRouter()
 <style scoped>
 
 .container {
-    /* border: 1px solid darkblue; */
+    border: 1px solid #D9D9D9;
     width: 500px;
     margin: 120px auto;
     height: 632.75px;
@@ -117,7 +117,7 @@ button {
     /* border: 2px solid #b9b9b9; */
     display: flex;
     justify-content: center;
-    background: #e49732;
+    background: #f9a63a;
     /* #F2F2F2 */
     border-radius: 4px;
 }

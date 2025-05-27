@@ -1,7 +1,10 @@
 <template>
     <div>
         <div class="playlist-name">
-            <span>{{ playlistTitle }}</span>
+            <router-link to="/main" style="display: inline-block;">
+                <Logo />
+            </router-link>
+
         </div>
         <div class="content">
             <div class="video-section">
@@ -11,9 +14,9 @@
             </div>
             <div class="playlist-detail-sidebar">
                 <div class="sidebar-timer">
-                    <span>Timer</span>
+                    <span>🏃‍♀️Timecode</span>
                     <!-- <div class="timer"> -->
-                        <DetailPrograssBar />
+                    <DetailPrograssBar />
                     <!-- </div> -->
                 </div>
                 <div class="sidebar-next-videos">
@@ -34,6 +37,7 @@ import DetailSideNextVideos from '@/components/DetailSideNextVideos.vue';
 import MemoForm from '@/components/MemoForm.vue';
 import MemoList from '@/components/MemoList.vue';
 import DetailPrograssBar from '@/components/DetailPrograssBar.vue';
+import Logo from '../components/Logo.vue'
 
 const store = usePlaylistStores()
 const route = useRoute()
@@ -49,8 +53,9 @@ const playlistTitle = computed(() => {
 .playlist-name {
     width: 1262.5px;
     height: 215px;
-    border: 1px solid navajowhite;
+    /* border: 1px solid navajowhite; */
     margin: 0 auto;
+    font-size: 45px;
 }
 
 .content {
@@ -58,14 +63,10 @@ const playlistTitle = computed(() => {
     justify-content: center;
 }
 
-
-
 .playlist-detail-sidebar {
     width: 300px;
     /* border: 1px solid yellow; */
 }
-
-
 
 .buttons {
     /* border: 1px solid firebrick; */
@@ -76,7 +77,7 @@ const playlistTitle = computed(() => {
 
 .sidebar-timer {
     height: 76px;
-    border: 1px solid darkblue;
+    /* border: 1px solid darkblue; */
     padding-top: 8px;
     padding-left: 10px;
 }
@@ -87,11 +88,6 @@ const playlistTitle = computed(() => {
     margin-top: 3px;
     margin-right: 10px;
     font-size: 16px;
-}
-
-.sidebar-calender {
-    height: 272px;
-    border: 1px solid darkcyan;
 }
 
 .sidebar-next-videos {

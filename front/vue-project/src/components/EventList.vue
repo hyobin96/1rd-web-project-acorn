@@ -19,8 +19,8 @@
                     <td>{{ event.content }}</td>
                     <td>{{ formatDate(event.startDate) }}</td>
                     <td>{{ formatDate(event.endDate) }}</td>
-                    <td><button @click="editEvent(event, $event)">수정</button></td>
-                    <td><button @click="deleteEvent(event.id)">삭제</button></td>
+                    <td><button @click="editEvent(event, $event)" class="edit-btn">수정</button></td>
+                    <td><button @click="deleteEvent(event.id)" class="delete-btn">삭제</button></td>
                 </tr>
             </tbody>
         </table>
@@ -99,8 +99,8 @@ function editEvent(event, e) {
 
 /* 수정 박스 닫기 */
 function closeEditBox() {
-  selectedEvent.value = null
-  showEditBox.value = false
+    selectedEvent.value = null
+    showEditBox.value = false
 }
 
 /* 저장 버튼 클릭 시 이벤트 수정하기 */
@@ -125,13 +125,13 @@ async function saveChanges() {
 }
 
 /* 이벤트 삭제하기 */
-async function deleteEvent(id){
+async function deleteEvent(id) {
     if (!confirm('정말 삭제하시겠습니까?')) return
-    try{
+    try {
         await api.delete(`/events/${id}`)
         await loadEventInfo()
         alert('이벤트 삭제 완료!')
-    }catch(err){
+    } catch (err) {
         console.log(`삭제 실패:`, err.response?.data || err.message);
         alert('이벤트 삭제 실패!')
     }
@@ -151,8 +151,20 @@ table {
 
 th,
 td {
-    border: 1px solid rgba(255, 106, 0, 0.534);
+    border: 1px solid #D9D9D9;
     text-align: center;
     min-width: 200px;
+}
+
+.edit-btn {
+    border: 1px solid #fff;
+    background-color: rgb(64, 207, 114);
+    color: #fff;
+}
+
+.delete-btn {
+    border: 1px solid #fff;
+    background-color: #e62525;
+    color: #fff;
 }
 </style>

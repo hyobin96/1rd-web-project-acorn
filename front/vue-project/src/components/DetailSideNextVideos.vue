@@ -19,6 +19,6 @@ img {
     /* ✅ 확대 잘라서 꽉 채우기 */
     display: block;
     margin-bottom: 10px;
-    border: 2px solid #42b983; /* Vue 기본 테마 색 */
+    /* border: 2px solid #42b983;  */
 }
 </style>

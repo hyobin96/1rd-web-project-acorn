@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-
 defineProps({
     totalCount: {
         type: Number,
@@ -19,23 +18,21 @@ defineProps({
 })
 
 defineEmits(['changeTab'])
-
-
-
 </script>
 
 <style scoped>
 .event-board-header-container {
-    height: 350px;
-    border: 1px solid blue;
+    width: 1262.5px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    justify-content: end;
 }
 
 .event-board-header {
-    border: 1px solid yellow;
-    width: 1200px;
+    /* border: 1px solid yellow; */
+    width: 1262.5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
