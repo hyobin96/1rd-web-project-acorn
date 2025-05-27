@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div class="logo-container">
+        <router-link to="/main" style="display: inline-block;">
+            <Logo class="logo"/>
+        </router-link>
+        </div>
+        </div>
         <EventBoardHeader :totalCount="eventStore.events.length" @changeTab="handleTabChange" />
         <div class="event-item-container">
             <div class="event-item" v-for="event in filteredEvents" :key="event.id">
@@ -18,8 +24,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            </div>
 </template>
 
 <script setup>
@@ -27,6 +32,7 @@ import EventBoardHeader from '@/components/EventBoardHeader.vue'
 import { ref, onMounted, computed } from 'vue';
 import api from '@/api/axios';
 import { useEventStore } from '@/stores/event';
+import Logo from '../components/Logo.vue'
 
 const eventStore = useEventStore()
 const selectedTab = ref('')
@@ -92,6 +98,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+
 .event-item-container {
     /* border: 1px solid hotpink; */
     width: 1262.5px;
@@ -166,5 +174,12 @@ onMounted(() => {
     display: inline-block;
     cursor: pointer;
 
+}
+
+.logo-container{
+    width: 100%;
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  align-items: center;     /* 필요에 따라 세로 방향도 */
 }
 </style>

@@ -28,10 +28,11 @@ defineEmits(['changeTab'])
 }
 
 .event-board-header {
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     width: 1262.5px;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 10px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

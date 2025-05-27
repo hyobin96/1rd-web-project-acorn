@@ -1,34 +1,34 @@
 <template>
     <div>
         <form @submit.prevent="submitForm" class="event-create-section">
-            <button type="submit">이벤트 생성</button>
-
+            <p>이벤트 생성</p>
             <div>
-                <label for="title">제목</label>
+                <label for="title">제목<span>*</span></label>
                 <input type="text" id="title" v-model="form.title" required>
             </div>
             <div>
-                <label for="content">내용</label>
+                <label for="content">내용<span>*</span></label>
                 <input type="text" id="content" v-model="form.content" required>
             </div>
             <div>
-                <label for="start-date">이벤트 시작일</label>
+                <label for="start-date">이벤트 시작일<span>*</span></label>
                 <input type="date" id="start-date" v-model="form.startDate" required>
             </div>
             <div>
-                <label for="end-date">이벤트 종료일</label>
+                <label for="end-date">이벤트 종료일<span>*</span></label>
                 <input type="date" id="end-date" v-model="form.endDate" required>
             </div>
             <div>
-                <label for="thumbnail">썸네일</label>
+                <label for="thumbnail">썸네일<span>*</span></label>
                 <input type="file" id="thumbnail" @change="handleThumbnailChange" required />
             </div>
             <div>
                 <label for="contentImage">본문 이미지</label>
                 <input type="file" id="contentImage" @change="handleContentImageChange" multiple />
             </div>
+            <div class="btn-container"><button type="submit">이벤트 생성</button></div>
         </form>
-        <EventList/>
+        <EventList />
     </div>
 </template>
 
@@ -68,7 +68,7 @@ const submitForm = async () => {
         const start = new Date(form.value.startDate);
         const end = new Date(form.value.endDate);
 
-        if(start >= end){
+        if (start >= end) {
             alert('이벤트 시작일은 종료일보다 빠르거나 같아야 합니다.');
             return;
         }
@@ -119,7 +119,47 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-.event-create-section{
+form {
+    border: 1px solid #d9d9d9;
+    width: 400px;
+}
+
+form>div {
+    margin-left: 15px;
+}
+
+button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    /* border: 1px solid darkblue; */
+    background-color: #1c1c1c;
+    color: #fff;
+}
+
+label {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.event-create-section {
     margin-bottom: 20px;
 }
+
+form>p {
+    margin-top: 15px;
+    margin-left: 15px;
+    font-size: 22px;
+}
+
+span {
+    color: rgb(234, 75, 75);
+    font-size: 20px;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: end;
+}
+
 </style>

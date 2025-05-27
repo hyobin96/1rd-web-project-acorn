@@ -1,7 +1,10 @@
 <template>
     <div>
         <div class="playlist-name">
-            <span>로고 누르면 메인 가도록 할 것</span>
+            <router-link to="/main" style="display: inline-block;">
+                <Logo />
+            </router-link>
+
         </div>
         <div class="content">
             <div class="video-section">
@@ -13,7 +16,7 @@
                 <div class="sidebar-timer">
                     <span>🏃‍♀️Timecode</span>
                     <!-- <div class="timer"> -->
-                        <DetailPrograssBar />
+                    <DetailPrograssBar />
                     <!-- </div> -->
                 </div>
                 <div class="sidebar-next-videos">
@@ -34,6 +37,7 @@ import DetailSideNextVideos from '@/components/DetailSideNextVideos.vue';
 import MemoForm from '@/components/MemoForm.vue';
 import MemoList from '@/components/MemoList.vue';
 import DetailPrograssBar from '@/components/DetailPrograssBar.vue';
+import Logo from '../components/Logo.vue'
 
 const store = usePlaylistStores()
 const route = useRoute()
@@ -59,14 +63,10 @@ const playlistTitle = computed(() => {
     justify-content: center;
 }
 
-
-
 .playlist-detail-sidebar {
     width: 300px;
     /* border: 1px solid yellow; */
 }
-
-
 
 .buttons {
     /* border: 1px solid firebrick; */

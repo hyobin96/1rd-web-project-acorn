@@ -29,8 +29,8 @@
 }
 
 .nav {
-    width: 300px;
-    border: 1px solid wheat;
+    width: 280px;
+    border: 1px solid #D9D9D9;
     display: flex;
     flex-direction: column;
     padding-top: 10px;
