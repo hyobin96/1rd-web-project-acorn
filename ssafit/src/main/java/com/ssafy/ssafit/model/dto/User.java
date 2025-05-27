@@ -9,38 +9,40 @@ import jakarta.validation.constraints.Size;
 
 public class User {
 	private Long id;
-	
+
 	@NotBlank(message = "5~20자의 영문 소문자와 특수기호(_)만 사용 가능합니다.")
 	@Size(min = 5, max = 15, message = "5~20자의 영문 소문자와 특수기호(_)만 사용 가능합니다.")
 	@Pattern(regexp = "^[a-z0-9_]+$", message = "5~20자의 영문 소문자와 특수기호(_)만 사용 가능합니다.")
 	private String username;
-	
+
 	@NotBlank(message = "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.")
 	@Size(min = 8, max = 16, message = "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.")
 	private String password;
-	
+
 	@NotBlank(message = "이메일 형식이 올바르지 않습니다.")
 	@Email(message = "이메일 형식이 올바르지 않습니다.")
 	private String email;
-	
+
 	@NotBlank(message = "2자 이상 10자 이하로 입력해주세요.")
 	@Size(min = 2, max = 10, message = "2자 이상 10자 이하로 입력해주세요.")
 	private String nickname;
-	
+
 	private boolean isAdmin;
-	
+
 	@JsonProperty("isDeleted")
 	private boolean isDeleted;
 	private String createdAt;
-	private String updatedAt; 
+	private String updatedAt;
 	private String profileImage; // 프로필 이미지 파일명 또는 경로
-	private String gender;    // 성별
+	private String gender; // 성별
 	private String birthDate; // 생년월일
+	private String lastAttendanceDate; // 마지막 출석 날짜 (YYYY-MM-DD 형태)
+	private int rewardPoints; // 누적 리워드 포인트
 
 	public User() {
 	}
-	
-	//회원가입용 생성자
+
+	// 회원가입용 생성자
 	public User(Long id, String username, String password, String email, String nickname, boolean isAdmin,
 			boolean isDeleted, String createdAt) {
 		super();
@@ -53,10 +55,11 @@ public class User {
 		this.isDeleted = isDeleted;
 		this.createdAt = createdAt;
 	}
-	
-	//전체 생성자
+
+	// 전체 생성자
 	public User(Long id, String username, String password, String email, String nickname, boolean isAdmin,
-			boolean isDeleted, String createdAt, String updatedAt, String profileImage, String gender, String birthDate) {
+			boolean isDeleted, String createdAt, String updatedAt, String profileImage, String gender,
+			String birthDate) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -67,7 +70,7 @@ public class User {
 		this.isDeleted = isDeleted;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.profileImage =profileImage;
+		this.profileImage = profileImage;
 		this.gender = gender;
 		this.birthDate = birthDate;
 	}
@@ -143,26 +146,45 @@ public class User {
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
 	public String getProfileImage() {
-	    return profileImage;
+		return profileImage;
 	}
 
 	public void setProfileImage(String profileImage) {
-	    this.profileImage = profileImage;
+		this.profileImage = profileImage;
 	}
-	
+
 	public String getGender() {
-	    return gender;
+		return gender;
 	}
+
 	public void setGender(String gender) {
-	    this.gender = gender;
+		this.gender = gender;
 	}
+
 	public String getBirthDate() {
-	    return birthDate;
+		return birthDate;
 	}
+
 	public void setBirthDate(String birthDate) {
-	    this.birthDate = birthDate;
+		this.birthDate = birthDate;
+	}
+
+	public String getLastAttendanceDate() {
+		return lastAttendanceDate;
+	}
+
+	public void setLastAttendanceDate(String lastAttendanceDate) {
+		this.lastAttendanceDate = lastAttendanceDate;
+	}
+
+	public int getRewardPoints() {
+		return rewardPoints;
+	}
+
+	public void setRewardPoints(int rewardPoints) {
+		this.rewardPoints = rewardPoints;
 	}
 
 	@Override
@@ -170,8 +192,9 @@ public class User {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", nickname=" + nickname + ", isAdmin=" + isAdmin + ", isDeleted=" + isDeleted + ", createdAt="
 				+ createdAt + ", updatedAt=" + updatedAt + ", profileImage=" + profileImage + ", gender=" + gender
-				+ ", birthDate=" + birthDate + "]";
+				+ ", birthDate=" + birthDate + ", lastAttendanceDate=" + lastAttendanceDate + ", rewardPoints="
+				+ rewardPoints + "]";
 	}
 
-
+	
 }

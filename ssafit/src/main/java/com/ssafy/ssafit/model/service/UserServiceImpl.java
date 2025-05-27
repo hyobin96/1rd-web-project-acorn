@@ -2,17 +2,22 @@ package com.ssafy.ssafit.model.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.ssafit.model.dao.UserDao;
 import com.ssafy.ssafit.model.dto.User;
+import com.ssafy.ssafit.model.exception.UserNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -161,5 +166,40 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsers() {
 		return userDao.selectAllUsers();
 	}
+	
+	/**
+	 * 출석 체크 및 보상 지급
+	 */
+	 @Override
+	    public ResponseEntity<?> checkAttendance(String username) {
+	        User user = userDao.findByUsername(username);
+	        System.out.println("userId:" + user.getId());
+	        System.out.println("lastAttendanceDate: " + user.getLastAttendanceDate());
+	        if (user == null) 
+	        	throw new UserNotFoundException("유저가 DB에 없습니다.");
 
+	        // 오늘 날짜 (yyyy-MM-dd)
+	        String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+
+	        String message = "오늘은 이미 출석했습니다.";
+	        // 이미 오늘 출석했는지 확인
+	        if (today.equals(user.getLastAttendanceDate())) {
+	            return ResponseEntity.badRequest().body(
+	            		Map.of("message", message,
+	            				"rewardPoints", user.getRewardPoints())); // 이미 출석함
+	        }
+
+	        // 출석 처리
+	        user.setLastAttendanceDate(today);
+
+	        // 포인트 지급 (예: 10포인트)
+	        int currentPoints = user.getRewardPoints();
+	        user.setRewardPoints(currentPoints + 10);
+	        
+	        // DB 업데이트
+	        boolean isUpdated = userDao.updateUser(user) > 0;
+	        if (isUpdated) message = "출석 완료! 10포인트 지급!";
+	        return ResponseEntity.ok(Map.of("message", message,
+    				"rewardPoints", user.getRewardPoints()));
+	    }
 }

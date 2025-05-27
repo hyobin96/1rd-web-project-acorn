@@ -2,6 +2,7 @@ package com.ssafy.ssafit.model.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.ssafit.model.dto.LoginRequest;
@@ -73,5 +74,10 @@ public interface UserService {
 	 * 전체 회원 조회
 	 */
 	List<User> getAllUsers();
+
+	/**
+	 * 출석 체크 및 보상 지급
+	 */
+	ResponseEntity<?> checkAttendance(String username);
 
 }

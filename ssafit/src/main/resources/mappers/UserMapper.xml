@@ -19,7 +19,8 @@
 		UPDATE users
 		SET
 		profile_image = #{profileImage}, nickname = #{nickname}, gender =
-		#{gender}, birth_date = #{birthDate}, updated_at = NOW()
+		#{gender}, birth_date = #{birthDate}, last_attendance_date = #{lastAttendanceDate},
+        reward_points = #{rewardPoints}, updated_at = NOW()
 		WHERE id =
 		#{id};
 	</update>
@@ -90,7 +91,9 @@
 		updated_at,
 		profile_image,
 		gender,
-		birth_date
+		birth_date,
+		last_attendance_date AS lastAttendanceDate,
+        reward_points AS rewardPoints
 		FROM users
 		WHERE is_admin = FALSE;
 	</select>
