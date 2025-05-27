@@ -117,7 +117,7 @@ button {
     /* border: 2px solid #b9b9b9; */
     display: flex;
     justify-content: center;
-    background: #e49732;
+    background: #f9a63a;
     /* #F2F2F2 */
     border-radius: 4px;
 }

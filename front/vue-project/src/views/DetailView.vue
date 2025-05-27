@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="playlist-name">
-            <span>{{ playlistTitle }}</span>
+            <span>로고 누르면 메인 가도록 할 것</span>
         </div>
         <div class="content">
             <div class="video-section">
@@ -11,7 +11,7 @@
             </div>
             <div class="playlist-detail-sidebar">
                 <div class="sidebar-timer">
-                    <span>Timer</span>
+                    <span>🏃‍♀️Timecode</span>
                     <!-- <div class="timer"> -->
                         <DetailPrograssBar />
                     <!-- </div> -->
@@ -49,8 +49,9 @@ const playlistTitle = computed(() => {
 .playlist-name {
     width: 1262.5px;
     height: 215px;
-    border: 1px solid navajowhite;
+    /* border: 1px solid navajowhite; */
     margin: 0 auto;
+    font-size: 45cm;
 }
 
 .content {
@@ -76,7 +77,7 @@ const playlistTitle = computed(() => {
 
 .sidebar-timer {
     height: 76px;
-    border: 1px solid darkblue;
+    /* border: 1px solid darkblue; */
     padding-top: 8px;
     padding-left: 10px;
 }
@@ -91,7 +92,7 @@ const playlistTitle = computed(() => {
 
 .sidebar-calender {
     height: 272px;
-    border: 1px solid darkcyan;
+    /* border: 1px solid darkcyan; */
 }
 
 .sidebar-next-videos {

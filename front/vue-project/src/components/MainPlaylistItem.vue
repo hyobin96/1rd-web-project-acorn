@@ -11,7 +11,7 @@
 
         <!-- 플레이리스트가 없을 때 안내용 3개 박스 -->
         <div v-else class="playlist-placeholder">
-            {{ idx + 1 }}번째 플레이리스트를 등록해주세요!
+            {{ idx }}번째 플레이리스트를 등록해주세요!
         </div>
     </div>
 </template>
@@ -44,10 +44,6 @@ img {
 .favorite-playlist-name {
     padding-top: 3px;
     padding-left: 3px;
-}
-
-img {
-    border: 1px solid gold;
 }
 
 /* 플레이리스트가 없을 때의 안내 박스 스타일 */

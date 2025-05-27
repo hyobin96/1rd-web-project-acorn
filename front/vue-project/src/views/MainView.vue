@@ -124,14 +124,14 @@ onMounted(async () => {
 }
 
 .favorite-playlist-section {
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     /* width: fit-content; */
     width: 1262.5px;
     margin: 0 auto;
 }
 
 .favorite-playlist {
-    border: 1px solid saddlebrown;
+    /* border: 1px solid saddlebrown; */
     height: 365.33px;
     flex: 1;
     /* 자식 요소가 부모의 가로 폭을 똑같이 나눠서 꽉 차게 배치 */

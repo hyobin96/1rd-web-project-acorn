@@ -75,7 +75,7 @@ iframe {
     align-items: center;
     width: 962.5px;
     height: 506.3px;
-    border: 2px solid #42b983; /* Vue 기본 테마 색 */
+    /* border: 2px solid #42b983; */
 }
 
 .video-title {
@@ -84,7 +84,9 @@ iframe {
     font-size: 20px;
     margin-top: 12px;
     margin-bottom: 24px;
+    margin-left: 10px;
     font-weight: 700;
     word-break: break-word;
+
 }
 </style>
