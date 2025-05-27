@@ -47,7 +47,7 @@ const router = useRouter()
 <style scoped>
 
 .container {
-    /* border: 1px solid darkblue; */
+    border: 1px solid #D9D9D9;
     width: 500px;
     margin: 120px auto;
     height: 632.75px;
