@@ -111,8 +111,24 @@ export const usePlaylistStores = defineStore('playlist-stores', () => {
         }
     }
 
+    const deletePlaylistItem = async (index) => {
+        const playlistItemId = playlistArr.value[currentPlaylistId.value][index].playlistItemId
+        try{
+            axios.delete(`playlistItem/${playlistItemId}`)
+            alert('영상 삭제 완료')
+            getPlaylist()
+        }catch(err){
+            alert('영상 삭제 실패')
+            console.log(err)
+        }
+    }
+
+    const updatePlaylistItem = async () => {
+        
+    }
+
     return {
         title, link, playlistId, savePlaylist, getPlaylist, playlistArr,
-        currentPlaylistItemId, currentPlaylistId, progress, duration, updatePlaylist, deletePlaylist,
+        currentPlaylistItemId, currentPlaylistId, progress, duration, updatePlaylist, deletePlaylist, deletePlaylistItem,
     }
 }, { persist: true })
