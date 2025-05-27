@@ -98,7 +98,7 @@ onMounted(async () => {
 
 <style scoped>
 .navbar {
-    border: 2px solid yellowgreen;
+    /* border: 2px solid yellowgreen; */
     width: 1262.5px;
     height: 215px;
     margin: 0 auto;
@@ -114,7 +114,7 @@ onMounted(async () => {
 .motivation-banner {
     width: 1262.5px;
     height: 56px;
-    border: 1px solid blueviolet;
+    border: 1px solid #D9D9D9;
     padding-left: 15px;
     margin: 0 auto;
     display: flex;
@@ -173,7 +173,7 @@ span.playlist-title {
     padding-top: 8px;
     padding-bottom: 8px;
     overflow-y: auto;
-    height: 200px;
+    height: 420px; /* 스크롤 바 높이 */
 }
 
 #thumbnail {

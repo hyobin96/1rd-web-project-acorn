@@ -79,7 +79,7 @@ body {
 .sidebar-container {
     width: 280px;
     height: 100vh;
-    border: 1px solid red;
+    border: 1px solid #D9D9D9;
     position: fixed;
     /* 절대 위치가 아니라 화면 고정 */
     left: 0;

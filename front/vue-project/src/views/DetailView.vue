@@ -51,7 +51,7 @@ const playlistTitle = computed(() => {
     height: 215px;
     /* border: 1px solid navajowhite; */
     margin: 0 auto;
-    font-size: 45cm;
+    font-size: 45px;
 }
 
 .content {
@@ -88,11 +88,6 @@ const playlistTitle = computed(() => {
     margin-top: 3px;
     margin-right: 10px;
     font-size: 16px;
-}
-
-.sidebar-calender {
-    height: 272px;
-    /* border: 1px solid darkcyan; */
 }
 
 .sidebar-next-videos {

@@ -74,7 +74,7 @@ button {
     outline: none;
     background: none;
     font: inherit;
-    color: inherit;
+    color: #868686;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;

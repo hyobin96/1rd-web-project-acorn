@@ -32,10 +32,9 @@ const createdAt = computed(() => {
 </script>
 
 <style scoped>
-
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 img {
@@ -43,9 +42,11 @@ img {
     object-fit: cover;
 }
 
-.playlist-item{
+.playlist-item {
     padding-left: 10px;
     display: flex;
+    /* border: 1px solid darkblue; */
+    margin-bottom: 10px;
 }
 
 .playlist-info {
@@ -55,11 +56,12 @@ img {
     padding-left: 10px;
 }
 
-.title{
-    font-size: 30px;
+.title {
+    font-size: 25px;
 }
 
-.created-time{
-    font-size: 15px;
+.created-time {
+    font-size: 16px;
+    color: #868686;
 }
 </style>
