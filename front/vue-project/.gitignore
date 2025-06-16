@@ -17,6 +17,7 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 localhost.pem
+localhost-key.pem
 
 # Editor directories and files
 .vscode/*
