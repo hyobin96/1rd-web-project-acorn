@@ -16,12 +16,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-  server: {
-    https: {
-      key: fs.readFileSync('./localhost-key.pem'),
-      cert: fs.readFileSync('./localhost.pem')
-    },
-    host: 'localhost',
-    port: 5173
-  },
+  // server: {
+  //   https: {
+  //     key: fs.readFileSync('./localhost-key.pem'),
+  //     cert: fs.readFileSync('./localhost.pem')
+  //   },
+  //   host: 'localhost',
+  //   port: 5173
+  // },
 })
